@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>eBPLS Business Permit and Licensing System</title>
+        <meta name="Author" content=" PAARV ">
+        <link href="stylesheets/default.css" rel="stylesheet" type="text/css">
+<title></title>
+</head>
+<body onLoad="javascript: _FRM.nCode.focus();">
+<form action="index.php?part=4&class_type=Preference&selMode=<?php echo $selMode;?>&action_=8&itemEvent=1&data_item=0&orderbyasde=1" ENCTYPE="multipart/form-data" method="post" name="_FRM">
+                                                                                                 
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=bbo value="<?php echo $bbo;?>">
+<input type=hidden name=confx value="<?php echo $confx;?>">
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+	<tr><td colspan=2 class=header2 align=center>Economic Organization</td></tr>
+        <tr width=100%>
+                <td> &nbsp </td>
+        </tr>
+	<tr width=100%>
+                <td> &nbsp </td>
+        </tr>
+        <tr width=100%>
+                <td align=right valign=top> Economic Organization Code : </td>
+                <td align=left valign=top> &nbsp <input type=text maxlength=15 name=nCode class=text180 value='<?php echo $nCode; ?>'> <font class="def_label"> (Max 15 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+        <tr width=100%>
+                <td align=right valign=top> Economic Organization Description : </td>
+                <td align=left valign=top> &nbsp <input type=text maxlength=30 name=nType class=text180 value='<?php echo $nType; ?>'> <font class="def_label"> (Max 30 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=90%>
+        <tr width=100%>
+                <td align=center valign=top>&nbsp</td>
+        </tr>
+        <tr width=100%>
+                <td align=center valign=top>
+			<input type=hidden name=sb>
+                        <input type=button value=Save name=sib onclick='VerifyEcoOrg();'>
+                        <input type=Button value=Cancel onClick='CancelCat();'>
+                        <input type=Reset value=Reset onClick="javascript: _FRM.nCode.focus();">
+                        &nbsp<br><br>
+                </td>
+        </tr>
+</table>
+</form>
+</body>
+</html>

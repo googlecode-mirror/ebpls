@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>eBPLS Business Permit and Licensing System</title>
+        <meta name="Author" content=" Robert M. Verzosa ">
+        <link href="stylesheets/default.css" rel="stylesheet" type="text/css">
+<title></title>
+</head>
+<body onLoad="javascript: _FRM.individual_interest_rate.focus();">
+<form ENCTYPE="multipart/form-data" method="post" name=_FRM>
+<script language="Javascript">
+function CheckValues()
+{
+	var _FRM = document._FRM;
+	
+	if (isBlank(_FRM.individual_interest_rate.value) || isNaN(_FRM.individual_interest_rate.value)) {
+		alert(<?php echo $invalid_input_error; ?> + " individual interest rate.");
+		_FRM.individual_interest_rate.focus();
+		_FRM.individual_interest_rate.select();
+		return false;
+	}
+	if (_FRM.individual_interest_rate.value.length > 5) {
+		alert("Individual interest rate " + <?php echo $max_len_error; ?>);
+		_FRM.individual_interest_rate.focus();
+		_FRM.individual_interest_rate.select();
+		return false;
+	}
+	
+	if (parseFloat(_FRM.individual_interest_rate.value) < 0) {
+                alert ("Individual interest rate " + <?php echo $cant_neg; ?> );
+                _FRM.individual_interest_rate.focus();
+                _FRM.individual_interest_rate.select();
+              return false;
+    }
+        
+    if (parseFloat(_FRM.individual_interest_rate.value) > 100) {
+                alert ("Individual interest rate cannot be greater than 100." );
+                _FRM.individual_interest_rate.focus();
+                _FRM.individual_interest_rate.select();
+              return false;
+    }
+	
+	if (isBlank(_FRM.individual_ceiling_rate.value) || isNaN(_FRM.individual_ceiling_rate.value)) {
+		alert(<?php echo $invalid_input_error; ?> + " individual ceiling rate.");
+		_FRM.individual_ceiling_rate.focus();
+		_FRM.individual_ceiling_rate.select();
+		return false;
+	}
+		if (_FRM.individual_ceiling_rate.value.length > 18) {
+		alert("Individual ceiling rate " + <?php echo $max_len_error; ?>);
+		_FRM.individual_ceiling_rate.focus();
+		_FRM.individual_ceiling_rate.select();
+		return false;
+	}
+	if (parseFloat(_FRM.individual_ceiling_rate.value) < 0) {
+                alert ("Individual ceiling rate " + <?php echo $cant_neg; ?> );
+                _FRM.individual_interest_rate.focus();
+                _FRM.individual_interest_rate.select();
+              return false;
+    }
+    if (parseFloat(_FRM.individual_ceiling_rate.value) > 9999999999999) {
+                alert ("Individual interest rate cannot be greater than 9999999999999." );
+                _FRM.individual_ceiling_rate.focus();
+                _FRM.individual_ceiling_rate.select();
+              return false;
+    }
+	if (isBlank(_FRM.corporate_interest_rate.value) || isNaN(_FRM.corporate_interest_rate.value)) {
+		alert(<?php echo $invalid_input_error; ?> + " corporate interest rate.");
+		_FRM.corporate_interest_rate.focus();
+		_FRM.corporate_interest_rate.select();
+		return false;
+	}
+	if (_FRM.corporate_interest_rate.value.length > 5) {
+		alert("Corporate interest rate " + <?php echo $max_len_error; ?>);
+		_FRM.corporate_interest_rate.focus();
+		_FRM.corporate_interest_rate.select();
+		return false;
+	}
+	if (parseFloat(_FRM.corporate_interest_rate.value) < 0) {
+                alert ("Corporate interest rate " + <?php echo $cant_neg; ?> );
+                _FRM.corporate_interest_rate.focus();
+                _FRM.corporate_interest_rate.select();
+              return false;
+    }
+        
+    if (parseFloat(_FRM.corporate_interest_rate.value) > 100) {
+                alert ("Corporate interest rate cannot be greater than 100." );
+                _FRM.corporate_interest_rate.focus();
+                _FRM.corporate_interest_rate.select();
+              return false;
+    }
+	if (isBlank(_FRM.corporate_ceiling_rate.value)  || isNaN(_FRM.corporate_ceiling_rate.value)) {
+		alert(<?php echo $invalid_input_error; ?> + " Corporate ceiling rate.");
+		_FRM.corporate_ceiling_rate.focus();
+		_FRM.corporate_ceiling_rate.select();
+		return false;
+	}
+	if (_FRM.corporate_ceiling_rate.value.length > 18) {
+		alert("Corporate ceiling rate " + <?php echo $max_len_error; ?>);
+		_FRM.corporate_ceiling_rate.focus();
+		_FRM.corporate_ceiling_rate.select();
+		return false;
+	}
+	if (parseFloat(_FRM.corporate_ceiling_rate.value) > 9999999999999) {
+                alert ("Corporate interest rate cannot be greater than 9999999999999." );
+                _FRM.corporate_ceiling_rate.focus();
+                _FRM.corporate_ceiling_rate.select();
+              return false;
+    }
+	if (parseFloat(_FRM.corporate_interest_rate.value) < 0) {
+                alert ("Corporate ceiling rate " + <?php echo $cant_neg; ?> );
+                _FRM.corporate_interest_rate.focus();
+                _FRM.corporate_interest_rate.select();
+              return false;
+    }
+	
+	
+	_FRM.sb.value="Submit"
+	_FRM.submit()
+	return true;
+}
+function ClearValues()
+{
+	var _FRM = document._FRM;
+	alert("Transaction Cancelled!");
+	_FRM.submit()
+	return true;
+}
+</script>
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=action_ value="<?php echo $action_;?>">
+<input type=hidden name=sb>
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=3 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=3 align=center>
+</td>
+</tr>
+<tr><td colspan=3 class=header2 align=center width=100%>CTC Settings</td></tr>
+	<tr><td colspan=3 ><br></td></tr>
+	<tr width=100%>
+		<td colspan=1 >&nbsp;</td>
+		<td colspan=1 align=center> Interest Rates/Month ( % )</td>
+		<td colspan=1 align=center> Ceiling Rate </td>
+	</tr>
+	<tr width=100%>
+		<td> &nbsp </td>
+	</tr>
+	<tr width=100%>
+		<td align=right valign=top> Individual &nbsp;</td>
+		<td align=center valign=top> &nbsp <input type=text maxlength=3 name=individual_interest_rate class=text100 value='<?php echo $individual_interest_rate; ?>'> <font class="def_label"> (0 - 99)</font></td>
+		<td align=center valign=top> &nbsp <input type=text maxlength=18 name=individual_ceiling_rate class=text100 value='<?php echo $individual_ceiling_rate; ?>'> <font class="def_label"> (0 - 9999999999999)</font></td>
+	</tr>
+	<tr width=90%>
+		<td align=right valign=top> Corporate &nbsp;</td>
+		<td align=center valign=top> &nbsp <input type=text maxlength=3 name=corporate_interest_rate class=text100 value='<?php echo $corporate_interest_rate; ?>'> <font class="def_label"> (0 - 99)</font></td>
+		<td align=center valign=top> &nbsp <input type=text maxlength=18 name=corporate_ceiling_rate class=text100 value='<?php echo $corporate_ceiling_rate; ?>'> <font class="def_label"> (0 - 9999999999999)</font></td>
+	</tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=90%>
+	<tr width=100%>
+		<td align=center valign=top>&nbsp</td>
+	</tr>
+	<tr width=100%>
+		<td align=center valign=top>
+			<input type=button value='Save' name=SubmitButton onClick="javascript: CheckValues();">
+			<input type=Button value=Cancel onClick="javascript: ClearValues();">
+			<input type=Reset value=Reset>
+			&nbsp<br><br>
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>eBPLS Business Permit and Licensing System</title>
+        <meta name="Author" content=" Robert M. Verzosa ">
+        <link href="stylesheets/default.css" rel="stylesheet" type="text/css">
+<title></title>
+</head>
+<body>
+<form action='index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&action_=8&itemEvent=1&data_item=0&orderbyasde=1' ENCTYPE="multipart/form-data" method="post" name='_FRM'>
+                                                                                                 
+<script language='Javascript' src='javascripts/default.js'></script>
+<script language="Javascript">
+function confdel(cc)
+{
+         var _FRM = document._FRM;
+        doyou = confirm("Record Will Be Deleted, Continue?");
+                                                                                                 
+                                                                                                 
+        if (doyou==true) {
+                _FRM.bcode.value = cc;
+               _FRM.confx.value = 1;
+        } else {
+                _FRM.confx.value=0;
+                return false;
+        }
+              _FRM.submit();
+               return true;
+}
+</script>
+                                                                                                 
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=action_ value="<?php echo $action_;?>">
+<input type=hidden name=itemEvent value="<?php echo $itemEvent;?>">
+<input type=hidden name=bcode value="<?php echo $bcode;?>">
+<input type=hidden name=confx value="<?php echo $confx;?>">
+<input type=hidden name=com value="<?php echo $com;?>">
+                                                                                                 
+                                                                                                 
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr>
+<td colspan=2 align=center>
+</td>
+</tr>
+                                                                                                 
+<tr><td colspan=2 ><br></td></tr>
+<tr><td colspan=2 ><br></td></tr>
+                                                                                                 
+                <tr width=100%>
+                        <td> &nbsp </td>
+                </tr>
+                <tr width=100%>
+                        <td> &nbsp </td>
+                </tr>
+                <tr width=100%>
+                        <td align=right valign=top> <?php echo $prefut; ?> Name : </td>
+                        <?php
+                        $selectupper = mysql_query("select * from $prefu order by province_desc") or die("1".mysql_error());
+                        $selectpref = mysql_query("select lguprovince from ebpls_buss_preference");
+                        $selectpref = mysql_fetch_row($selectpref);
+                        if ($selectpref2<>'') {
+                                $selectpref[0]=$selectpref2;
+                        }
+                        ?>
+                        <td align=left valign=top> &nbsp
+                        <select maxlength=255 name=sname class=text180>
+                        <?php
+                        //print"<option value='$selectpref[0]'>$selectpref[0]</option>\n";
+                        while ($selectupper1 = mysql_fetch_row($selectupper)) {
+                                $selectupper1[0]=strtoupper($selectupper1[0]);
+                                $selectupper1[1]=strtoupper($selectupper1[1]);
+                                if ($selectupper1[1]==$selectpref[0]) {
+                                                $slt = 'selected';
+                                } else {
+                                                $slt = '';
+                                }
+                                print"<option value='$selectupper1[0]' $slt>$selectupper1[1] </option>\n";
+                        }
+                        ?>
+                        </select>
+                        </td>
+                        <td> &nbsp </td>
+                </tr>
+                <tr width=100%>
+                        <td align=right valign=top> LGU Code : </td>
+                        <td align=left valign=top> &nbsp <input type=text maxlength=255 name=mcode class=text180 value='<?php echo $mcode; ?>'></td>
+                        <td> &nbsp </td>
+                </tr>
+		<tr width=100%>
+                        <td align=right valign=top> LGU Name : </td>
+                        <td align=left valign=top> &nbsp <input type=text maxlength=255 name=mdesc class=text180 value='<?php echo $mdesc; ?>'></td>
+                        <td> &nbsp </td>
+                </tr>
+                <tr width=100%>
+                        <td align=right valign=top> BLGF Code : </td>
+                        <td align=left valign=top> &nbsp <input type=text maxlength=255 name=blgf_codes class=text180 value='<?php echo $blgf_codes; ?>'></td>
+                        <td> &nbsp </td>
+                </tr>
+        </table>
+        <table align=center border=0 cellspacing=0 cellpadding=0 width=90%>
+                <tr width=100%>
+                        <td align=center valign=top>
+                        &nbsp</td>
+                </tr>
+                <tr width=100%>
+                        <td align=center valign=top>
+                        <input type=submit value=Submit name=sb>
+                        <input type=Button value=Cancel onClick='history.go(-1);'>
+                        <input type=Reset value=Reset>
+                        &nbsp<br><br></td>
+                </tr>
+        </table>
+</form>
+<?php
+require "refpage.php";
+?>
+                </tr>
+        </table>
+                                                                                                 
+<tr>
+<td colspan=2 align=center><br>
+<?php
+$data_item=1;
+include'tablemenu-inc.php';
+?>
+</td>
+</tr>
+                                                                                                 
+</table>
+                                                                                                 
+                                                                                                 
+</form>
+</body>
+</html>
+

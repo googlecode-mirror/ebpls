@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>eBPLS Business Permit and Licensing System</title>
+        <meta name="Author" content=" PAARV Solutions ">
+        <link href="includes/eBPLS.css" rel="stylesheet" type="text/css">
+<title></title>
+</head>
+<body onLoad="javascript: _FRM.iDistrict.focus();">
+<form action='index.php?part=4&class_type=Preference&selMode=ebpls_nbarangay&is_desc=ASC' method="post" name='_FRM'>
+<script language='Javascript' src='javascripts/default.js'></script>
+<script language="Javascript">
+
+function CheckValues()
+{
+	var _FRM = document._FRM;
+	if (isBlank(_FRM.iDistrict.value) == true) {
+		alert("District!! Cannot Be Empty");
+		_FRM.iDistrict.focus();
+		return false;
+	}
+	if (isBlank(_FRM.iBarangay.value)) {
+		alert("Enter valid Barangay!!");
+		_FRM.iBarangay.focus();
+		_FRM.iBarangay.select();
+		return false;
+	}
+	if (_FRM.iBarangay.value.length > 30) {
+		alert("Barangay Exceeds Max Length!!");
+		_FRM.iBarangay.focus();
+		_FRM.iBarangay.select();
+		return false;
+	}
+	_FRM.sb.value="Submit"
+	_FRM.submit()
+	return true;
+}
+function ClearValues()
+{
+	var _FRM = document._FRM;
+	_FRM.iDistrict.value = "";
+	_FRM.iBarangay.value = "";
+	_FRM.iBLGFCode.value = "";
+	_FRM.sb.value = "";
+	_FRM.bbo.value = "";
+	_FRM.iCheck.value = "";
+	alert("Transaction Cancelled!");
+	_FRM.submit()
+	return true;
+}
+                                                                                                 
+function confdel(cc)
+{
+         var _FRM = document._FRM;
+        doyou = confirm("Record Will Be Deleted, Continue?");
+                                                                                                 
+                                                                                                 
+        if (doyou==true) {
+                _FRM.bbo.value = cc;
+               _FRM.confx.value = 1;
+        } else {
+                _FRM.confx.value=0;
+                alert("Transaction Cancelled");
+				_FRM.iDistrict.focus();
+                return false;
+        }
+        		
+                _FRM.submit();
+               return true;
+}
+</script>
+<input type=hidden name=confx value='<?php echo $confx; ?>'>
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=bbo value="<?php echo $bbo;?>">
+<input type=hidden name=com>
+<input type=hidden name=sb>
+<input type=hidden name='iCheck'>
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+<tr><td colspan=2 class=header2 align=center width=100%>Barangay</td></tr>
+<tr width=100%>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> District Name </td>
+	<td align=left valign=top> &nbsp 
+	<? echo get_select_district('iDistrict',$iDistrict);?>
+	</td>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> Barangay Name </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=30 name=iBarangay class=text180 value='<?php echo $iBarangay; ?>'></td>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> BLGF Code </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=255 name=iBLGFCode class=text180 value='<?php echo $iBLGFCode; ?>' maxlength="10"></td>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> &nbsp; </td>
+	<td align=left valign=top> &nbsp <input type='checkbox' name='iGZone' value="ON" <? echo $iCheck; ?>>&nbsp; Garbage Zone</td>
+	<td> &nbsp </td>
+</tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr width=100%>
+	<td align=center valign=top>&nbsp</td>
+</tr>
+<tr width=100%>
+	<td align=center valign=top>
+		<input type=button value=Save name='SubmitButton' onClick="javascript: CheckValues();">
+		<input type=Button value=Cancel onClick='javascript: ClearValues();'>
+		<input type=Reset value=Reset onClick="javascript: _FRM.iDistrict.focus();">
+		&nbsp<br><br></td>
+</tr>
+</table>
+<?php 
+include'pager/barangay_page.php';
+?>
+                </tr>
+        </table>
+<tr>
+<td colspan=2 align=center><br>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+

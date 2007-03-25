@@ -1,0 +1,10 @@
+truncate ebpls_transaction_payment_check;
+truncate ebpls_transaction_payment_or_details;
+truncate ebpls_transaction_payment_or;
+truncate comparative_statement;
+truncate bus_grandamt;
+truncate ebpls_business_enterprise;
+truncate tempbusnature;
+truncate ebpls_business_enterprise_permit;
+truncate tempassess;
+truncate havereq;

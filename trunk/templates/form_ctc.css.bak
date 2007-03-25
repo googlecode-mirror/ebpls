@@ -1,0 +1,87 @@
+.ctc_menu
+	{
+	font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+	color : #FF0000;
+	text-decoration: none;
+	background-color: #909090;
+	text-decoration: underline;
+}
+
+.ctc_menu_selected
+	{
+	font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+	color : #000000;
+	text-decoration: none;
+	font-style: bold;
+	background-color: #c0c0c0;
+}
+
+.ctc_menu_record
+	{
+	font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+	color : #FF0000;
+	text-decoration: none;
+	text-decoration: underline;
+}
+
+.ctc_place_issued
+	{
+	font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+	color : #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.ctc_year
+	{
+	font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+	color : #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.ctc_date
+	{
+	font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+	color : #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.ctc_item
+	{
+	font: normal 14px Verdana, Arial, Helvetica, sans-serif;
+	color : #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.ctc_note_red
+	{
+	font: normal 14px Verdana, Arial, Helvetica, sans-serif;
+	color : #FF0000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.ctc_note
+	{
+	font: normal 14px Verdana, Arial, Helvetica, sans-serif;
+	color : #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.ctc_amounttext
+	{	
+	text-align: right;	
+}
+
+.ctc_total_amounttext
+	{	
+	text-align: right;	
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+
