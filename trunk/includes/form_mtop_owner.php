@@ -199,7 +199,7 @@ if($cancelme==1) {
                 $strWhere="owner_id='$owner_id'";
                 $addown->UpdateTaxPayer($strValues,$strWhere);
         ?>
-        <body onload='parent.location="index.php?part=4";'></body>
+        <body onload='parent.location="index.php?part=4&class_type=Permits&permit_type=<?php echo $permit_type; ?>&busItem=<?php echo $busItem; ?>&owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id; ?>&itemID_=1221&mainfrm=Main";'></body>
 <?php
      }  else {
 	      ?>
@@ -341,6 +341,7 @@ function createZone()
 
 	<input type='hidden' name='addOwner' value='<?php echo $addOwner; ?>'>
 	<input type='hidden' name='owner_id' value=<?php echo $owner_id; ?>>
+	<input type='hidden' name='business_id' value=<?php echo $business_id; ?>>
 	<input type='hidden' name='busItem' value=<?php echo $busItem; ?>>
 	<input type='hidden' name='comm' value=<?php echo $comm; ?>>
 	<input type='hidden' name='search' value=<?php echo $search; ?>>
@@ -363,11 +364,11 @@ function createZone()
 	    <td align="right" valign="top" class='normal' width='20%'> <font color="#FF0000"><? echo $ast; ?></font>
 		First Name : </td>
 	    <td align="left" valign="top" class='normal' width='30%'>&nbsp; 
-<input tabindex=1 type='text' name='owner_first_name' maxlength=60 class='text180' value='<?php echo $owner_first_name; ?>'>
+<input type='text' name='owner_first_name' maxlength=60 class='text180' value='<?php echo $owner_first_name; ?>'>
 	    </td>
 	    <td align="right" valign="top" class='normal' width='20%'> <font color="#FF0000">* </font>Civil 
 	      Status : </td>
-	    <td align="left" valign="top" class='normal' width='30%'>&nbsp; <select tabindex=4 name='owner_civil_status'  class='select100'>
+	    <td align="left" valign="top" class='normal' width='30%'>&nbsp; <select name='owner_civil_status'  class='select100'>
 	     	<?php
 		if ($owner_civil_status<>''){
 	     	?>
@@ -390,11 +391,11 @@ function createZone()
 	    <td align="right" valign="top" class='normal'> <font color="#FF0000"><? echo $ast; ?></font>Middle 
 	      Name : </td>
 	    <td align="left" valign="top" class='normal'>&nbsp; 
-<input tabindex=2 type='text' name='owner_middle_name' maxlength=60 class='text180' value='<?php echo $owner_middle_name; ?>'> 
+<input type='text' name='owner_middle_name' maxlength=60 class='text180' value='<?php echo $owner_middle_name; ?>'> 
 	    </td>
 	    <td align="right" valign="top" class='normal'> <font color="#FF0000">*</font> 
 	      Gender : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <select tabindex=5 name='owner_gender' class='select100'>
+	    <td align="left" valign="top" class='normal'>&nbsp; <select name='owner_gender' class='select100'>
 		<option value='M' <?php echo (! strcasecmp($owner_gender,'M')) ? ('selected') : (''); ?> >M</option>
 		<option value='F' <?php echo (! strcasecmp($owner_gender,'F')) ? ('selected') : (''); ?>>F</option>
 	      </select> </td>
@@ -403,12 +404,12 @@ function createZone()
 	    <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font> 
 	      Lastname : </td>
 	    <td align="left" valign="top" class='normal'>&nbsp; 
-<input tabindex=3 type='text' name='owner_last_name' maxlength=60 class='text180' value='<?php echo $owner_last_name; ?>'> 
+<input type='text' name='owner_last_name' maxlength=60 class='text180' value='<?php echo $owner_last_name; ?>'> 
 	    </td>
 	    <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Citizenship 
 	    	: </td>
 	    <td align="left" valign="top" class='normal'>&nbsp;
-	 <select  tabindex=6 name='owner_citizenship'>
+	 <select  name='owner_citizenship'>
 	<?php 
 	$cit = mysql_query("select cit_desc from ebpls_citizenship") or die("SELECT Error :".mysql_error());
 	while ($getcit = mysql_fetch_row($cit)){
@@ -431,7 +432,7 @@ function createZone()
 		   <td align="right" valign="top" class='normal'>
 	      Legal Entity : </td>
 	    <td align="left" valign="top" class='normal'>&nbsp; 
-<input tabindex=3 type='text' name='owner_legal_entity' maxlength=60 class='text180' value='<?php echo $owner_legal_entity; ?>'> 
+<input type='text' name='owner_legal_entity' maxlength=60 class='text180' value='<?php echo $owner_legal_entity; ?>'> 
 	    </td>
 	    	</tr>
 	   <?php } else {
@@ -453,7 +454,7 @@ type="text" size="10" onFocus="javascript:vDateType='2'" onKeyUp="DateFormat(thi
 
 	    </td>
 	    <td align="right" valign="top" class='normal'> TIN : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_tin_no' maxlength=255 class='text180' tabindex=8 value=<?php echo $owner_tin_no;?>> 
+	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_tin_no' maxlength=255 class='text180' value=<?php echo $owner_tin_no;?>> 
 	    </td>
 	  </tr>
 	  <tr> 
@@ -466,7 +467,7 @@ type="text" size="10" onFocus="javascript:vDateType='2'" onKeyUp="DateFormat(thi
 	  <tr> 
 	    <td align="right" valign="top" class='normal' width='20%'> <font color="#FF0000">* 
 	      </font>Address : </td>
-	    <td align="left" valign="top" class='normal' width='33.33%'>&nbsp; <input type='text' name='owner_street' maxlength=255 class='text180' tabindex=9 value='<?php echo $owner_street; ?>'> 
+	    <td align="left" valign="top" class='normal' width='33.33%'>&nbsp; <input type='text' name='owner_street' maxlength=255 class='text180' value='<?php echo $owner_street; ?>'> 
 	    </td>
 
 <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Province
@@ -479,7 +480,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 
 	  </tr>
 	  <tr> 
-<td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>City
+<td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>City/Municipality
               : </td>
             <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
@@ -534,7 +535,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
             </td>
 
 	    <td align="right" valign="top" class='normal'> Telephone No : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_phone_no' maxlength=255 class='text180' tabindex=10 value="<?php echo $owner_phone_no;?>"> 
+	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_phone_no' maxlength=255 class='text180' value="<?php echo $owner_phone_no;?>"> 
 	    </td>
 	  </tr>
 	  <tr> 
@@ -556,7 +557,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
         </td>
 
 	    <td align="right" valign="top" class='normal'> Mobile No (+639121234567): </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_gsm_no' maxlength=255 class='text180' tabindex=11 value="<?php echo $owner_gsm_no?>"> 
+	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_gsm_no' maxlength=255 class='text180' value="<?php echo $owner_gsm_no?>"> 
 	    </td>
 	  </tr>
 	  <tr>
@@ -576,7 +577,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 
             </td>
 	    <td align="right" valign="top" class='normal'> Email Address : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_email_address' maxlength=255 class='text180' tabindex=12 value="<?php echo $owner_email_address;?>"> 
+	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_email_address' maxlength=255 class='text180' value="<?php echo $owner_email_address;?>"> 
 	    </td>
 	  </tr>
 	  <tr>
@@ -584,7 +585,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 	    <td align="left" valign="top" class='normal'>&nbsp; 
 	    </td>
 	    <td align="right" valign="top" class='normal'> Others : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_others' maxlength=255 class='text180' tabindex=13 value="<?php echo $owner_others?>"> 
+	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_others' maxlength=255 class='text180' value="<?php echo $owner_others?>"> 
 	    </td>
 	  </tr>
 
@@ -603,6 +604,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 	  	  	    	<input type='button' name='addowner' value='   SAVE   ' onClick='javascript:checkValidOwner();'>
 				<input type=hidden name=cancelme>
 				<input type=button value='CANCEL' onClick="_FRM.cancelme.value=1; _FRM.submit();">
+				<!--<input type=button value='CANCEL' onClick="parent.location='index.php?part=4&class_type=Permits&itemID_=1221&owner_id=<? echo $owner_id;?>&com=<? echo $com;?>&permit_type=<? echo $permit_type;?>&stat=<? echo $stat;?>&business_id=<? echo $business_id;?>&busItem=<? echo $busItem;?>&addbiz=update&bizcom=Select'">-->
 	  	  	    </td>
 	  </tr>
 	   <tr> 

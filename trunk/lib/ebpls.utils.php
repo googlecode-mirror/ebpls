@@ -4,22 +4,22 @@
 //-------------------------------------------------------------------
 
 //--- connect to DB
-define('DB_HOST1','192.168.1.5');
-define('DB_NAME1','ebplsajax');
-define('DB_USER1','ebpls');
-define('DB_PASS1','ebpls');
+define('DB_HOST1','192.168.100.1');
+define('DB_NAME1','ebpls');
+define('DB_USER1','root');
+define('DB_PASS1','elguebpls');
 
 define("eBPLS_APP_NAME", "eBPLS");
 define("eBPLS_APP_VERSION", "1.0");
-define("eBPLS_APP_URL", "http://192.168.3.104/bplsline/");       // do not include filenames
+define("eBPLS_APP_URL", "http://192.168.100.1/ebpls/");       // do not include filenames
 //define("eBPLS_APP_URL", "http://localhost/ebpls-site/");      // do not include filenames
                                                                                                  
 //      String Length of GSM Number
 define("eBPLS_GSMNUM_LEN", 12);
                                                                                                  
 //      Alert Strings: System developers' contact variables
-define("eBPLS_MAIL_WEBMASTER", "vdsa_15@yahoo.com,rmv71279@yahoo.com,domingor@dap.gov.ph");     // does not support multiple email addresses
-define("eBPLS_GSM_WEBMASTER", "639193354369");  // no spaces (" ") please!!!
+define("eBPLS_MAIL_WEBMASTER", "vdsa_15@yahoo.com,asuquev@dap.edu.ph,radomingo@dap.edu.ph,bobbet_a_domingo@yahoo.com");     // does not support multiple email addresses
+define("eBPLS_GSM_WEBMASTER", "+639193354369");  // no spaces (" ") please!!!
                                                                                                  
 //      Module Index Handler
 define("eBPLS_MODULE_FNAME", "ebplsNNN.php");

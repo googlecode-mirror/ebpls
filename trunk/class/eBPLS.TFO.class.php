@@ -132,7 +132,6 @@ class EBPLSTFO extends DataEncapsulator {
 			}
 		
 		}
-		
 		if ( ( $error_num = $this->validateData(true) ) > 0 ) {
 		
 			

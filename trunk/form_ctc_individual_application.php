@@ -160,22 +160,22 @@ function iCheckValues1() {
                                                 $ctc_tin_no = $ctcrecord[16];
                                                 $ctc_birth_date = $ctcrecord[22];
 
-						$getbarangay = mysql_query("select barangay_desc from ebpls_barangay where barangay_code='$ctcrecord[6]'");
+						$getbarangay = mysql_query("select barangay_desc from ebpls_barangay where barangay_code='$ctcrecord[7]'");
 						$getbarangay1 = mysql_fetch_row($getbarangay);
 						$ctc_barangay_code = $getbarangay1[0];
 						$getzone = mysql_query("select zone_desc
-from ebpls_zone where zone_code='$ctcrecord[7]'");
+from ebpls_zone where zone_code='$ctcrecord[8]'");
                                                 $getzone1 = mysql_fetch_row($getzone);
                                                 $ctc_zone_code = $getzone1[0];
 						$getdistrict = mysql_query("select district_desc
-from ebpls_district where district_code='$ctcrecord[8]'");
+from ebpls_district where district_code='$ctcrecord[9]'");
                                                 $getdistrict1 = mysql_fetch_row($getdistrict);
                                                 $ctc_district_code = $getdistrict1[0];
 						$getcity = mysql_query("select city_municipality_desc
-from ebpls_city_municipality  where city_municipality_code='$ctcrecord[9]'");
+from ebpls_city_municipality  where city_municipality_code='$ctcrecord[10]'");
                                                 $getcity1 = mysql_fetch_row($getcity);
                                                 $ctc_city = $getcity1[0];
-						$ctc_address=$ctcrecord[4].' '.$ctcrecord[5].' '.$ctc_zone_code.' '.$ctc_barangay_code.' '.$ctc_district_code.' '.$ctc_city;
+						$ctc_address=$ctcrecord[6].' '.$ctcrecord[5].' '.$ctc_zone_code.' '.$ctc_barangay_code.' '.$ctc_district_code.' '.$ctc_city;
 
 					?>
 						<td></td>
@@ -193,7 +193,7 @@ from ebpls_city_municipality  where city_municipality_code='$ctcrecord[9]'");
 				<td align="" valign="top"  bgcolor='#ffffff' width="70%" align=center colspan=3>
 				&nbsp;ADDRESS
 				<BR>
-				&nbsp;<input name="ctc_address" value="<?php echo $ctc_address;?>" size=60 readonly>
+				&nbsp;<input name="ctc_address" value="<?php echo $ctc_address;?>" size=60 >
 				</td>
 				<td align="" valign="top"  bgcolor='#ffffff' width=190 ><sup class='suptitle'>&nbsp;SEX<BR>&nbsp;
 				<select name='ctc_gender'>

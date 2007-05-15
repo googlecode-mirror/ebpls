@@ -6,7 +6,7 @@ $payment_id = $business_id; //businee id
 $tax_fee_code='taxcode';
 $account_code='acntcode';
 $account_desc ='acnt desc';
-                
+$check_name = addslashes($check_name);               
 //check for existing or
 $checkor = SelectDataWhere($dbtype,$dbLink,"ebpls_transaction_payment_or",
 		"where payment_code='$orno'");
@@ -36,10 +36,7 @@ if ($cmd=='CHECK') {
 		if (is_numeric($nature_id)) {
 			//update tempbus
 
-			$updateline = UpdateQuery($dbtype,$dbLink,"tempbusnature",
-					"linepaid=1, recpaid=1"," 
-					owner_id=$owner_id and business_id=$business_id and
-					bus_code=$nature_id");
+			
 		
 			/*$newrecord = InsertQuery($dbtype,$dbLink,"comparative_statement",
 				    	"'', '$owner_id', '$business_id', '', '', '$pmode', 
@@ -58,7 +55,7 @@ if ($cmd=='CHECK') {
 					 ts_create,payment_officer)",
 		                        "'', '$orno', $trans_id, now(), $amtpay,
 	                                 $change, $amtpaid, now(),'$usern'");
-				
+				$or_no = @mysql_insert_id();
 					
 			$newrecord = InsertQuery($dbtype,$dbLink,"comparative_statement","",
 					"'', '$owner_id', '$business_id', '', '', '$pmode', 
@@ -169,9 +166,10 @@ $updatepmode =  UpdateQuery($dbtype,$dbLink,"ebpls_business_enterprise",
 
 						}
 						}
+					
                                                                               
 ?>
-                        <body onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
+                        <body onunload='opener.location.reload(true); ' onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&stat=<?php echo $istat; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
                        
 <?php
 

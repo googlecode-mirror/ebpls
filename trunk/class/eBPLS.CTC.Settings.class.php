@@ -28,6 +28,7 @@ define(ID,"id");
 define(CTC_TYPE,"ctc_type");
 define(INTEREST_RATE,"interest_rate");
 define(CEILING_RATE,"ceiling_rate");
+define(PENALTY_DATE,"penalty_date");
 define(MODIFIED_DATE,"modified_date");
 define(UPDATED_BY,"updated_by");
 
@@ -47,6 +48,7 @@ class EBPLSCTCSettings extends DataEncapsulator {
 		$this->addDataElement( CTC_TYPE, "is_not_empty", "[VALUES]");
 		$this->addDataElement( INTEREST_RATE, "is_not_empty", "[VALUES]");
 		$this->addDataElement( CEILING_RATE, "is_not_empty", "[VALUES]");
+		$this->addDataElement( PENALTY_DATE, "is_not_empty", "[VALUES]");
 		$this->addDataElement( MODIFIED_DATE, "is_not_empty", "[VALUES]");
 		$this->addDataElement( UPDATED_BY, "is_not_empty", "[VALUES]");
 		

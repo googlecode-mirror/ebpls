@@ -41,7 +41,7 @@ include_once "class/BusinessEstablishmentClass.php";
 	} elseif ($srch_frm==2) {
         $getbus->GetBusinessByNameCTC($search_bus,$search_branch);
         } elseif ($srch_frm==3) {
-        $getbus->GetBusinessByOnline($search_bus,$search_branch);
+        $getbus->GetBusinessByOnline($search_bus,$search_branch,$owner_id);
         } 
 
 

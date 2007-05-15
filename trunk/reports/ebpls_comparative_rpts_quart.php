@@ -83,33 +83,33 @@ $result=mysql_query("select lguname, lguprovince, lguoffice from ebpls_buss_pref
 $resulta=mysql_fetch_row($result);
    
     //taxes
-if ($iQtr == '1') {
-	$nMonth1 = 1;
+if ($iQrt == '1') {
+	$nMonth1 = "01";
 	$MonthDisplay1 = "January";
-	$nMonth2 = 2;
+	$nMonth2 = "02";
 	$MonthDisplay2 = "February";
-	$nMonth3 = 3;
+	$nMonth3 = "03";
 	$MonthDisplay3 = "March";
-} elseif ($iQtr == '2') {
-	$nMonth1 = 4;
+} elseif ($iQrt == '2') {
+	$nMonth1 = "04";
 	$MonthDisplay1 = "April";
-	$nMonth2 = 5;
+	$nMonth2 = "05";
 	$MonthDisplay2 = "May";
-	$nMonth3 = 6;
+	$nMonth3 = "06";
 	$MonthDisplay3 = "June";
-} elseif ($iQtr == '3') {
-	$nMonth1 = 7;
+} elseif ($iQrt == '3') {
+	$nMonth1 = "07";
 	$MonthDisplay1 = "July";
-	$nMonth2 = 8;
+	$nMonth2 = "08";
 	$MonthDisplay2 = "August";
-	$nMonth3 = 9;
+	$nMonth3 = "09";
 	$MonthDisplay3  = "September";
-} elseif ($iQtr == '4') {
-	$nMonth1 = 10;
+} elseif ($iQrt == '4') {
+	$nMonth1 = "10";
 	$MonthDisplay1 = "October";
-	$nMonth2 = 11;
+	$nMonth2 = "11";
 	$MonthDisplay2 = "November";
-	$nMonth3 = 12;
+	$nMonth3 = "12";
 	$MonthDisplay3 = "December";
 }
 $sumtaxq1 = mysql_query("select sum(taxes) from comparative_statement where for_year='$dateprev' and
@@ -451,11 +451,8 @@ $pdf->SetX(5);
 $pdf->Cell(30,5,'DETAILS',1,0,'C');
 $pdf->SetX(35);
 $pdf->Cell(90,5,'YEAR 1 ('.$dateprev.')',1,0,'C');
-$pdf->SetX(115);
 $pdf->Cell(90,5,'YEAR 2 ('.$datenext.')',1,0,'C');
-$pdf->SetX(195);
 $pdf->Cell(30,5,'% DIFFERENCE',1,0,'C');
-$pdf->SetX(255);
 $pdf->Cell(90,5,'AMOUNT DIFFERENCE',1,1,'C');
 
 $pdf->SetX(5);

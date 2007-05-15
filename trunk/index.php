@@ -21,6 +21,21 @@ include_once("lib/multidbconnection.php");
 $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 dbConnect();
 
+$checktaxfeeother = @mysql_query("select * from ebpls_buss_taxfeeother");
+$checktaxfeeother1 = @mysql_num_rows($checktaxfeeother);
+if ($checktaxfeeother1 == 0 || $checktaxfeeother == "") {
+	$inserttfo1 = @mysql_query("insert into ebpls_buss_taxfeeother values ('','','','','','','','','','','')");
+	$getid = @mysql_insert_id();
+	$deleteid = @mysql_query("delete from ebpls_buss_taxfeeother where taxfeeid = '$getid'");
+	if ($getid <= 300) {
+		$x = 1;
+		while ($x <= 300) {
+			$inserttfo = @mysql_query("insert into ebpls_buss_taxfeeother values ('','','','','','','','','','','')");
+			$x++;
+		}
+	}
+	$deleteall = @mysql_query("delete from ebpls_buss_taxfeeother where taxfeeid > 0");
+}
 if ($part=='') {
 		if ($GLOBALS['watbrowser']=='msie') {
 			

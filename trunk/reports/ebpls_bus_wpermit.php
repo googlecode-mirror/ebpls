@@ -95,7 +95,7 @@ $pdf->AddPage();
 $pdf->AliasNbPages();
 
 $Y_Label_position = 50;
-$Y_Table_Position = 55;
+$Y_Table_Position = 60;
 
 $pdf->SetFont('Arial','B',6);
 $pdf->SetY($Y_Label_position);
@@ -104,7 +104,7 @@ $pdf->SetX(5);
 $pdf->Cell(340,5,$dateprinted,0,1,'R');
 $pdf->SetX(5);
 $pdf->Cell(10,5,'SEQ. NO.',1,0,'C');
-$pdf->Cell(35,5,'NAME OF OWNER',1,0,'C');
+$pdf->Cell(50,5,'NAME OF OWNER',1,0,'C');
 $pdf->Cell(40,5,'BUSINESS NAME',1,0,'C');
 $pdf->Cell(90,5,'BUSINESS ADDRESS',1,0,'C');
 $pdf->Cell(25,5,'CAPITAL INVESTMENT',1,0,'C');
@@ -152,7 +152,7 @@ $date_to = date('Y-m-d', $xdate);
 
 		$pdf->SetX(5);
 		$pdf->Cell(10,5,$i,1,0,'L');
-		$pdf->Cell(35,5,$resulta[fulln],1,0,'L');
+		$pdf->Cell(50,5,$resulta[fulln],1,0,'L');
 		$pdf->Cell(40,5,$resulta[business_name],1,0,'L');
 		$pdf->Cell(90,5,$resulta[bus_add],1,0,'L');
                 $getlineb = mysql_query("select a.cap_inv as invest from tempbusnature a,

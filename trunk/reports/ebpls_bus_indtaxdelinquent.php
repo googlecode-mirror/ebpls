@@ -200,7 +200,7 @@ $pdf->SetX(5);
 					$qtrc = $ann;
 				
 		}		
-			
+			//echo "$re[owner_id] VooDoo $qtrnow";
 			//check if have payment
 				$hispay = mysql_query("select * from ebpls_transaction_payment_or_details where
 									trans_id='$re[owner_id]' and payment_id='$re[business_id]' and
@@ -311,7 +311,7 @@ $pdf->Cell(172,5,$getsignatories1[gs_name],0,1,'L');
 $pdf->SetFont('Arial','B',10);
 $pdf->SetX(5);
 $datetoday = date('Y - m - d');
-$pdf->Cell(172,5,$datetoday,0,0,'L');
+//$pdf->Cell(172,5,$datetoday,0,0,'L');
 $pdf->Cell(172,5,$getsignatories1[gs_pos],0,1,'L');
 
 $report_desc='Business Establishment';

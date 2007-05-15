@@ -106,13 +106,13 @@ $pdf->SetX(10);
 $pdf->Cell(25,5,'',0,0,'L');
 
 $Y_Label_position = 45;
-$Y_Table_Position = 55;
+$Y_Table_Position = 60;
 
 $dateprinted = date('Y-m-d');
 $pdf->SetFont('Arial','B',12);
 $pdf->SetY($Y_Label_position);
 $pdf->SetX(5);
-$pdf->Cell(340,5,$dateprinted,0,1,'R');
+//$pdf->Cell(270,5,$dateprinted,0,1,'R');
 $pdf->SetFont('Arial','B',12);
 $pdf->SetX(5);
        
@@ -259,7 +259,7 @@ $pdf->Cell(55,4, number_format($totsi,2),0,1,'R');
 }
 $pdf->Cell(270,5,'',0,1,'C');
 $pdf->Cell(270,5,'',0,1,'C');
-$pdf->Cell(25,4,'Total',0,0,'L');
+$pdf->Cell(25,5,'Total',0,0,'L');
 $topay = number_format($tottax + $totfee + $totsi,2);
 $pdf->Cell(55,4,$topay,0,1,'R');
 $pdf->Cell(270,5,'',0,1,'C');
@@ -286,7 +286,6 @@ $pdf->SetX(5);
 $datetoday = date('Y - m - d');
 $pdf->Cell(172,5,$datetoday,0,0,'L');
 $pdf->Cell(172,5,$getsignatories1[gs_pos],0,1,'L');
-
 $pdf->Output();
 
 ?>

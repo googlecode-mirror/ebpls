@@ -1,6 +1,6 @@
 <?php
 $dataRecord_ = mysql_query("SELECT * FROM ebpls_buss_preference",$dbLinkFunc);
-
+		
 if (mysql_affected_rows($dbLinkFunc)==1 ){
 $dataRecord__=mysql_fetch_array($dataRecord_);
 $niSPermit=$dataRecord__[spermit];
@@ -26,14 +26,14 @@ $iBodyColorScheme=$dataRecord__[bodycolor];
 	<title>eBPLS Business Permit and Licensing System</title>
 	<meta name="Author" content="PARV Solutions">
 	<link href="stylesheets/default.css" rel="stylesheet" type="text/css">
-
+	
 	<!--
 	-->
 </head>
 <body  text="#000000" link="#333333" vlink="#333333" alink="#D0E8FF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="<?php echo $iBodyColorScheme;?>"> <!--"#3C746B"-->
 
 
-
+	
 <?php
          if ($part<>2) {
 ?>
@@ -44,7 +44,7 @@ $iBodyColorScheme=$dataRecord__[bodycolor];
 			<img src=images/<?php echo $iLGUImage;?> border="0" hspace="0" vspace="0" width="80" height="63">
 		</td>
 		<td align="Right" valign="center" width=80%>
-			<img src="images/title.jpg" border="0" hspace="0" vspace="0" height=63>
+			<img src="images/title.gif" border="0" hspace="0" vspace="0" height=63>
 		</td>
 	</tr>
 </table>

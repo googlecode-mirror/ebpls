@@ -134,30 +134,49 @@ function ClearValues()
 <input type=hidden name=action_ value="<?php echo $action_;?>">
 <input type=hidden name=sb>
 <table border=0 width=100% align=center cellspacing=0 cellpadding=0>
-<tr><td colspan=3 class=header align=center width=100%>REFERENCES</td></tr>
+<tr><td colspan=4 class=header align=center width=100%>REFERENCES</td></tr>
 <tr>
-        <td colspan=3 align=center>
+        <td colspan=4 align=center>
 </td>
 </tr>
-<tr><td colspan=3 class=header2 align=center width=100%>CTC Settings</td></tr>
-	<tr><td colspan=3 ><br></td></tr>
+<tr><td colspan=4 class=header2 align=center width=100%>CTC Settings</td></tr>
+	<tr><td colspan=4 ><br></td></tr>
 	<tr width=100%>
 		<td colspan=1 >&nbsp;</td>
 		<td colspan=1 align=center> Interest Rates/Month ( % )</td>
 		<td colspan=1 align=center> Ceiling Rate </td>
+		<td colspan=1 align=center> Start of Interest </td>
 	</tr>
 	<tr width=100%>
-		<td> &nbsp </td>
+		<td colspan=4> &nbsp </td>
 	</tr>
 	<tr width=100%>
 		<td align=right valign=top> Individual &nbsp;</td>
 		<td align=center valign=top> &nbsp <input type=text maxlength=3 name=individual_interest_rate class=text100 value='<?php echo $individual_interest_rate; ?>'> <font class="def_label"> (0 - 99)</font></td>
 		<td align=center valign=top> &nbsp <input type=text maxlength=18 name=individual_ceiling_rate class=text100 value='<?php echo $individual_ceiling_rate; ?>'> <font class="def_label"> (0 - 9999999999999)</font></td>
+		<td align=center valign=top> &nbsp <select name="individual_penalty_date">
+			<option value="1" <?php echo $pendateseli1;?>>January</option>
+			<option value="2" <?php echo $pendateseli2;?>>February</option>
+			<option value="3" <?php echo $pendateseli3;?>>March</option>
+			<option value="4" <?php echo $pendateseli4;?>>April</option>
+			<option value="5" <?php echo $pendateseli5;?>>May</option>
+			<option value="6" <?php echo $pendateseli6;?>>June</option>
+			</select>
+		</td>
 	</tr>
-	<tr width=90%>
+	<tr width=100%>
 		<td align=right valign=top> Corporate &nbsp;</td>
 		<td align=center valign=top> &nbsp <input type=text maxlength=3 name=corporate_interest_rate class=text100 value='<?php echo $corporate_interest_rate; ?>'> <font class="def_label"> (0 - 99)</font></td>
 		<td align=center valign=top> &nbsp <input type=text maxlength=18 name=corporate_ceiling_rate class=text100 value='<?php echo $corporate_ceiling_rate; ?>'> <font class="def_label"> (0 - 9999999999999)</font></td>
+		<td align=center valign=top> &nbsp <select name="corporate_penalty_date">
+			<option value="1" <?php echo $pendateselc1;?>>January</option>
+			<option value="2" <?php echo $pendateselc2;?>>February</option>
+			<option value="3" <?php echo $pendateselc3;?>>March</option>
+			<option value="4" <?php echo $pendateselc4;?>>April</option>
+			<option value="5" <?php echo $pendateselc5;?>>May</option>
+			<option value="6" <?php echo $pendateselc6;?>>June</option>
+			</select>
+		</td>
 	</tr>
 </table>
 <table align=center border=0 cellspacing=0 cellpadding=0 width=90%>

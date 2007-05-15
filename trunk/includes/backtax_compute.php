@@ -242,9 +242,9 @@ while ($lastpaydatey < $getnyeartoday)
 	$totbak = $totbak + $getch;
 	if ($istat=='Retire') {
 		$backtaks=SelectMultiTable($dbtype,$dbLink,"bus_grandamt",
-		"grandamt, totpenamt, si",
+		"sum(grandamt), sum(totpenamt), sum(si), sum(penamt)",
 		"where owner_id=$owner_id and business_id='$business_id'  and ts = '$lastpaydatey' 
-		and active = 0 order by gid desc limit 1");
+		and active = 0 order by gid desc");
 	} else {
 		$backtaks=SelectMultiTable($dbtype,$dbLink,"bus_grandamt",
 		"sum(grandamt), sum(totpenamt), sum(si), sum(penamt)",

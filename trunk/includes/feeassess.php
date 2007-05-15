@@ -25,6 +25,7 @@ $feetype = 1;
 		if ($getfeex>0) {
 			$exemptedfee = $exemptedfee + $getf[6]; 
 		        $usemin = 'Fee Exempted ';
+			$totfee =$totfee + $getf[6];
 		        $getf[6]=0;
 		}
 	$havegar = strpos(strtolower($getf[1]),'garbage');
@@ -32,9 +33,11 @@ $feetype = 1;
 
 if ($g_zone==0) {
 	if ($havegar>-1) {
-		$exemptedfee = $exemptedfee + $getd[amtformula];
+		$exemptedfee = $exemptedfee + $getf[6];
 		$usemin = 'Not in Garbage Zone ';
 		$rtag='';
+	$totfee = $totfee + $getf[6];
+	
         $getf[6]=0;
         
         $totind=0;
@@ -56,11 +59,14 @@ $yearsi = mysql_query("select  a.*  from tempassess a, ebpls_buss_tfo b where
 
 		if ($havemat>0 and $PROCESS<>"COMPUTE" and $usemin=='') { //have prev record
 			//check if will bill
-			@$howmanydec = $havemat/$getyr[counter];
+		@$howmanydec = $havemat/$getyr[counter];
 			$isdeci = strpos($howmanydec,".");
-			if ($isdeci>0 and $haveaddpay<>$watqtr) { // will not bill
+		
+			if ($isdeci>0 and $haveaddpay==$watqtr) { // will not bill
+
 
 $getf[6] = 0;
+$dan=1;
 
 $result = InsertQuery($dbtype,$dbLink,"tempassess",
 			            		"(assid, owner_id, business_id, natureid, 
@@ -74,6 +80,7 @@ $result = InsertQuery($dbtype,$dbLink,"tempassess",
 
 
 			} else { //will bill
+		
 			    if ($PROCESS<>'COMPUTE' and $itemID_=='4212' and $haveaddpay<>$watqtr) {
 					
 			         $result = InsertQuery($dbtype,$dbLink,"tempassess",
@@ -91,7 +98,14 @@ $result = InsertQuery($dbtype,$dbLink,"tempassess",
 			if ($haveaddpay==$watqtr) {
 				$haveaddpay='';
 			}
-			    if ($PROCESS<>'COMPUTE' and $haveaddpay<>$watqtr) {
+				//check if will bill
+		@$howmanydec = $havemat/$getyr[counter];
+			$isdeci = strpos($howmanydec,".");
+			if ($isdeci>0 and $haveaddpay==$watqtr) { // will not bill
+
+$getf[6] = 0;
+}
+			    if ($PROCESS<>'COMPUTE' and $haveaddpay<>$watqtr  ) {
 			         $result = InsertQuery($dbtype,$dbLink,"tempassess",
 			            		"(assid, owner_id, business_id, natureid, 
 						 taxfeeid, multi, amt, formula, compval,
@@ -100,7 +114,7 @@ $result = InsertQuery($dbtype,$dbLink,"tempassess",
 					         '',1,$getf[6],'$getf[6]',$getf[6], $getf[0],1,
 					         '$stat',now()");
 			        $varx++;
-				} if ($PROCESS=='COMPUTE' and $haveaddpay=='' and $watqtr=='') {
+				} if ($PROCESS=='COMPUTE' and $haveaddpay=='' and $watqtr=='' ) {
                                  $result = InsertQuery($dbtype,$dbLink,"tempassess",
                                                 "(assid, owner_id, business_id, natureid,
                                                  taxfeeid, multi, amt, formula, compval,
@@ -155,6 +169,8 @@ $totfee = round($totfee-$tsf,2);//+$totmpf,2);
 }
 
 ?>
+
+<input type=hidden name="dan" value="<?php echo $dan; ?>">
 <tr><td colspan=2 align=right>Total GENERAL CHARGES</td><td align=right bgcolor="lightblue">
 Php &nbsp;<?php $fee=$regfee; $feecompute=$regfee; echo number_format($regfee,2); ?></td></tr>
 </table>

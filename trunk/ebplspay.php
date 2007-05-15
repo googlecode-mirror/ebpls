@@ -7,17 +7,20 @@ require_once "includes/variables.php";
 include("lib/multidbconnection.php");
 $dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 ?>
+<form name="_FRM" method="POST">
 <link rel="stylesheet" href="stylesheets/calendar.css?random=20051112" media="screen"></LINK>
 <SCRIPT type="text/javascript" src="javascripts/calendar.js?random=20060118"></script>
-	
+<script language='Javascript' src='javascripts/javafuncs.js'></script>	
 <link rel="stylesheet" href="stylesheets/default.css" type="text/css"/>
 <script language='Javascript' src='javascripts/default.js'></script>
 <script language="Javascript">
 function CancelOR(or) {
 var d = document._FRM;	
-	doyou = confirm("Cancel OR and re-issue a new one?");
+	doyou = confirm("Cancel OR?");
 	
 	if (doyou==true) {
+		willu = confirm("Re-issue a new OR number?");
+		if (willu==true) {
 		newor = prompt("Enter new OR Number","");
 		if (isBlank(newor)) {
 			alert ("Invalid OR Number");
@@ -29,6 +32,12 @@ var d = document._FRM;
 				} else {
 					parent.location = 'ebplspay.php?reasoncan=' + reasoncan + '&new_or=1&or_new=' + newor + '&old_or=' + or;
 				}
+		}
+		} else {
+			canu = confirm("Cancel Payment?");
+			if (canu==true) {
+				parent.location = 'ebplspay.php?cancelpay=cancel&new_or=2&old_or=' + or;
+			}
 		}
 	}
 	
@@ -55,14 +64,15 @@ function checkValidPay(cmd)
 {
          var _FRM = document._FRM;
                 var msgTitle = "Payment\n";
-                
-                 if(isBlank(_FRM.orno.value))
+                  
+                 if(isBlank(_FRM.orno.value) & cmd !='CHECKSTATUS' & _FRM.amtpaid.value != 0 & _FRM.amtpay.value != 0)
 	                {
+							
 	                        alert( msgTitle + "Please input a valid or number!");
 	                        _FRM.orno.focus();
 	                        return false;
 	                } 
-	                
+	             
 	                if(_FRM.orno.value.length>15)
 	                {
 	                        alert( msgTitle + "OR Number exceeds max length!");
@@ -71,13 +81,13 @@ function checkValidPay(cmd)
 	                        return false;
 	                }
                 
-                
+             
                 
                 if (cmd=='CASH') {
                 
-                 
+                
 	                
-	                if(isNaN(_FRM.amtpaid.value) || _FRM.amtpaid.value<1 || _FRM.amtpaid.value<_FRM.amtpay.value)
+	                if(isNaN(_FRM.amtpaid.value) || _FRM.amtpaid.value<0 || _FRM.amtpaid.value<_FRM.amtpay.value)
 	                {
 	                        alert( msgTitle + "Please input a valid amount!");
 	                        _FRM.amtpaid.focus();
@@ -86,7 +96,7 @@ function checkValidPay(cmd)
 	                } 
 	                
 	                
-	                if(_FRM.amtpaid.value.length>9)
+	                if(_FRM.amtpaid.value.length>15)
 	                {
 	                        alert( msgTitle + "Amount exceeds max length!");
 	                        _FRM.amtpaid.focus();
@@ -105,7 +115,7 @@ function checkValidPay(cmd)
                 
                 if (cmd=='CHECK') {
 	              //Set the two dates
-	              
+	           
 	              if (isBlank(_FRM.check_no.value)) {
 		              alert ("Please input valid check number");
 		              _FRM.check_no.focus();
@@ -215,11 +225,47 @@ if ($new_or==1) {
 	$upor = mysql_query("update comparative_statement set or_no='$or_new' where
 							or_no='$or_no'");						
 	$insor = mysql_query("insert into cancel_or values('','$or_no', '$or_new', '$reasoncan',now(),'$usern')");
-	
+	$insor = mysql_query("insert into cancel_or values('','$or_no', '$or_new', '$reasoncan',now(),'$usern')");
+//robert	
 	?>
+<body onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
 <body onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
 <?php
 						
+} elseif ($new_or==2) {
+	//cancel payment
+	//see if predcomp
+	$chkreference = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_preference",
+		"predcomp","");
+$chkreference = FetchRow($dbtype,$chkreference);
+	$predcom = $chkreference[0];
+	$getdel = mysql_query("select * from ebpls_transaction_payment_or_details where
+							or_no = '$old_or'");
+	$getdet = mysql_fetch_assoc($getdel);
+	
+
+	$pcode = mysql_query("select * from ebpls_transaction_payment_or where or_no = '$old_or'");
+	$pco = mysql_fetch_assoc($pcode);
+	$pode = $pco["payment_code"];
+	$business_id = $getdet[payment_id];
+	$owner_id = $getdet[trans_id];
+	$cmd = $getdet[or_entry_type];	
+	$or_no = $old_or;
+	$tid = $getdet[" or_detail_id"];
+		if ($predcom==1) {
+		$getdel = mysql_query("update tempbusnature set linepaid=0, recpaid=0 where business_id='$business_id' and
+														owner_id='$owner_id' and active=1");
+	}
+	$upor = mysql_query("delete from  ebpls_transaction_payment_check where
+							or_no='$or_no'");
+	$upor = mysql_query("delete from  ebpls_transaction_payment_or where
+							or_no='$or_no'");
+	$upor = mysql_query("delete from  ebpls_transaction_payment_or_details where
+							 or_no='$or_no'");
+	$upor = mysql_query("delete from  comparative_statement where or_no='$pode'");	
+	?>
+<body onLoad='opener.location.reload(true); window.close();'></body>
+<?php
 }
 
 
@@ -239,7 +285,7 @@ $chkreference = FetchRow($dbtype,$chkreference);
 $getmax = SelectMultiTable($dbtype,$dbLink,"ebpls_transaction_payment_or",
 		"or_no","");
 $getor = NumRows($dbtype,$getmax);
-$or_no = $getor + 1;
+$or_no1 = $getor + 1;
 if ($pmode=='QUARTERLY' and $paymde<>'Per Line' and $chkreference[0]=1 and $chkreference[1]<>1){
 	$divfee=$fee/4;
 	$divexempt=$exemption/4;
@@ -314,8 +360,8 @@ if ($cmd=='CASH') {
 	
         <tr>
         <td>Control Number:</td>
-        <td align=right><input type=hidden name=ctl_no value=<?php echo $or_no; ?> size=10>
-        <?php echo $or_no; ?>
+        <td align=right><input type=hidden name=ctl_no value=<?php echo $or_no1; ?> size=10>
+        <?php echo $or_no1; ?>
 	<input type=hidden name=perline value=<?php echo $perline; ?>>
 	<input type=hidden name=nat_id value=<?php echo $nature_id; ?>>
         </tr>
@@ -502,9 +548,11 @@ if ($getcheck[13]==1) {
         </tr>
         <tr>
         <td>Bank Name:</td>
-        <td><?php echo $getcheck[2]; ?>
+        <td><?php echo stripslashes($getcheck[2]); ?>
         </tr>
         <tr>
+        <input type="hidden" name="amtpaid" value="<?php echo $getcheck[3]; ?>">
+        <input type="hidden" name="amtpay" value="<?php echo $getcheck[3]; ?>">
         <td>Amount Paid:</td>
         <td align=right><?php echo number_format($getcheck[3],2); ?>
         </tr>
@@ -647,8 +695,7 @@ IF ($changestat<>'CLEARED') {
 //onload
 if ($guddah<>1 and $von<>1) {
 
-$updatebusnature=UpdateQuery($dbtype,$dbLink,"tempbusnature",
-                 "recpaid=1","owner_id=$owner_id and business_id=$business_id and active='1'");
+
 ?>
 <div align=center><a href="ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>">Print OR</a></div>
 <?php
@@ -669,12 +716,23 @@ if ($paymade==1 and $von<>1) {
 if ($cmd=='CASHVIEW' || $cmd=='CHECKVIEW') {
 ?>
 <table border=0 align=center><br>
-<tr><td><a href="ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or1; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $lynpyd; ?>&nature_id=<?php echo $nat_id; ?>">Re-Print OR</a>  &nbsp;|
+<tr><td><!--<a href="ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or1; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $lynpyd; ?>&nature_id=<?php echo $nat_id; ?>">Re-Print OR</a>  -->
+<?php
+$watdate= strtotime(substr($getid[0],0,10));
+$rt = strtotime(substr($tdate,0,10));
+
+if ($cmd=='CHECKVIEW') {
+	$watdate= strtotime(substr($getcheck[7],0,10));
+}
+if ($watdate==$rt) {
+ 
+?>
 
 <a href="#" onclick='CancelOR(<?php echo $or1; ?>);'>Cancel OR</a>
 
 
 <?php
+}
 } else {
 	
 ?>
@@ -689,4 +747,4 @@ if ($cmd=='CASHVIEW' || $cmd=='CHECKVIEW') {
                                                                                                  
 <?php
 }
-
+//include "logger.php";

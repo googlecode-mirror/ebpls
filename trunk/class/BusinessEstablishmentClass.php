@@ -16,7 +16,7 @@ var
 	{
 	$this->outselect = SelectDataWhereDB("ebpls_business_enterprise",
                 "where business_name  like '$bname%' and
-                 business_branch  like '$bbranch%' and retire=1 and blacklist<>1 or owner_id=0 or  business_update_by='ONLINE'"); 
+                 business_branch  like '$bbranch%' and retire=1 and blacklist<>1 "); 
 	$this->outnumrow = NumRowsDB($this->outselect);
 	}
 
@@ -33,15 +33,15 @@ var
         {
         $this->outselect = SelectDataWhereDB("ebpls_business_enterprise",
                 "where business_name  like '$bname%' and
-                 business_branch  like '$bbranch%' and  owner_id=0 or  business_update_by='ONLINE'");
+                 business_branch  like '$bbranch%' and  owner_id=0 and  business_update_by='ONLINE'");
         $this->outnumrow = NumRowsDB($this->outselect);
         }
 
-	 function GetBusinessByOnline($bname,$bbranch)
+	 function GetBusinessByOnline($bname,$bbranch,$owner)
         {
         $this->outselect = SelectDataWhereDB("ebpls_business_enterprise",
                 "where business_name  like '$bname%' and
-                 business_branch  like '$bbranch%' and  business_update_by='ONLINE'");
+                 business_branch  like '$bbranch%' and  owner_id='$owner' and business_update_by='ONLINE' and business_id not in (select business_id from ebpls_business_enterprise_permit where owner_id='$owner')");
         $this->outnumrow = NumRowsDB($this->outselect);
         }
 

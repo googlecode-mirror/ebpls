@@ -132,10 +132,6 @@ echo date("F dS Y h:i:s A");
 </table>
 
 <br>
-<?php
 
-require_once("includes/eBPLS_footer.php");
-
-?>
 </body>
 </html>

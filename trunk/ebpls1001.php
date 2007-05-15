@@ -159,7 +159,7 @@ if ($ctc_process=='PROCESS') {
 		$eexempted=0;
 		$ctc_basic_tax=5;
 	}
-	$getinterest = mysql_query("select interest_rate, ceiling_rate from ebpls_ctc_interest where ctc_type='Individual'") or die("ctc interest".mysql_error());
+	$getinterest = mysql_query("select interest_rate, ceiling_rate, penalty_date from ebpls_ctc_interest where ctc_type='Individual'") or die("ctc interest".mysql_error());
 	$getinterest = mysql_fetch_row($getinterest);
 	$ctc_additional_tax1_due=(int)($ctc_additional_tax1/1000);
 	$ctc_additional_tax2_due=(int)($ctc_additional_tax2/1000);
@@ -171,10 +171,10 @@ if ($ctc_process=='PROCESS') {
 		$ctc_total_amount_due = $ctc_total_amount_due;
 	}
 	$nhyear = date('Y');
-	$nhdate = "$nhyear-01-31 23:59:59";
-	$nhdatetoday = date('Y-m-d G:i:s');
-	if ($nhdatetoday > $nhdate) {
-		$ctc_total_interest_due = (($ctc_total_amount_due * $getinterest[0])/100)*($monthnow);
+	$nhdate = $getinterest[2];
+	$nhdatetoday = date('n');
+	if ($nhdatetoday >= $nhdate) {
+		$ctc_total_interest_due = (($ctc_total_amount_due * $getinterest[0])/100)*($nhdatetoday);
 	} else {
 		$ctc_total_interest_due = 0;
 	}

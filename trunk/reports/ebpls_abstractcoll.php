@@ -137,13 +137,13 @@ $result = mysql_query ("select concat(b.owner_first_name, ' ', b.owner_middle_na
 		and k.province_code = b.owner_province_code and 
 		f.barangay_code = a.business_barangay_code and g.city_municipality_code = a.business_city_code 
 		and h.province_code = a.business_province_code ");
-
+		
 while ($gd = mysql_fetch_assoc($result)) {
 	$owner_id = $gd['owner_id'];
 	$business_id=$gd['business_id'];
 	//check if line is paid
 		$lp = mysql_query("select * from tempbusnature a, ebpls_buss_nature b,   ebpls_transaction_payment_or_details c where owner_id='$owner_id' and business_id='$business_id' and recpaid='1' and a.bus_code=b.natureid and
-		a.owner_id=c.trans_id and a.business_id=c.payment_id and c.ts between  '$date_from 00:00:00' and '$date_to 23:59:59'");
+		a.owner_id=c.trans_id and a.business_id=c.payment_id and c.ts between  '$date_from 00:00:00' and '$date_to 23:59:59'  limit 1");
 	
 		while ($gp = mysql_fetch_assoc($lp)) {
 			//get details

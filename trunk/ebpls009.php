@@ -874,4 +874,6 @@ function _validate_settings2()
 <?php
 if ($intUserLevel > -1) setCurrentActivityLog($thStrLogAction);
 ob_end_flush();
+
+include "logger.php";
 ?>

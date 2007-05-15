@@ -203,7 +203,6 @@ class DataEncapsulator {
 			return false;
 
 		}
-		
 		return true;
 
 	}

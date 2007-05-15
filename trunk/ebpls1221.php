@@ -643,7 +643,7 @@ if ($predcomp==1 and $stat=='New') {
                                 "(business_id, owner_id, for_year,application_date,
                                 input_by, transaction, paid, steps, pin, active)",
                                 "$business_id, $owner_id,'$currdate[year]',
-                                now(), '$usern', 'New', 0, 'For Assessmentdfsdfsdf',
+                                now(), '$usern', 'New', 0, 'For Assessment',
                                 '$genpin', 1");
 	}
 

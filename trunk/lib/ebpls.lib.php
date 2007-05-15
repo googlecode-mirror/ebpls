@@ -531,24 +531,29 @@ include'includes/variables.php';
             $strUpdatePostVar = ($strPostVarData) ? "postvarval = '$strPostVarData'," : "";
             $intPartId = (empty($GLOBALS['part'])) ? getCurrFilePartNum() : $GLOBALS['part'];
 	    $levele = crypt_md5($ThUserData['level'],$decoder);	
-            $strQuqery = mysql_query("INSERT INTO ebpls_activity_log SET
-                userid = '" . $ThUserData[id] . "',
-                userlevel = '" .$levele . "',
-                username = '" . $ThUserData[username] . "',
-                part_constant_id = '" . $intPartId . "',
-                querystring = '" . $GLOBALS['HTTP_SERVER_VARS']['QUERY_STRING'] . "',
-                postvarval = '" . $strUpdatePostVar . "',
-                action = '$strAction',
-                remoteip = '$remoteip',
-                lastupdated = NOW()
-                ");
+//             $strQuqery = mysql_query("INSERT INTO ebpls_activity_log SET
+//                 userid = '" . $ThUserData[id] . "',
+//                 userlevel = '" .$levele . "',
+//                 username = '" . $ThUserData[username] . "',
+//                 part_constant_id = '" . $intPartId . "',
+//                 querystring = '" . $GLOBALS['HTTP_SERVER_VARS']['QUERY_STRING'] . "',
+//                 postvarval = '" . $strUpdatePostVar . "',
+//                 action = '$strAction',
+//                 remoteip = '$remoteip',
+//                 lastupdated = NOW()
+//                 ");
                 
              ActiveLogin($ThUserData['id']);   
                 
         }
         return $result;
     }
-
+ function setCurrentActivity($watuser, $straction) {
+	    if ($straction != '') {
+	    $m = mysql_query("insert into ebpls_activity_log values ('','$watuser','$straction',now())");
+    	}		
+       
+    }
     function getDbFormSelect($strTable, $strFieldValue, $strFieldLabel, $strObjName="frmMsgCateg", $strMatch="", $blnAllowNull=1, $intSize=null, $strWhereStmt=null)
     {
         $strDisplay = "";

@@ -57,8 +57,8 @@ $buttag='Add';
 $buttag1='Clear';
 $temptbl='tempfees';
 //permit templates
-$templatesPath = "/home/site/ebpls/ebpls-php-lib/permits_template/";
-$directory = "/home/site/ebpls";
+$templatesPath = "/var/www/html/von/ebpls-php-lib/permits_template/";
+$directory = "/home/site/bpls";
 $decoder = "dap-ckm-kisap";
 $superpass = md5("123456");
 $connecttype = 'c';
@@ -144,7 +144,7 @@ if ($permit_type=='Business') {
 	$appdate ='occ_permit_application_date';
 
 }  elseif ($permit_type=='Peddlers') {
-        $rrtt ='ebpls_owner';
+        $rrtt ='ebpls_owner'; 
         $owner ='ebpls_owner';
         $fee = 'ebpls_peddlers_fees';
         $dtable=$fee;
@@ -154,10 +154,10 @@ if ($permit_type=='Business') {
         $incode = 'peddlers_permit_code';
         $tag = $permit_type;
         $appdate ='application_date';
-
+                                                                                                 
 }  elseif ($permit_type=='Fishery') {
-
-	$rrtt ='ebpls_fish_owner';
+                                   
+	$rrtt ='ebpls_fish_owner';                                                              
         $owner ='ebpls_owner';
         $fee = 'ebpls_fishery_fees';
         $dtable=$fee;

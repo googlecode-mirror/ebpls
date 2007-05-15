@@ -132,26 +132,34 @@ if ($brgy_name != "") {
 } else {
 	$brgy_name = "$brgy_name%";
 }
-
+if (strtolower($list_option)=='capital investment') {
+		$nnquery = "i.cap_inv between '$range1' and '$range2'";
+		$qorder = "i.cap_inv";
+                                
+		} else {
+		$nnquery = "i.last_yr between '$range1' and '$range2'";
+		$qorder = "i.last_yr";
+		 }
+		 
 	$result = mysql_query ("select distinct (c.business_permit_code) as pid, a.business_name,        concat(a.business_lot_no, ' ', a.business_street, ' ', f.barangay_desc, ' ',
         g.city_municipality_desc, ' ', h.province_desc, ' ', a.business_zip_code) as bus_add,
         concat(b.owner_first_name, ' ', b.owner_middle_name, ' ', b.owner_last_name) as fulln,
-        b.owner_id, a.business_id
+        b.owner_id, a.business_id, i.cap_inv, i.last_yr 
         from ebpls_business_enterprise a, ebpls_owner b, ebpls_business_enterprise_permit c,
-        ebpls_barangay f , ebpls_city_municipality g , ebpls_province h where
+        ebpls_barangay f , ebpls_city_municipality g , ebpls_province h , tempbusnature i where
         a.business_barangay_code = f.barangay_code and g.city_municipality_code = a.business_city_code 
         and h.province_code = a.business_province_code
         and b.owner_id = a.owner_id and a.business_id = c.business_id and
         c.active=1 and c.application_date between '$date_from 00:00:00' and '$date_to 23:59:59'
-        and a.business_barangay_code  like '$brgy_name%' 
-	limit $list_limit");
-
-
+        and a.business_barangay_code  like '$brgy_name' and i.business_id = a.business_id and i.owner_id = b.owner_id and 
+		$nnquery order by $qorder DESC limit $list_limit");
+	
 
 	
 
 	$i = 1;
 	$pdf->SetY($Y_Table_Position);
+	$totinv1 = 0;
 	while ($resulta=mysql_fetch_assoc($result))
 	{
 		 $totdue=0;
@@ -170,25 +178,12 @@ if ($brgy_name != "") {
 		$pdf->SetX(155);
 		$pdf->Cell(90,5,$resulta[bus_add],1,0,'L');
 		if (strtolower($list_option)=='capital investment') {
-		
-	 	$getlineb = mysql_query("select sum(a.cap_inv) as invest from tempbusnature a
-				 where a.owner_id=$resulta[owner_id] and
-	                        a.business_id=$resulta[business_id] and
-                                a.cap_inv between '$range1' and '$range2' 
-                                order by cap_inv desc");
-                                
+			$totinv =  $resulta[cap_inv];
 		} else {
-		 $getlineb = mysql_query("select sum(a.last_yr) as invest from tempbusnature a
-                                 where a.owner_id=$resulta[owner_id] and
-                                a.business_id=$resulta[business_id] and
-                                a.active=1 and
-                                a.last_yr between '$range1' and '$range2' 
-				order by last_yr desc");
+			$totinv =  $resulta[last_yr];
 		}
- 
-		$resultb = mysql_fetch_assoc($getlineb);
-		$totinv =  $totinv + $resultb[invest];
-		$pdf->Cell(30,5,number_format($resultb[invest],2),1,0,'R');
+		$totinv1 =  $totinv1 + $totinv;
+		$pdf->Cell(30,5,number_format($totinv,2),1,0,'R');
 		
 		$getlineb = mysql_query("select sum(a.compval) as tax_due 
 				from tempassess a where a.owner_id=$resulta[owner_id] and
@@ -329,7 +324,7 @@ $pdf->SetX(95);
 $pdf->Cell(60,5,'',1,0,'L');
 $pdf->SetX(155);
 $pdf->Cell(90,5,'Total ' ,1,0,'R');
-$pdf->Cell(30,5,number_format($totinv,2),1,0,'R');
+$pdf->Cell(30,5,number_format($totinv1,2),1,0,'R');
 $pdf->Cell(30,5,number_format($gtotdue,2),1,0,'R');
 $pdf->Cell(30,5,number_format($gtotpay,2),1,0,'R');
 

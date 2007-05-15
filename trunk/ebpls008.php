@@ -43,7 +43,6 @@ $dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 		</td>
 	</tr>
 </table>
-
 <?php
 // update record if triggered
 if (!empty($frmBtnAdd)) {
@@ -912,5 +911,7 @@ function clearAll(ids)
 <?php
 if ($intUserLevel > -1) setCurrentActivityLog($thStrLogAction);
 ob_end_flush();
+
+include "logger.php";
 ?>
                                                                                                                                                                                                                                

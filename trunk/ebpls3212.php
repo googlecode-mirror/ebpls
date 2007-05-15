@@ -46,8 +46,9 @@ if ($permit_type<>'Business') {
 		$anoba = $gt["for_year"];
 		if ($anoba==date('Y')) {
 		//get total number of permit released
+		$curyr = date('Y');
 		$gettotal = SelectDataWhere($dbtype,$dbLink,$permittable, 
-				"where released = 1");
+				"where released = 1 and for_year = '$curyr'");
 		$gettot = NumRows($dbtype,$gettotal);
 		} else {
 		$gettot = 0;

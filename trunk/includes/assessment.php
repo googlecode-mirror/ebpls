@@ -23,6 +23,7 @@
 */
 
 					
+//Delete Per Stab default
 
 //check if have new line 
 	$tempdatenow = date('Y');
@@ -142,7 +143,14 @@ $staxfee = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_preference",
 $prefset = FetchArray($dbtype,$staxfee);
 $sassesscomplex = $prefset['sassess']; // per estab
 $predcomp = $prefset['predcomp'];
-
+$tempechodate = date('Y');
+/*if ($sassesscomplex == 0 || $sassesscomplex == "") {
+	$getdefault = @mysql_query("select * from ebpls_buss_tfo where tfoindicator = '1'");
+	while ($getdefault1 = @mysql_fetch_assoc($getdefault)) {
+		$deletetemp = @mysql_query("delete from tempassess where owner_id = '$owner_id' and business_id = '$business_id' and tfoid = '$getdefault1[tfoid]' and active = '1' and transaction = '$stat' and date_create like '$tempechodate%'");
+	}
+}*/
+//Delete Per Stab default
 if ($predcomp==1 and $stat=='New') {
 $startd = SelectMultiTable($dbtype,$dbLink,"ebpls_business_enterprise",
 		" business_start_date","where business_id='$business_id' and owner_id='$owner_id'");
@@ -388,31 +396,25 @@ if ($watqtr<= 3) {
 
 if ($invest_up==1) {
 	$i=0;
-	
-	while ($i<$chcap) {
+	while ($i<$chcap+1 ) {
 	$i++;	
 	$newi = "new_cap$i";
 	$newinv = $$newi;
 	$gettype = mysql_query("select * from tempassess where
 					owner_id=$owner_id and business_id=$business_id 
-				and active=1 and transaction='$trancap[$i]' and
+				and active=1  and
 				natureid='$natcap[$i]'");
-		
 						
 		while ($gett = mysql_fetch_assoc($gettype)) {
 			$taxid = $gett[taxfeeid];
-			
 			$stup = mysql_query("select * from ebpls_buss_taxfeeother where
 									taxfeeid = '$taxid'") or die ("s");
 			$getbasis = mysql_fetch_assoc($stup);
 			$getbas = $getbasis[basis];			
-					
-			if ($getbas<>3) {						
+			if ($getbas<>3) {			
 			$res=mysql_query("update tempassess set multi='$newinv' where 	owner_id=$owner_id and business_id=$business_id 
-						and active=1 and transaction='$trancap[$i]' and taxfeeid='$taxid' and
+						and active=1  and taxfeeid='$taxid' and
 						natureid='$natcap[$i]' and multi='$oldcap[$i]'") or die ("G");
-						
-			
 			}	
 		}
 	}	
@@ -728,7 +730,7 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
                 
                 
                 
-                $complex_formula = str_replace($get_varx[var_complex],$replace_var[compval],$complex_formula);
+                $complex_formula = str_replace("$get_varx[var_complex]",$replace_var[compval],$complex_formula);
                 }
                 
                          
@@ -745,6 +747,7 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 		
 					if ($replace_var[compval]>0) {
 							$repval = $replace_var[compval];
+							
 					} else {
 							$repval = $replace_var[defamt];
 							
@@ -802,12 +805,47 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 								
 						///////////////////////	
 						}
-	        $complex_formula = str_replace($get_varx[var_complex],$repval,$complex_formula);
-	       
+				
+						$to = strpos($complex_formula,"X1");
+						$newvar=substr($get_varx[var_complex],1);
+					
+		$formula = substr_replace($complex_formula,$repval,strpos($complex_formula,$get_varx[var_complex]));
+	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
+	  //  echo "$formula ---$to<BR>";
+	$cnto++;  
+		$vari[$cnto] = $get_varx[var_complex];
+		$rp[$cnto] = $repval;
                 }
-        }   
-                
-                
+        } 
+		 
+		$yo = 0;
+		if ($cnto>9) {
+			$eks = strpos($complex_formula,"X10");
+			$dfor =  substr($complex_formula,0,$eks-1);
+			$orig = $dfor;
+			while($yo<9) {
+				$yo++;
+			
+				$dfor = str_replace($vari[$yo],$rp[$yo],$dfor);
+				
+			}
+			$complex_formula = str_replace($orig,$dfor,$complex_formula);
+			
+			while($yo<$cnto) {
+				$yo++;
+			
+				$complex_formula = str_replace($vari[$yo],$rp[$yo],$complex_formula);
+				
+			}
+			
+			
+		//	} else {
+		//		$complex_formula = str_replace($vari,$rp,$complex_formula);
+			}
+			
+	
+	
+     
                 
                 
 //		echo "$get_varx[var_complex],$replace_var[compval],$complex_formula";
@@ -817,7 +855,7 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 
 
 
-		        	       		} elseif ($gethuh[mode]==1 || $gethuh[mode]==0) { //normal 
+		        	       		} elseif ($gethuh[mode]==1 || $gethuh[mode]==0) { //normal
 		$formula_rep = str_replace("X0",$gethuh[multi],strtoupper($gethuh[amtformula]));
                 @eval("\$totind=$is_dec$formula_rep;");
 						}
@@ -1067,7 +1105,7 @@ $nat_id = $getn[0];
 			
 		$gTempAssess->ReplaceValue($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
 		$replace_var = $gTempAssess->outarray;
-	        $complex_formula = str_replace($get_varx[var_complex],$replace_var[compval],$complex_formula);
+	        $complex_formula = str_replace("$get_varx[var_complex]",$replace_var[compval],$complex_formula);
                 }
                 
       	} else {  
@@ -1115,7 +1153,7 @@ $nat_id = $getn[0];
 							
 							
 						}
-	        $complex_formula = str_replace($get_varx[var_complex],$repval,$complex_formula);
+	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
                 }
                 
         }   
@@ -1160,7 +1198,7 @@ $nat_id = $getn[0];
 //                 $replace_var = $gTempAssess->outarray;
 //                 //voni
 //                 
-//                 $complex_formula = str_replace($get_varx[var_complex],$replace_var[compval],$complex_formula);
+//                 $complex_formula = str_replace("$get_varx[var_complex]",$replace_var[compval],$complex_formula);
 //                 }
 
        $gTFO = new TaxFee;
@@ -1192,7 +1230,7 @@ $nat_id = $getn[0];
 								}
                 
                 
-                $complex_formula = str_replace($get_varx[var_complex],$replace_var[compval],$complex_formula);
+                $complex_formula = str_replace("$get_varx[var_complex]",$replace_var[compval],$complex_formula);
                 }
                 
                          
@@ -1263,7 +1301,7 @@ $nat_id = $getn[0];
 								
 						///////////////////////	
 						}
-	        $complex_formula = str_replace($get_varx[var_complex],$repval,$complex_formula);
+	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
                 }
         }  
 

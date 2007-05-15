@@ -3,9 +3,9 @@ include'includes/variables.php';
 include'class/eBPLS.TFO.class.php';
 include'lib/phpFunctions-inc.php';
 if ($itfoindicator == "ON") {
-	$itfoindicator = 1;
+	$itfoindicator1 = '1';
 } else {
-	$itfoindicator = 0;
+	$itfoindicator1 = '0';
 }
 if ($sb=='Submit') {
 	$iDesc = addslashes($iDesc);
@@ -27,7 +27,7 @@ if ($sb=='Submit') {
 			$nRequirements = new EBPLSTFO($dbLink,'false');
 			$nRequirements->setData(TFODESC,$iDesc);
 			$nRequirements->setData(TFOSTATUS,"A");
-			$nRequirements->setData(TFOINDICATOR,$itfoindicator);
+			$nRequirements->setData(TFOINDICATOR,$itfoindicator1);
 			$nRequirements->setData(TAXFEETYPE,$iTFOType);
 			$nRequirements->setData(DATECREATED,$datetoday);
 			$nRequirements->setData(DEFAMT,$iDefAmount);
@@ -64,7 +64,7 @@ if ($sb=='Submit') {
 			$nRequirements = new EBPLSTFO($dbLink,'false');
 			$nRequirements->setData(TFODESC,$iDesc);
 			$nRequirements->setData(TFOSTATUS,"A");
-			$nRequirements->setData(TFOINDICATOR,$itfoindicator);
+			$nRequirements->setData(TFOINDICATOR,$itfoindicator1);
 			$nRequirements->setData(TAXFEETYPE,$iTFOType);
 			$nRequirements->setData(DATECREATED,$datetoday);
 			$nRequirements->setData(DEFAMT,$iDefAmount);

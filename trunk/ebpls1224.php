@@ -737,7 +737,7 @@ if($cancelme==1) {
 <input type=text name='business_pro_desc' maxlength=255 class='text180' readonly  value="<?php echo strtoupper($getpro[1]); ?>">
  
     </td>
-    <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>City 
+    <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>City/Municipality 
       : </td>
 <td align="left" valign="top" class='normal'>&nbsp; 
 <input type=hidden name='business_city_code'value="<?php echo $getcty[0]; ?>">
@@ -1174,7 +1174,7 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="right" valign="top" class='normal'  > DTI Registration Date :  
 <?php
         if ($datarow[business_dti_reg_date]=='') {
-                $datarow[business_dti_reg_date]=$business_dti_reg_date;
+                $datarow[business_dti_reg_date]=$tdate;
         } else {
 	        $datarow[business_dti_reg_date]=substr($datarow[business_dti_reg_date],0,10);
         }

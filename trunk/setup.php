@@ -148,6 +148,16 @@ if ($valid==1) {
 					$x++;
 				}
 				$delins = mysql_query("delete from ebpls_buss_taxfeeother");
+				
+				
+				$ty = mysql_query("truncate ebpls_user");
+				
+				
+				
+				
+				$ty = mysql_query("INSERT INTO ebpls_user (id, level, csgroup, username, password, lastname, firstname, designation, email, gsmnum, login, logout, lockout, currthreads, roundrobinflag, dateadded, lastupdated) VALUES (1, 'ã', NULL, 'ebpls', '°eæw', 'EBPLS', 'EBPLS', '', '', '', '2007-03-07 16:35:31', '2007-03-07 16:35:31', NULL, NULL, NULL, '2006-07-06 09:56:38', '2007-03-07 16:35:31')");
+				$ty = mysql_query("INSERT INTO ebpls_user (id, level, csgroup, username, password, lastname, firstname, designation, email, gsmnum, login, logout, lockout, currthreads, roundrobinflag, dateadded, lastupdated) VALUES (2, 'ã', NULL, 'nccfoo', '»]vìkL', 'FOO', 'NCC', '', '', '', '2007-02-01 13:49:49', '2007-01-23 14:01:26', NULL, NULL, NULL, '2006-07-06 09:57:11', '2007-02-01 13:49:49')") or die (mysql_error());
+
 			//}
 		
 		$arrKeys = array(

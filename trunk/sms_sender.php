@@ -60,16 +60,17 @@ $smsid = $getit[0];
                 fwrite($fileopened,"To: $mnum\r\n\r\n");
                 fwrite($fileopened,"$mmsg");
 		fclose($fileopened);
-                $copfile = shell_exec("cp textfile /var/www/html/gsm/outgoing/textfile");
+		$nRand = rand(00000,99999);
+                $copfile = shell_exec("cp textfile /var/www/html/gsm/outgoing/textfile$nRand");
 		
 
 		sleep(2); 
                 $updateit = DeleteQuery($dbtype,$dbLink,"sms_send","smsid=$smsid");
-		if ($mnum<>'') {
+//		if ($mnum<>'') {
 	
                 $archiveit = InsertQuery($dbtype,$dbLink,"sms_archive","",
                                 "'','$mnum','$mmsg',now()");
-		}                                                             
+//		}                                                             
         }
 
 setUrlRedirect("sms_sender.php");

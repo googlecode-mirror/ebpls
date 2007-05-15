@@ -97,33 +97,33 @@ function ComparativeAnnual(x)
         {
 //              alert(x);
         var _FRM = document._FRM;
-		var vDateSplit1 = _FRM.checkid1.value.split("/");
-		vDate1 = vDateSplit1[0] + vDateSplit1[1] + vDateSplit1[2];
-		var vDateSplit2 = _FRM.checkid2.value.split("/");
-		vDate2 = vDateSplit2[0] + vDateSplit2[1] + vDateSplit2[2];
-		var getDiff = (vDate2-vDate1);
-		var today = new Date();
-		today.setFullYear(<? echo $yeartoday;?>,<? echo $monthtoday - 1;?>,<? echo $daytoday;?>);
-		var datefrom = new Date();
-		var dateto = new Date();
-		datefrom.setFullYear(vDateSplit1[0],vDateSplit1[1]-1,vDateSplit1[2]);
-		dateto.setFullYear(vDateSplit2[0],vDateSplit2[1]-1,vDateSplit2[2]);
+		//var vDateSplit1 = _FRM.checkid1.value.split("/");
+		//vDate1 = vDateSplit1[0] + vDateSplit1[1] + vDateSplit1[2];
+		//var vDateSplit2 = _FRM.checkid2.value.split("/");
+		//vDate2 = vDateSplit2[0] + vDateSplit2[1] + vDateSplit2[2];
+		//var getDiff = (vDate2-vDate1);
+		//var today = new Date();
+		//today.setFullYear(<? echo $yeartoday;?>,<? echo $monthtoday - 1;?>,<? echo $daytoday;?>);
+		//var datefrom = new Date();
+		//var dateto = new Date();
+		//datefrom.setFullYear(vDateSplit1[0],vDateSplit1[1]-1,vDateSplit1[2]);
+		//dateto.setFullYear(vDateSplit2[0],vDateSplit2[1]-1,vDateSplit2[2]);
 		
-		if (datefrom > today) {
-			alert("Date Range cannot exceed current date.");
-			_FRM.checkid1.select();
-			return false;
-		}
-		if (dateto > today) {
-			alert("Date Range cannot exceed current date.");
-			_FRM.checkid2.select();
-			return false;
-		}
-		if (getDiff < 0) {
-			alert("Invalid Date Range!!");
-			_FRM.checkid1.select();
-			return false;
-		}
+		//if (datefrom > today) {
+		//	alert("Date Range cannot exceed current date.");
+		//	_FRM.checkid1.select();
+		//	return false;
+		//}
+		//if (dateto > today) {
+		//	alert("Date Range cannot exceed current date.");
+		//	_FRM.checkid2.select();
+		//	return false;
+		//}
+		//if (getDiff < 0) {
+		//	alert("Invalid Date Range!!");
+		//	_FRM.checkid1.select();
+		//	return false;
+		//}
         winpopup = window.open('reports/' + x + '?owner_last=' + _FRM.checkid1.value + '&date_to=' + _FRM.checkid2.value + '&usernm=' + _FRM.usernm.value);
 //,'popup','height=500,width=800,menubar=no,scrollbars=yes,status=no,screenX=100,screenY=0,left=100,top=0');
         return true;
@@ -181,33 +181,33 @@ function ComparativeQuart(x)
         {
 //              alert(x);
         var _FRM = document._FRM;
-		var vDateSplit1 = _FRM.checkid1.value.split("/");
-		vDate1 = vDateSplit1[0] + vDateSplit1[1] + vDateSplit1[2];
-		var vDateSplit2 = _FRM.checkid2.value.split("/");
-		vDate2 = vDateSplit2[0] + vDateSplit2[1] + vDateSplit2[2];
-		var getDiff = (vDate2-vDate1);
-		var today = new Date();
-		today.setFullYear(<? echo $yeartoday;?>,<? echo $monthtoday - 1;?>,<? echo $daytoday;?>);
-		var datefrom = new Date();
-		var dateto = new Date();
-		datefrom.setFullYear(vDateSplit1[0],vDateSplit1[1]-1,vDateSplit1[2]);
-		dateto.setFullYear(vDateSplit2[0],vDateSplit2[1]-1,vDateSplit2[2]);
+		//var vDateSplit1 = _FRM.checkid1.value.split("/");
+		//vDate1 = vDateSplit1[0] + vDateSplit1[1] + vDateSplit1[2];
+		//var vDateSplit2 = _FRM.checkid2.value.split("/");
+		//vDate2 = vDateSplit2[0] + vDateSplit2[1] + vDateSplit2[2];
+		//var getDiff = (vDate2-vDate1);
+		//var today = new Date();
+		//today.setFullYear(<? echo $yeartoday;?>,<? echo $monthtoday - 1;?>,<? echo $daytoday;?>);
+		//var datefrom = new Date();
+		//var dateto = new Date();
+		//datefrom.setFullYear(vDateSplit1[0],vDateSplit1[1]-1,vDateSplit1[2]);
+		//dateto.setFullYear(vDateSplit2[0],vDateSplit2[1]-1,vDateSplit2[2]);
 		
-		if (datefrom > today) {
-			alert("Date Range cannot exceed current date.");
-			_FRM.checkid1.select();
-			return false;
-		}
-		if (dateto > today) {
-			alert("Date Range cannot exceed current date.");
-			_FRM.checkid2.select();
-			return false;
-		}
-		if (getDiff < 0) {
-			alert("Invalid Date Range!!");
-			_FRM.checkid1.select();
-			return false;
-		}
+		//if (datefrom > today) {
+		//	alert("Date Range cannot exceed current date.");
+		//	_FRM.checkid1.select();
+		//	return false;
+		//}
+		//if (dateto > today) {
+		//	alert("Date Range cannot exceed current date.");
+		//	_FRM.checkid2.select();
+		//	return false;
+		//}
+		//if (getDiff < 0) {
+		//	alert("Invalid Date Range!!");
+		//	_FRM.checkid1.select();
+		//	return false;
+		//}
         winpopup = window.open('reports/' + x + '?owner_last=' + _FRM.checkid1.value + '&date_to=' + _FRM.checkid2.value + '&usernm=' + _FRM.usernm.value + '&iQrt=' + _FRM.iQrt.value);
 //,'popup','height=500,width=800,menubar=no,scrollbars=yes,status=no,screenX=100,screenY=0,left=100,top=0');
         return true;
@@ -654,7 +654,7 @@ function BussPermit()
 			_FRM.owner_last.focus();
 			return false;
 		}
-        winpopup = window.open('reports/ebpls_business_profile.php?owner_last=' + _FRM.owner_last.value + '&reportpermit=1&permit_type=Business' + '&bus_name=' + _FRM.bus_name.value + '&pin=' + _FRM.pin.value);
+        winpopup = window.open('reports/ebpls_orderpayment.php?profile=prof&owner_last=' + _FRM.owner_last.value + '&reportpermit=1&permit_type=Business' + '&bus_name=' + _FRM.bus_name.value + '&pin=' + _FRM.pin.value);
 //,'popup','height=500,width=800,menubar=no,scrollbars=yes,status=no,screenX=100,screenY=0,left=100,top=0');
         return true;
                                                                                                  
@@ -994,7 +994,10 @@ function ReqDelin()
 	                    	$checkit2 = "selected";
                     	} elseif ($trans == 'ReNew') {
 	                    	$checkit3 = "selected";
-                    	} else {
+                    	} elseif ($trans == 'Retire') {
+	                    	$checkit3 = "selected";
+                    	}
+						else {
 	                    	$checkit = "selected";
                     	}
                     	?>
@@ -2388,21 +2391,24 @@ function ReqDelin()
 	    				<tr>
 	    					<?php
 								//where report_desc like '%business%' or report_desc like 'business%' 
-								$result1 = mysql_query("select * from ebpls_buss_taxfeetype") or die(mysql_error()); 
+								
     		
-  								print "<td width=20% align=right>
+  								
+									$result1 = mysql_query("select * from ebpls_buss_taxfeetype"); 
+    								while ($reports1 = mysql_fetch_assoc($result1)) {
+    									/*$getlevel = mysql_query("select * from ebpls_user_sublevel where
+										submenu = '$reports[0]'");
+					$getme = mysql_fetch_assoc($getlevel);*/
+					
+					//if ($$getme[rptvars]==1) {
+										$temption .= "<option value=$reports1[taxfeetype] $iselecty>$reports1[typedesc]</option>";
+					//}
+									}
+									print "<td width=20% align=right>
     							Type&nbsp</td>";
     							print "<td width=20% align=left>
     								<select name='taxtype'>";
-    								while ($reports1=mysql_fetch_row($result1)) {
-    									$getlevel = mysql_query("select * from ebpls_user_sublevel where
-										submenu = '$reports[0]'");
-					$getme = mysql_fetch_assoc($getlevel);
-					
-					if ($$getme[rptvars]==1) {
-    									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
-					}
-									}
+									print $temption;
     								print"</select></td>";
     							
     							//echo get_select_data($dbLink,'report_list','ebpls_reports','report_file','report_desc',$owner_datarow[report_id]);

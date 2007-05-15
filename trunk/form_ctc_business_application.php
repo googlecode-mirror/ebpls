@@ -67,7 +67,7 @@ function iCheckValues1() {
 		<table border=0 cellspacing=1 cellpadding=0  width="100%" bgcolor='#202366'>
 			<tr>
 				<td align="center" valign="center"  bgcolor='#ffffff' width=33% class='normaltax' colspan=2>COMMUNITY TAX CERTIFICATE</td>
-			        <td align="center" valign="center"  bgcolor='#ffffff' width=15% class='normalgray'>BUSINESS</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' width=15% class='normalgray'>CORPORATE</td>
 				<td align="center" valign="center" width=18% height=20  bgcolor='#ffffff' class='normaltax'><input type='text' name='ctc_code' value=<?php echo $ctc_code;?>></td>
 			</tr>
 			<tr>

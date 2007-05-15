@@ -131,7 +131,6 @@ $date_to = date('Y-m-d', $xdate);
 		$pdf->Cell(50,5,number_format($resulta[4],2),1,0,'R');	//address
 		$pdf->Cell(50,5,number_format($resulta[5],2),1,0,'R');	//date issued
 		$pdf->Cell(30,5,number_format($resulta[2]+$resulta[3],2),1,0,'R');	//incorpotation date
-		$total_ = $total_ + $resulta[4] + $resulta[5];	
 		$i++;
 		$pdf->SetY($pdf->GetY()+5);
 		$total_ = $total_ + $resulta[2] + $resulta[3];

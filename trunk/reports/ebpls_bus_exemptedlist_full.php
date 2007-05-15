@@ -124,7 +124,7 @@ $pdf->SetFont('Arial','B',6);
 $pdf->SetY($Y_Label_position);
 $dateprinted = date('Y-m-d');
 $pdf->SetX(5);
-$pdf->Cell(340,5,$dateprinted,0,1,'R');
+$pdf->Cell(340,5,'',0,1,'R');
 $pdf->SetX(5);
 $pdf->Cell(10,5,'SEQ. NO.',1,0,'C');
 $pdf->SetX(15);
@@ -264,8 +264,9 @@ $pdf->Cell(172,5,$getuser[firstname].' '.$getuser[lastname],0,0,'L');
 $pdf->Cell(172,5,$getsignatories1[gs_name],0,1,'L');
 $pdf->SetFont('Arial','B',10);
 $pdf->SetX(5);
-$pdf->Cell(172,5,'',0,0,'C');
+$pdf->Cell(172,5,$dateprinted,0,0,'L');
 $pdf->Cell(172,5,$getsignatories1[gs_pos],0,1,'L');
+
 
 $report_desc='Business Establishment By Barangay';
 include '../report_signatories_footer1.php';

@@ -92,9 +92,9 @@ $datenext = $dateprev + 1;
         $sumtax2 = mysql_fetch_row($sumtax2);
 
 	
-	$graphtax1 = $sumtax1[0] / 50000;
+	$graphtax1 = $sumtax1[0] / 100000;
 
-	$graphtax2 = $sumtax2[0] / 50000;
+	$graphtax2 = $sumtax2[0] / 100000;
                                                                                                                              
         //fees
         $sumfee1 = mysql_query("select sum(fees) from comparative_statement where for_year='$dateprev' and
@@ -105,9 +105,9 @@ $datenext = $dateprev + 1;
                                                         paid = 0");
         $sumfee2 = mysql_fetch_row($sumfee2);
                                                                                                                              
-        $graphfee1 = $sumfee1[0] / 50000;
+        $graphfee1 = $sumfee1[0] / 100000;
 
-        $graphfee2 = $sumfee2[0] / 50000;
+        $graphfee2 = $sumfee2[0] / 100000;
 
 
 	//interest
@@ -119,9 +119,9 @@ $datenext = $dateprev + 1;
                                                         paid = 0");
         $sumint2 = mysql_fetch_row($sumint2);
                                                                                                                              
-        $graphint1 = $sumint1[0] / 50000;
+        $graphint1 = $sumint1[0] / 100000;
 
-        $graphint2 = $sumint2[0] / 50000;
+        $graphint2 = $sumint2[0] / 100000;
 
 
 	//penalty
@@ -133,9 +133,9 @@ $datenext = $dateprev + 1;
                                                         paid = 0");
         $sumpen2 = mysql_fetch_row($sumpen2);
                                                                                                                              
-	$graphpen1 = $sumpen1[0] / 50000;
+	$graphpen1 = $sumpen1[0] / 100000;
 
-        $graphpen2 = $sumpen2[0] / 50000;
+        $graphpen2 = $sumpen2[0] / 100000;
 
 
         //backtax
@@ -147,9 +147,9 @@ $datenext = $dateprev + 1;
                                                         paid = 0");
         $sumbak2 = mysql_fetch_row($sumbak2);
                                                                                                                              
-	$graphbak1 = $sumbak1[0] / 50000;
+	$graphbak1 = $sumbak1[0] / 100000;
 
-        $graphbak2 = $sumbak2[0] / 50000;
+        $graphbak2 = $sumbak2[0] / 100000;
 
 
 $getlgu = @mysql_query("select city_municipality_desc from ebpls_city_municipality where city_municipality_code = '$resulta[0]'");
@@ -302,83 +302,103 @@ $pdf->Cell(25,5,'110',0,0,'L');
 
 $pdf->SetY(180);
 $pdf->SetX(80);
-$pdf->Cell(25,5,'1:100,000',0,0,'L');
+$pdf->Cell(25,5,'1:200,000',0,0,'L');
 
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(255,0,0);
-$pdf->Line(80, 70, 80 + $graphtax1, 70);
+if ($graphtax1 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(255,0,0);
+	$pdf->Line(80, 70, 80 + $graphtax1, 70);
+}
 
 $pdf->SetY(67);
 $pdf->SetX(80 + $graphtax1 + 3);
 $pdf->Cell(25,5,'Year '.$dateprev.' ('. number_format($sumtax1[0],2).')',0,0,'L');
 
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(255,100,0);
-$pdf->Line(80, 75, 80 + $graphtax2, 75);
+if ($graphtax2 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(255,100,0);
+	$pdf->Line(80, 75, 80 + $graphtax2, 75);
+}
                                                                                                                              
 $pdf->SetY(72);
 $pdf->SetX(80 + $graphtax2 + 3);
 $pdf->Cell(25,5,'Year '.$datenext.' ('. number_format($sumtax2[0],2).')',0,0,'L');
-                                                                                                                             
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(0,255,0);
-$pdf->Line(80, 90, 80 + $graphfee1, 90);
+        
+if ($graphfee1 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(0,255,0);
+	$pdf->Line(80, 90, 80 + $graphfee1, 90);
+}
 
 $pdf->SetY(87);
 $pdf->SetX(80 + $graphfee1 + 3);
 $pdf->Cell(25,5,'Year '.$dateprev.' ('. number_format($sumfee1[0],2).')',0,0,'L');
 
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(100,255,0);
-$pdf->Line(80, 95, 80 + $graphfee2, 95);
+if ($graphfee2 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(100,255,0);
+	$pdf->Line(80, 95, 80 + $graphfee2, 95);
+}
                                                                                                                              
 $pdf->SetY(92);
 $pdf->SetX(80 + $graphfee2 + 3);
 $pdf->Cell(25,5,'Year '.$datenext.' ('. number_format($sumfee2[0],2).')',0,0,'L');
 
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(0,0,255);
-$pdf->Line(80, 110, 80 + $graphpen1, 110);
+if ($graphpen1 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(0,0,255);
+	$pdf->Line(80, 110, 80 + $graphpen1, 110);
+}
 
 $pdf->SetY(107);
 $pdf->SetX(80 + $graphpen1 + 3);
 $pdf->Cell(25,5,'Year '.$dateprev.' ('. number_format($sumpen1[0],2).')',0,0,'L');
 
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(0,100,255);
-$pdf->Line(80, 115, 80 + $graphpen2, 115);
+if ($graphpen2 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(0,100,255);
+	$pdf->Line(80, 115, 80 + $graphpen2, 115);
+}
                                                                                                                              
 $pdf->SetY(112);
 $pdf->SetX(80 + $graphpen2 + 3);
 $pdf->Cell(25,5,'Year '.$datenext.' ('. number_format($sumpen2[0],2).')',0,0,'L');
                                                                                                                              
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(155,155,155);
-$pdf->Line(80, 130, 80 + $graphint1, 130);
+if ($graphint1 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(155,155,155);
+	$pdf->Line(80, 130, 80 + $graphint1, 130);
+}
 
 $pdf->SetY(127);
 $pdf->SetX(80 + $graphint1 + 3);
 $pdf->Cell(25,5,'Year '.$dateprev.' ('. number_format($sumint1[0],2).')',0,0,'L');
 
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(55,155,55);
-$pdf->Line(80, 135, 80 + $graphint2, 135);
+if ($graphint2 > 0) {
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(55,155,55);
+	$pdf->Line(80, 135, 80 + $graphint2, 135);
+}
                                                                                                                              
 $pdf->SetY(132);
 $pdf->SetX(80 + $graphint2 + 3);
 $pdf->Cell(25,5,'Year '.$datenext.' ('. number_format($sumint2[0],2).')',0,0,'L');
-                                                                                                                             
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(255,255,0);
-$pdf->Line(80, 150, 80 + $graphbak1, 150);
+ 
+if ($graphbak1 > 0) { 
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(255,255,0);
+	$pdf->Line(80, 150, 80 + $graphbak1, 150);
+}
                                                                                                                              
 $pdf->SetY(147);
 $pdf->SetX(80 + $graphbak1 + 3);
 $pdf->Cell(25,5,'Year '.$dateprev.' ('. number_format($sumbak1[0],2).')',0,0,'L');
-                                                                                                                             
-$pdf->SetLineWidth(2);
-$pdf->SetDrawColor(255,55,250);
-$pdf->Line(80, 155, 80 + $graphbak2, 155);
+ 
+ if ($graphbak2 > 0) { 
+	$pdf->SetLineWidth(2);
+	$pdf->SetDrawColor(255,55,250);
+	$pdf->Line(80, 155, 80 + $graphbak2, 155);
+}
                                                                                                                              
 $pdf->SetY(152);
 $pdf->SetX(80 + $graphbak2 + 3);

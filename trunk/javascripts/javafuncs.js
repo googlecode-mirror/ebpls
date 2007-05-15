@@ -1,3 +1,43 @@
+function GenerateLog(a,b,c,d)
+{
+
+        var _FRM     = document._FRM;
+     	var p
+     	p='';
+        for (var i=0;  i < _FRM.elements.length; i ++)
+        {
+                var _element = _FRM.elements[i];
+                var _type = _element.type;
+                
+        		                                                                                   
+                if ( _type != "submit" && _type != "button" && _type != "reset" && _type != "hidden" && _type != "Reset")
+                {
+	                if ( _type == "checkbox" ) {
+		                p = p + ' ' + _element.name + '=' + _element.checked + ': ';
+	                } else {
+	                p = p + ' ' + _element.name + '=' + _element.value + ': ';
+               		 }
+                }
+                
+        }
+        
+        p = 'Menu: ' +  a + ': Module: ' + b +  ': Subcommand: ' + c + ': id: ' + d + ': Data:' + p + ':';
+		setCookie("logger",p,"","","","");
+}
+
+function SearchAct()
+{
+	var x     = document.porm;
+	setCookie("search_user",x.search_user.value,"","","","");
+	setCookie("search_cat",x.search_cat.value,"","","","");
+	parent.location="http://192.168.1.104/ebpls/index.php?part=4&itemID_=11&busItem=Settings&permit_type=Settings&settings_type=ActivityLog&item_id=Settings";
+}
+function ClearAct()
+{
+	setCookie("search_user","","","","","");
+	setCookie("search_cat","","","","","");
+}
+
 function UpFoc()
 {
 var frm = document._FRM;
@@ -366,7 +406,43 @@ function OrderBy(z,y,e)
 	return true;
 }
 
-
+function Paginationd(z)
+{
+	var x = document._FRM1;
+	x.page.value=z;
+	x.submit();
+	return true;
+}
+function OrderByd(z,y,e)
+{
+	var x = document._FRM1;
+	x.order.value=z;
+	x.page.value=y;
+	x.isdesc.value=e;
+	x.submit();
+	return true;
+}
+function ViewLog(x)
+{
+		
+		setCookie("logid",x,"","","","");
+		myRef = window.open('viewlog.php','viewpay',
+                                'left=120,top=50,width=650,height=420,toolbar=0,resizable=1');
+        myRef.focus();                        
+}
+function setCookie( name, value, expires, path, domain, secure ) {
+  var today = new Date();
+  today.setTime( today.getTime() );
+  if ( expires ) {
+    expires = expires * 1000 * 60 * 60 * 24;
+  }
+  var expires_date = new Date( today.getTime() + (expires) );
+  document.cookie = name+"="+escape( value ) +
+    ( ( expires ) ? ";expires="+expires_date.toGMTString() : "" ) + //expires.toGMTString()
+    ( ( path ) ? ";path=" + path : "" ) +
+    ( ( domain ) ? ";domain=" + domain : "" ) +
+    ( ( secure ) ? ";secure" : "" );
+}
 function VerifySet() {
         var x=document.prefSetForm;
         if (x.passLen.value=='') {
@@ -1068,7 +1144,7 @@ function checkValidOwner()
 
 			        
                                                                                                                                                                                                          
-                        if( isBlank(_FRM.owner_last_name.value) == true)
+                        if( isBlank(_FRM.owner_last_name.value) == true  && isBlank(_FRM.owner_legal_entity.value)==true)
                         {
                         alert("Please enter Last Name/Legal");
                         _FRM.owner_last_name.focus();

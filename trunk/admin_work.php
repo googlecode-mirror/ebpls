@@ -64,8 +64,21 @@ if ($scmd==2) {
 	//include'validate-inc.php';			
 	//}
 }
-	
-	
+if ($scmd == '200') {
+	$ccdate = date('Y');
+	$getrec = @mysql_query("select * from ebpls_business_enterprise_permit where for_year < '$ccdate' and transaction = 'New' and paid = '0'");
+	while ($getRec = @mysql_fetch_assoc($getrec)) {
+		$gethis = @mysql_query("select * from trans_his where business_id = '$getRec[business_id]'");
+		$getHis = @mysql_num_rows($gethis);
+		if ($getHis == 0) {
+			$deletebus1 = @mysql_query("delete from ebpls_business_enterprise_permit where business_id = '$getRec[business_id]'");
+			$deletebus2 = @mysql_query("delete from ebpls_business_enterprise where business_id = '$getRec[business_id]'");
+			$deletebus3 = @mysql_query("delete from bus_grandamt where business_id = '$getRec[business_id]'");
+			$deletebus4 = @mysql_query("delete from tempassess where business_id = '$getRec[business_id]'");
+			$deletebus5 = @mysql_query("delete from tempbusnature where business_id = '$getRec[business_id]'");
+		}
+	}
+}
 	
                                                                                         
 
@@ -141,7 +154,19 @@ function RestoreDB()
                                                                                                  
         return true;
 }
-
+function purgerecord()
+{
+	var _FRM = document._FRM;
+	doyou = confirm("Delete Dormant Records?");
+	if (doyou==true) {
+        _FRM.prec.value == 'purge';
+        _FRM.scmd.value=200;
+         _FRM.submit();  
+    } else {
+        return false;
+        }                                                                        
+        return true;
+}
 
 </script>
 
@@ -159,6 +184,7 @@ function RestoreDB()
 		</tr>
 		<tr width=90%>
 		<input type=hidden name=scmd>
+		<input type=hidden name=prec>
 			<td align=right valign=top> Backup Database : </td>
 			<td align=left valign=top> &nbsp;
 			<input type=text name=backup>&nbsp; 
@@ -173,6 +199,10 @@ function RestoreDB()
 			<input type=button value='Go' onclick='RestoreDB();'>
 			</td>
 			<td> &nbsp </td>
+		</tr>
+		<tr><td><br></td></tr>
+		<tr width=90%>
+			<td align=center valign=top colspan='3'> <input   type=button  name=purge   value="Delete Dormant Records" onclick="purgerecord();"> </td>
 		</tr>
 	</table>
 </body>

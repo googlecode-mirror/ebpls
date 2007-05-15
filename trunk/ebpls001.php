@@ -1,12 +1,13 @@
 <?php
 //	eBPLS_PAGE_LOGIN: Login Page
-if (getenv(HTTP_X_FORWARDED_FOR)) {
-    $remoteip = getenv(HTTP_X_FORWARDED_FOR);
-} else {
+if (getenv(HTTP_X_FORWARDED_FOR)) {							
+    $remoteip = getenv(HTTP_X_FORWARDED_FOR); 
+} else { 
     $remoteip = getenv(REMOTE_ADDR);
-}
+}	
 //echo $remoteip;
 ?>
+<br>
 <div align="CENTER">
 <table WIDTH=788 border="0" cellspacing="0" cellpadding="0">
 <?php
@@ -28,7 +29,7 @@ if (getenv(HTTP_X_FORWARDED_FOR)) {
 			case 3:
 				$strErrMessage = "Access Denied: You are trying to access a eBPLS Admin Account<br> outside the defined domains!";
 				break;
-
+				
 			default:
 				$strErrMessage = "Illegal Operation! Please contact the author of this program.";
 				break;
@@ -60,25 +61,25 @@ if (getenv(HTTP_X_FORWARDED_FOR)) {
 	<TR>
 		<TD height="144"> <IMG SRC="images/eBPLSLoginPage_04.gif" WIDTH=270 HEIGHT=144 ALT=""></TD>
 		<TD> <table align="center" width="243" height="142" cellpadding="0" cellspacing="0">
-            <tr>
-              <td align="RIGHT" valign="MIDDLE" class="thFieldTitle"> User Name:<br>
+            <tr> 
+              <td align="RIGHT" valign="MIDDLE" class="thFieldTitle"> User Name:<br> 
               </td>
-              <td align="LEFT" valign="MIDDLE" class="thFieldTitle"> <input type="text" name="frmUserName" value="" size="10">
+              <td align="LEFT" valign="MIDDLE" class="thFieldTitle"> <input type="text" name="frmUserName" value="" size="10"> 
                 &nbsp; &nbsp; &nbsp; &nbsp; </td>
             </tr>
-            <tr>
-              <td align="RIGHT" valign="MIDDLE" class="thFieldTitle"> Password:<br>
+            <tr> 
+              <td align="RIGHT" valign="MIDDLE" class="thFieldTitle"> Password:<br> 
               </td>
-              <td align="LEFT" valign="MIDDLE" class="thFieldTitle"> <input type="password" name="frmUserKey" value="" size="10">
+              <td align="LEFT" valign="MIDDLE" class="thFieldTitle"> <input type="password" name="frmUserKey" value="" size="10"> 
                 &nbsp; &nbsp; &nbsp; &nbsp; </td>
             </tr>
-            <tr>
-              <td colspan="2" class="thFieldTitle"> <input type="submit" name="frmLoginSubmit" value="    Log In   ">
-                &nbsp;&nbsp;&nbsp;&nbsp; <input type="reset" id="frmBtnCancel" onclick='_FRM.frmUserName.focus();'name="frmBtnCancel" value="   Cancel   " onClick="javascript: clear_browse();">
+            <tr> 
+              <td colspan="2" class="thFieldTitle"> <input type="submit" name="frmLoginSubmit" value="    Log In   "> 
+                &nbsp;&nbsp;&nbsp;&nbsp; <input type="reset" id="frmBtnCancel" onclick='_FRM.frmUserName.focus();'name="frmBtnCancel" value="   Cancel   " onClick="javascript: clear_browse();"> 
                 <br> </td>
             </tr>
           </table></TD>
-		<TD>
+		<TD> 
 			<IMG SRC="images/eBPLSLoginPage_06.gif" WIDTH=275 HEIGHT=144 ALT=""></TD>
 	</TR>
 	<TR>
@@ -89,8 +90,8 @@ if (getenv(HTTP_X_FORWARDED_FOR)) {
 		<TD>
 			<IMG SRC="images/eBPLSLoginPage_09.gif" WIDTH=275 HEIGHT=207 ALT=""></TD>
 	</TR>
-
-
+	
+	
 
    </form>
 </table>

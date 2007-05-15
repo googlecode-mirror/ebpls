@@ -34,18 +34,18 @@ Function OpenDB($dbtype, $connectType = "c", $connect, $username = "", $password
     }
 
 
-Function QueryDB($query)
+Function QueryDB($query) 
 {
-include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include "includes/variables.php";                               
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
 
     Switch ($dbtype) {
     Case "mssql":
     $r = mssql_query($query, $dbLinkFunc);
     Break;
     Case "mysql":
-    $r = mysql_query($query, $dbLinkFunc);
+    $r = mysql_query($query, $dbLinkFunc)or die("Query Error: ".mysql_error());
     Break;
     Case "pg":
     $r = pg_exec($idCon, $dbLinkFunc);
@@ -55,14 +55,14 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
     Break;
 	}
     return $r;
-
+		
 }
 
 Function InsertQueryDB($tblName,$fields,$values)
 {
-include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include "includes/variables.php";                                
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);                                  
     Switch ($dbtype) {
     Case "mssql":
     $r = mssql_query("insert into $tblName $fields values ($values)", $dbLinkFunc);
@@ -71,7 +71,7 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 //echo "insert into $tblName $fields values ($values)";
     $r = mysql_query("insert into $tblName $fields values ($values)", $dbLinkFunc)
 	or die("Insert Error: ".mysql_error());
-    $r = mysql_insert_id();
+    $r = mysql_insert_id();	
     Break;
     Case "pg":
     $r = pg_exec($dbLinkFunc,"insert into $tblName $fields values ($values)");
@@ -81,14 +81,14 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
     Break;
         }
     return $r;
-
+                                                                                                 
 }
 
 Function UpdateQueryDB($tblName,$values,$where)
 {
-include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include "includes/variables.php";                        
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);                                                                          
     Switch ($dbtype) {
     Case "mssql":
     $r = mssql_query("update $tblName set $values where $where", $dbLinkFunc);
@@ -107,14 +107,14 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
     Break;
         }
     return $r;
-
+                                                                                                 
 }
 
 Function DeleteQueryDB($tblName,$where)
 {
-include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include "includes/variables.php"; 
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);                                                                         
     Switch ($dbtype) {
     Case "mssql":
     $r = mssql_query("delete from $tblName where $where", $dbLinkFunc);
@@ -131,16 +131,16 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
     Break;
         }
     return $r;
-
+                                                                                                 
 }
 
 Function FetchRowDB($query)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
- Switch ($dbtype)
-    {
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
+ Switch ($dbtype) 
+    { 
     Case "mssql":
     $r = mssql_fetch_row($query);
     Break;
@@ -153,7 +153,7 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
     Default:
     $r = False;
     Break;
-    }
+    }	
  return $r;
 
 }
@@ -161,8 +161,8 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 Function FetchArrayDB($query)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
 
  Switch ($dbtype) {
     Case "mssql":
@@ -185,8 +185,8 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 Function FetchArrayPayerListDB($query,$permit_type)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
  Switch ($dbtype) {
     Case "mssql":
     $r = mssql_fetch_assoc($query);
@@ -224,8 +224,8 @@ print "
 Function FetchArrayBusinessListDB($query,$new_owner,$gpin)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
  Switch ($dbtype) {
     Case "mssql":
     $r = mssql_fetch_assoc($query);
@@ -237,7 +237,7 @@ while ($get_info = mysql_fetch_assoc($query)){
         $address = $get_info[business_lot_no].' '.$get_info[business_street].
                    ' '.$get_info[business_barangay_name].' '.$get_info[business_city_code].
                    ' '.$get_info[business_province_code];
-
+                                                                                                 
         $business_name=stripslashes($get_info[business_name]);
         $business_branch=stripslashes($get_info[business_branch]);
         $address=stripslashes($address);
@@ -264,15 +264,15 @@ while ($get_info = mysql_fetch_assoc($query)){
         }
         return $r;
 }
-
+                                                                                                                                                                                                   
 
 
 
 Function ResultDB($result, $RowNumber)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
     Switch ($dbtype) {
     Case "mssql":
     $r = mssql_result($result, $RowNumber);
@@ -294,8 +294,8 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 Function NumRowsDB($result)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
     Switch ($dbtype) {
     Case "mssql":
     $r = mssql_num_rows($result);
@@ -317,10 +317,10 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 Function SelectDataWhereDB($tblName,$where)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
- Switch ($dbtype)
-    {
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
+ Switch ($dbtype) 
+    {	
     Case "mssql":
     $r = mssql_query("select * from $tblName $where",$dbLinkFunc);
     Break;
@@ -342,15 +342,15 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 Function SelectMultiTableDB($tblName,$fields,$where)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
  Switch ($dbtype)
     {
     Case "mssql":
     $r = mssql_query("select $fields from $tblName $where",$dbLinkFunc);
     Break;
     Case "mysql":
-    $r = mysql_query("select $fields from $tblName $where",$dbLinkFunc)
+    $r = mysql_query("select $fields from $tblName $where",$dbLinkFunc) 
 		or die ("Select Error: ".mysql_error());
     Break;
     Case "pg":
@@ -366,8 +366,8 @@ $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 Function FetchArrayMotorListDB($query,$permit_type,$ownid,$stat)
 {
 include "includes/variables.php";
-include_once("lib/multidbconnection.php");
-$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
+include_once("lib/multidbconnection.php");                                                                                                
+$dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname); 
  Switch ($dbtype) {
     Case "mssql":
     $r = mssql_fetch_assoc($query);

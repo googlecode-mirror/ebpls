@@ -142,13 +142,10 @@ $Y_Table_Position = 55;
 $pdf->SetFont('Arial','B',6);
 $pdf->SetY(50);
 $pdf->SetX(5);
-$pdf->Cell(10,5,'Tax Payer:',1,0,'C');
-$pdf->SetX(15);
-$pdf->Cell(30,5,$getid[fullname],1,0,'C');
-$pdf->SetX(45);
+$pdf->Cell(20,5,'Tax Payer:',1,0,'C');
+$pdf->Cell(35,5,$getid[fullname],1,0,'C');
 $pdf->Cell(20,5,'Business Name',1,0,'C');
-$pdf->SetX(65);
-$pdf->Cell(20,5,$getid[business_name],1,1,'C');
+$pdf->Cell(40,5,$getid[business_name],1,1,'C');
 
     
 $chkbacktax = SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
@@ -164,21 +161,23 @@ $gettag=SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
 $gettag=FetchArray($dbtype,$gettag);
 	if ($gettag[sassess]=='') {
 $tftnum = 1;
-        $tft = ' and c.taxfeetype=1'; // or c.taxfeetype=4';
-       
+        //$tft = ' and c.taxfeetype=1'; // or c.taxfeetype=4';
+       $tft = ''; // or c.taxfeetype=4';
         $totexempt=0;
         require "../includes/rpt_assessment.php";
 $total_tax_compute = $grandamt;
 $howmany = $df;
 $tftnum=4;
-        $tft = ' and c.taxfeetype=4';// and c.taxfeetype=4';
+        //$tft = ' and c.taxfeetype=4';// and c.taxfeetype=4';
+		$tft = '';// and c.taxfeetype=4';
       
         $totexempt=0;
         //require "includes/rpt_assessment.php";
 $total_sf_compute = $grandamt;
 $howmany = $df+$howmany;
                                                                                                                              
-        $tft =' and c.taxfeetype<>1';// or c.taxfeetype<>4';
+        //$tft =' and c.taxfeetype<>1';// or c.taxfeetype<>4';
+		$tft ='';// or c.taxfeetype<>4';
         
         //require "includes/feeassess.php";
 

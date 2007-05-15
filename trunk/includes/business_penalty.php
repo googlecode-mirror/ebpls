@@ -125,7 +125,7 @@ $anongmonthito = date('m', $checkluma1[date_create]);
 		$LBnewtax = 0;
 	$LBnewfee = 0;
 	}
-	
+	//echo $pmode."VooDoo";
 /*===========================*/	
 $yeartoday = date('Y');
 $addend = "$yeartoday-";

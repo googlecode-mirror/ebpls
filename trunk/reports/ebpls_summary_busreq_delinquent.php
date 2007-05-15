@@ -123,7 +123,7 @@ $pdf->Cell(30,5,'APPLICATION DATE',1,0,'C');
 $pdf->Cell(50,5,'BUSINESS NAME',1,0,'C');
 $pdf->Cell(100,5,'BUSINESS ADDRESS',1,0,'C');
 $pdf->Cell(60,5,'OWNER NAME',1,0,'C');
-$pdf->Cell(100,5,'OWNER ADDRESS',1,1,'C');
+$pdf->Cell(100,5,'REQUIREMENT DELINQUENT',1,1,'C');
 
 /*
 	$result = mysql_query("select distinct (c.business_permit_id), a.business_name, 
@@ -146,8 +146,7 @@ $date_to = date('Y-m-d', $xdate);
 	$result = mysql_query ("select distinct (c.business_permit_code) as pid, a.business_name,
         concat(a.business_lot_no, ' ', a.business_street, ' ', f.barangay_desc, ' ',
         g.city_municipality_desc, ' ', h.province_desc, ' ', a.business_zip_code) as bus_add,
-        concat(b.owner_first_name, ' ', b.owner_middle_name, ' ', b.owner_last_name) as fulln, b.owner_id, 
-	b.owner_id, a.business_id, c.application_date 
+        concat(b.owner_first_name, ' ', b.owner_middle_name, ' ', b.owner_last_name) as fulln, b.owner_id, a.business_id, c.application_date 
         from ebpls_business_enterprise a, ebpls_owner b, ebpls_business_enterprise_permit c,
 	tempbusnature d, ebpls_buss_nature e , ebpls_barangay f , ebpls_city_municipality g , ebpls_province h, 
 	havereq i where
@@ -172,7 +171,21 @@ $date_to = date('Y-m-d', $xdate);
 		$pdf->Cell(50,5,$resulta[business_name],1,0,'C');
 		$pdf->Cell(100,5,$resulta[bus_add],1,0,'C');
 		$pdf->Cell(60,5,$resulta[fulln],1,0,'C');
-		$pdf->Cell(100,5,$getownadd[owner_street_no] . ' ' . $getownadd[zone_desc] . ' ' . $getownadd[barangay_desc] . ' ' . $$getownadd[district_desc] . ' ' . $getownadd[city_municipality_desc] . ' ' . $getownadd[province_desc],1,1,'C');
+		$getdelreq = @mysql_query("select * from havereq where  business_id = '$resulta[business_id]' and owner_id = '$resulta[owner_id]' and active = '0'");
+		$getdelreq11 = "";
+		$xvvar = 1;
+		while ($getdelreqs = @mysql_fetch_assoc($getdelreq)) {
+			$getreq = @mysql_query("select * from ebpls_buss_requirements where reqid = '$getdelreqs[reqid]'");
+			$getreqs = @mysql_fetch_assoc($getreq);
+			if ($xvvar > 1) {
+				$xvvar1 = ", ";
+			} else {
+				$xvvar1 = "";
+			}
+			$getdelreq11 .= $xvvar1.$getreqs['reqdesc'];
+			$xvvar++;
+		}
+		$pdf->Cell(100,5,$getdelreq11,1,1,'L');
 
 		$pdf->SetY($pdf->GetY()+5);
 	} 

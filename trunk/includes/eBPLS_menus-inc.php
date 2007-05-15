@@ -160,10 +160,11 @@ if ($chkpenalty==0) {
 <table border=0 width=100% cellspacing=0 cellpadding=0 class="mnu">
 
 <tr>
-<input type=hidden name=superlog value=<?php echo $superlog; ?>>
+
 <td colspan="2" height="10" class="header" align=center>SEARCH </td>
 </tr>
-<form action = 'index.php?part=4' method=post >
+<form action = 'index.php?part=4' method=post name="_FRM1">
+<input type=hidden name=superlog value=<?php echo $superlog; ?>>
 <tr><input type=hidden name=ieuser value=<?php echo $ieuser; ?>>
 <td height="19">&nbsp;<b>Business/Lastname</b></td>
 <td height="19"><input type=text name=search_lastname size=15 value="<?php echo $itxt_Search;?>" style="font-size:10"></td>
@@ -173,6 +174,7 @@ if ($chkpenalty==0) {
 	<td align="left" height="19"><b>&nbsp;Permit Type</b></td>
 	<td height="19" align="left"><select name=permit_type height="19" style="font-size:10">
 	<?php
+	
 	if ($bp==1 || $ulev==6 || $ulev==7) { ?>
 	<option value='Business'>Business</option>
 	<?php
@@ -1236,6 +1238,7 @@ if ($permit_type=='Business') {
 if ($ulev==6) {
 	include_once 'body.php';
 include_once'includes/bodycontent-inc.php';
+include "logger.php";
 } else {
 include "includes/security.php";
 }

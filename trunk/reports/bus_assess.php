@@ -90,14 +90,14 @@ function AcceptPageBreak()
 } // end of PDF class
 
 
-	$result=mysql_query("select lguname, lguprovince, lguoffice from ebpls_buss_preference") 
+	$result=mysql_query("select lguname, lguprovince, lguoffice, sassess from ebpls_buss_preference") 
 	or die(mysql_error());
     $resulta=mysql_fetch_row($result);
 $getlgu = @mysql_query("select city_municipality_desc from ebpls_city_municipality where city_municipality_code = '$resulta[0]'");
 $getlgu = @mysql_fetch_row($getlgu);
 $getprov = @mysql_query("select province_desc from ebpls_province where province_code = '$resulta[1]'");
 $getprov = @mysql_fetch_row($getprov);		
-
+$iAssess = $resulta[3];
 		$result=mysql_query("select lgumunicipality, lguprovince, lguoffice from ebpls_buss_preference") or die(mysql_error());
     $resulta=mysql_fetch_row($result);
    
@@ -359,7 +359,17 @@ $linebus = mysql_query("select a.*, b.*, c.* from tempbusnature a, tempassess b,
         $totme = 0;	
 
 }
-
+if ($iAssess == "1") {
+	$getTFOs = @mysql_query("select * from ebpls_buss_tfo where tfoindicator = '1'");
+	while ($getTFOS = @mysql_fetch_assoc($getTFOs)) {
+		$pdf->SetX(15);
+		$pdf->Cell(45,5,$getTFOS['tfodesc'],0,0,'L');
+		$pdf->SetX(60);
+		$pdf->Cell(30,5,number_format($getTFOS['defamt'],2),0,1,'R');
+		$totme = $totme + $getTFOS['defamt'];
+		$grandtot = $grandtot + $totme;
+	}
+}
 
 $pdf->Cell(45,5,'',0,1,'L');
 $pdf->Cell(45,5,'',0,1,'L');

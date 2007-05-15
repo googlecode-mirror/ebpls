@@ -122,6 +122,23 @@ $pdf->Cell(190,5,"MAYOR'S PERMIT",0,0,'C');
 				a.business_id = b.business_id and a.owner_id = c.owner_id 
 				and b.business_id = d.business_id") or die(mysql_error()."fff");
     $resulta=mysql_fetch_row($result);
+	if (trim($resulta[5]) == "") {
+		$result23=mysql_query("select a.business_permit_code, a.application_date, 
+				b.business_name, b.business_street, a.transaction, 
+				c.owner_legal_entity, 
+				c.owner_gender,	concat(c.owner_street, ' ', c.owner_city_code, ' ', 
+				c.owner_province_code), a.business_permit_id, d.cap_inv, 
+				d.last_yr, b.employee_male, b.employee_female, d.bus_nature, 
+				b.business_payment_mode, business_occupancy_code, concat(b.business_lot_no, ' ', 
+				b.business_street, ' ', b.business_city_code, ' ', b.business_province_code, ' ', 
+				b.business_zip_code),c.owner_civil_status from ebpls_business_enterprise_permit a, 
+				ebpls_business_enterprise b, ebpls_owner c, tempbusnature d
+				where $ddt and 
+				a.business_id = b.business_id and a.owner_id = c.owner_id 
+				and b.business_id = d.business_id") or die(mysql_error()."fff");
+    $resulta23=mysql_fetch_row($result23);
+	$resulta[5] = "$resulta23[5]";
+		}
 
     $result1=mysql_query("select a.business_permit_code, a.application_date, b.business_name, 
 			  b.business_street, a.transaction, 
@@ -262,7 +279,7 @@ $pdf->SetFont('Arial','',12);
 $pdf->Cell(190,5,'registered proprietor owner/manager of which is',0,1,'C');
 $pdf->Cell(190,5,'',0,2,'C');
 $pdf->SetFont('Arial','BU',12);
-$pdf->Cell(190,5,"$tag $resulta[5]",0,1,'C');
+$pdf->Cell(190,5,"$resulta[5]",0,1,'C');
 $pdf->Cell(190,5,'',0,2,'C');
 $pdf->SetFont('Arial','',12);
 $pdf->MultiCell(190,5,'with legal residence/office/s at '.strtoupper($getadd[0]).' to operate/construct/install: ',0,'C');
@@ -490,7 +507,23 @@ $pdf->Cell(190,5,"MAYOR'S PERMIT",0,0,'C');
 				a.business_id = b.business_id and a.owner_id = c.owner_id 
 				and b.business_id = d.business_id") or die(mysql_error()."fff");
     $resulta=mysql_fetch_row($result);
-
+if (trim($resulta[5]) == "") {
+		$result23=mysql_query("select a.business_permit_code, a.application_date, 
+				b.business_name, b.business_street, a.transaction, 
+				c.owner_legal_entity, 
+				c.owner_gender,	concat(c.owner_street, ' ', c.owner_city_code, ' ', 
+				c.owner_province_code), a.business_permit_id, d.cap_inv, 
+				d.last_yr, b.employee_male, b.employee_female, d.bus_nature, 
+				b.business_payment_mode, business_occupancy_code, concat(b.business_lot_no, ' ', 
+				b.business_street, ' ', b.business_city_code, ' ', b.business_province_code, ' ', 
+				b.business_zip_code),c.owner_civil_status from ebpls_business_enterprise_permit a, 
+				ebpls_business_enterprise b, ebpls_owner c, tempbusnature d
+				where $ddt and 
+				a.business_id = b.business_id and a.owner_id = c.owner_id 
+				and b.business_id = d.business_id") or die(mysql_error()."fff");
+    $resulta23=mysql_fetch_row($result23);
+	$resulta[5] = "$resulta23[5]";
+		}
     $result1=mysql_query("select a.business_permit_code, a.application_date, b.business_name, 
 			  b.business_street, a.transaction, 
 			  concat(c.owner_first_name, ' ', c.owner_middle_name, ' ', 
@@ -630,7 +663,7 @@ $pdf->SetFont('Arial','',12);
 $pdf->Cell(190,5,'registered proprietor owner/manager of which is',0,1,'C');
 $pdf->Cell(190,5,'',0,2,'C');
 $pdf->SetFont('Arial','BU',12);
-$pdf->Cell(190,5,"$tag ".strtoupper($resulta[5]),0,1,'C');
+$pdf->Cell(190,5,strtoupper($resulta[5]),0,1,'C');
 $pdf->Cell(190,5,'',0,2,'C');
 $pdf->SetFont('Arial','',12);
 $pdf->MultiCell(190,5,'with legal residence/office/s at '.strtoupper($getadd[0]).' to operate/construct/install: ',0,'C');

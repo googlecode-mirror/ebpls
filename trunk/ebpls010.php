@@ -160,4 +160,5 @@ function delSubLevelListings($dbLink,$uid)
 <?php
 if ($intUserLevel > -1) setCurrentActivityLog($thStrLogAction);
 ob_end_flush();
+include "logger.php";
 ?>

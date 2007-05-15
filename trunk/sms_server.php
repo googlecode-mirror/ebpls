@@ -14,7 +14,6 @@ global $ThUserData;
 require_once "includes/variables.php";
 include("lib/multidbconnection.php");
 $dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
-
 ?>
 
 <title>SMS Receiver</title>
@@ -81,7 +80,7 @@ $getmsg = @substr($s, $getmsgpos + 10);
 $getmsg = @trim($getmsg);
 
 if ($getnum<>'') { 
-$pp = @mysql_query("insert into sms values ('','$getnum', '$getmsg',now())") or die(mysql_error());
+$pp = @mysql_query("insert into sms values ('','$getnum', '$getmsg',now())") or die("==".mysql_error());
 }
 $result = SelectDataWhere($dbtype,$dbLink,"sms",
 			"order by smsid asc limit 1");
@@ -96,7 +95,6 @@ if ($re>0) {
 	$re = FetchArray($dbtype,$result);
 	$smsid = $re[smsid];
 	$msg = stripslashes($re[msg]);
-
 	//get cell number
 // 	$pos1 = strpos($re, "Originating address:"); //get string for sender number
 // 	$pos2 = strpos($re, "'", $pos1); //start point
@@ -267,7 +265,6 @@ echo "No New Messages Found. Will Search Again";
 // fclose($r);
 // $s = shell_exec('rm -rf msg.txt');
 // //setUrlRedirect("sms_server.php");	
-
 
 
 sleep(2);

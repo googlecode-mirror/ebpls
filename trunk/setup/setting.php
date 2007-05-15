@@ -2,8 +2,8 @@
 
 $thIntPassLen = 20;
 $thIntPassRetLimit = 3;
-$thIntCookieExp = 72000;
-$thIntPageLimit = 60;
+$thIntCookieExp = 3600;
+$thIntPageLimit = 10;
 $thThemeColor1 = "#DDE3EB";
 $thThemeColor2 = "#6FCDF9";
 $thThemeColor3 = "#FFFFFF";

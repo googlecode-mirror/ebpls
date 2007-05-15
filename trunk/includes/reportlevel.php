@@ -152,7 +152,7 @@ $getsl = mysql_query("SELECT b.* FROM ebpls_user_sublevel_listings a,
 											$col4 = 1;
 											}
 											
-											if (trim($getd[2])=='Master List of Tax Delinquent List') {
+											if (trim($getd[2])=='Individual Tax Delinquent List') {
 											$col5 = 1;
 											}
 											

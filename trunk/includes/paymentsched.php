@@ -163,7 +163,8 @@ $startd = SelectMultiTable($dbtype,$dbLink,"ebpls_business_enterprise",
                 " business_start_date","where business_id='$business_id' and owner_id='$owner_id'");
 $startdate = FetchArray($dbtype,$startd);
 $startdate =strtotime($startdate['business_start_date']);
-
+$getsassess = @mysql_query("select * from ebpls_buss_preference");
+$getsassess1 = @mysql_fetch_assoc($getsassess);
 
 $predcomp = $prefset['predcomp'];
 
@@ -173,12 +174,19 @@ $exemptedfee=0;
 
 $totaltaxfee = $grandamt;
 $totalfee = $totfee - $exemptedfee;
+
 $totalexptax = $exemptot;
-$totaltax = ($totaltaxfee - $totalfee);
+//echo $getsassess1['sassess']." $totaltax = ($totaltaxfee - ($totalfee + $exemptedfee)) VooDoo"; 	
+if ($getsassess1['sassess'] == '1') {
+$totaltax = $totaltaxfee - $totalfee;
+} else {
+$totaltax = ($totaltaxfee - ($totalfee));
+
+}
 $totalexemptedfee = $exemptedfee;
 $totalremain = ($totaltaxfee) - $totalpayment;
 
-/*
+/*  ice
 echo "<br>Total Tax/Fee = $totaltaxfee <br>
 	   Total Tax = $totaltax <br>
 	   Total Fee = $totalfee <BR>
@@ -188,8 +196,8 @@ echo "<br>Total Tax/Fee = $totaltaxfee <br>
 	   Total check payment = $totalcheck <BR>
 	   Total payment = $totalpayment <BR> 
 	   Balance =<BR>";
-
 */
+
 $businessyr = date('Y', $startdate);
 $currentyr = date('Y');
 
@@ -218,7 +226,7 @@ $currentyr = date('Y');
 					$getqtr = 3;
 					$predqtr = 4;
 				}
-				
+				echo $newtax;
 			} elseif (strtolower($pmode)=='semi-annual') {
 				if ($businessmo<=6) { // no waive
 					$getsem = 0;
@@ -309,7 +317,7 @@ $isnew = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
                                                 business_id='$business_id' and date_create like '$yearnow%' and
                                                 transaction='$stat' and active=1 and recpaid=1");
 $inew = mysql_num_rows($isnew);
-
+if ($inew > 0) {
         if ($havnew>0 and $plspass=='' and $inew>0 and $swaive !='') { //may bago na line
                 $nat=0;
 		$xxo = 1;
@@ -370,7 +378,7 @@ $inew = mysql_num_rows($isnew);
 		$xxo++;
 		}
 		}
-			
+}			
 	//	echo "$newtax ===ungas== $divtax + $divfee + $getsumnun1) - $paymade; <br>";
 			 $isbad = ($divtax + $divfee + $getsumnun1) - $paymade;
 
@@ -515,8 +523,9 @@ $inew = mysql_num_rows($isnew);
 				if ($tempDateToday > $tempStartDate) {
 					$nrmv = $qtrcnt - 1;
 					if ($qtrcntp[$nrmv] != 'TAX WAIVED') {
-						
-						require "includes/business_penalty.php";
+						if ($paidtaxes <= 0) {
+							require "includes/business_penalty.php";
+						}
 					}
 				}
 			} elseif ($stat<>'New') {
@@ -582,11 +591,11 @@ $inew = mysql_num_rows($isnew);
 		$divtax = $totaltax / 4;
 		
 		} else { //will waive tax
+		
 		$waivedtax = ($totaltax / 4) * $getqtr; // remaining tax to pay
 		$divtax = ($totaltax-$waivedtax) / (4 - $getqtr); // distribute tax
 		
 		} // end scenario waive tax
-		
 		$qtrcnt = 0;
 		while ($qtrcnt<4) {
 			$qtrcnt++;
@@ -624,6 +633,102 @@ $inew = mysql_num_rows($isnew);
 				$paystat = 0;
 			}
 			
+			//siningit ko weird von 4/24/07
+			
+					$checknew = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
+                                                business_id='$business_id' and date_create like '$yearnow%' and
+                                                transaction='New' and active=1 and recpaid=0");
+$havnew = mysql_num_rows($checknew);
+$isnew = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
+                                                business_id='$business_id' and date_create like '$yearnow%' and
+                                                transaction='$stat' and active=1 and recpaid=1");
+$inew = mysql_num_rows($isnew);
+if ($inew > 0) {
+        if ($havnew>0 and $plspass=='' and $inew>0 and $swaive !='') { //may bago na line
+                $nat=0;
+		$xxo = 1;
+                while ($newnew = mysql_fetch_assoc($checknew)) {
+                        $nature[$nat] = $newnew[bus_code];
+                        $nat++;
+                        
+			$getmnth[$xxo] = date('m', strtotime($newnew[date_create]));
+			if ($havnew>0){
+			if ($getmnth[$xxo] > 0 and $getmnth[$xxo] <=3) {
+				$getqqtr21 = 1;
+				$getqqtr = 0;
+			} elseif ($getmnth[$xxo] > 3 and $getmnth[$xxo] <=6) {
+				
+				$getqqtr21 = 2;
+                                $getqqtr = 1;
+                        } elseif ($getmnth[$xxo] > 6 and $getmnth[$xxo] <=9) {
+				$getqqtr21 = 3;
+                                $getqqtr = 2;
+                        } elseif ($getmnth[$xxo] > 9 and $getmnth[$xxo] <=12) {
+				$getqqtr21 = 4;
+                                $getqqtr = 3;
+                        }
+			$nbsmonth = date('m');
+                        $getqqtr222 = $qtrcnt;
+				$bis=0;
+				while ($bis<$nat) {
+                        $biset = mysql_query("select * from tempassess
+                                                where owner_id='$owner_id' and business_id='$business_id' and
+                                                natureid='$nature[$bis]' and active=1 and date_create like '$yearnow%'");
+				$newtax = 0;
+				$newfee = 0;
+                                while ($amtbis =mysql_fetch_assoc($biset)) {
+                                        $getfeeid = $amtbis[tfoid];
+                                        $gettotfee = mysql_query("select * from ebpls_buss_tfo where
+                                                                                                tfoid='$getfeeid'");
+                                        $gid = mysql_fetch_assoc($gettotfee);
+                                        if ($gid[taxfeetype]==1) {
+                                                $newtax = $newtax + $amtbis[compval];
+                                        } else {
+                                                $newfee = $newfee + $amtbis[compval];
+                                               
+                                        }
+                                }
+				$bis++;
+				}
+		
+		        $divfee = ($divfee * $gettqqtr) - $newfee;
+		
+			
+			//$newfee = $newfee /(4-$getqqtr);
+			
+			//echo "$getqqtr222 >= $getqqtr21 <BR>";
+			if ($getqqtr222 >= $getqqtr21) {
+				//echo "($divfee / $getqqtr) + $newfee<br>";
+				//$divfee = ($divfee / $getqqtr) + $newfee;
+				if ($pass!=1) {
+				$divfee = $newfee;
+				$pass=1;
+				} else {
+				$divfee=0;
+				}
+			}
+			else {
+			        $divfee = ($divfee / $gettqqtr);
+                        }
+                        $newtax = $newtax * ($ndsearch[0] / 100);
+			$newtax = $newtax / 4;
+			//echo "$divfee $newfee <br>";
+			}
+		$xxo++;
+		}
+		}
+}	
+			
+			
+			
+			
+	
+			
+			
+		//
+			
+			
+			
 			if ($predcomp == '1' and $haveaddpay==1 and $stat=='New') {
 				
 				$isbad = (($divtax * 4) + $divfee) - $paymade;
@@ -635,7 +740,14 @@ $inew = mysql_num_rows($isnew);
 				$isbad = ($divtax + $divfee + $getsumnun1) - $paymade;
 			}
 			$NgTotalTaxFee = $divtax + $divfee;
-		
+			
+			
+		//nadale batang bata	kunyari lang
+		//echo "$qtrcnt < $getqqtr21 <BR>";
+		if ($qtrcnt < $getqqtr21) {
+				$isbad=0;
+			}
+		//
 			//ano quarter na
 				$watqtr = date('m') / 4;
 			
@@ -787,10 +899,10 @@ $inew = mysql_num_rows($isnew);
 				$payd = mysql_query("select * from ebpls_buss_penalty1");
 				
 					$paydue = mysql_fetch_assoc($payd);
-				
-				if ($watqtr< 1 and $q==1) {
+		
+				if ($watqtr< 1 and $q==1 || $q=='') {
 				$paylist = 'First Quarter Payment';
-						;			
+					
 				$paydue = $paydue['qtrdue1'];
 				$paydue = $paydue. " ".date('l', strtotime($paydue."-".date('Y'))); 
 							if ($paystat==1 and $haveaddpay<>1) {
@@ -804,6 +916,7 @@ $inew = mysql_num_rows($isnew);
 										     $payst = 'UNPAID';
 										     $payme=1;
 							}
+						
 				} elseif ($watqtr>=1 and $watqtr<1.75 and $q==2) {
 					$paylist = 'Second Quarter Payment';
 					$paydue = $paydue['qtrdue2'];
@@ -970,7 +1083,9 @@ $inew = mysql_num_rows($isnew);
 					
 					$nrmv = $qtrcnt - 1;
 					if ($qtrcntp[$nrmv] != 'TAX WAIVED') {
-						require "includes/business_penalty.php";
+						if ($paidtaxes <= 0) {
+							require "includes/business_penalty.php";
+						}
 					}
 				}
 			} elseif ($stat<>'New') {
@@ -990,6 +1105,7 @@ $inew = mysql_num_rows($isnew);
 			?></td>
 			<td align=center width=20%><?php echo $payst; ?></td>
 			<?php
+		
 				if ($itemID_==2212 and $unpaid==1) {
 			?>
 			
@@ -1092,7 +1208,9 @@ $cntb = mysql_num_rows($cntbu);
 					
 					if ($seeifpaid1 > 0) {
 						
-						require "includes/business_penalty.php";
+						if ($paidtaxes <= 0) {
+							require "includes/business_penalty.php";
+						}
 					}
 				} elseif (strtotime($yearnow."-".$paydue)<strtotime($renewaldate)) {
 					$haveaddpay=1;		
@@ -1277,6 +1395,7 @@ $havnew121 = mysql_num_rows($checknew121);
                                                 business_id='$business_id' and date_create like '$yearnow%' and
                                                 transaction='$stat' and active=1 and recpaid=1");
 $inew = mysql_num_rows($isnew);
+if ($inew > 0) {
         if ($havnew121>0 and $plspass=='' and $swaive !='') { //may bago na line
                 $nat=0;
                 $xxo = 1;
@@ -1373,6 +1492,7 @@ $inew = mysql_num_rows($isnew);
 			$newtax=0;
 			$op = ($divtax-$newtax);
 		}
+	}
 //echo "($divtax * $divfee) - $newfee $newtax VooDoo";
                
                      //    $isbad = ($divtax + $divfee  + $newtax+ $getsumnun1) - $paymade; //ok sa bayad lahat then add line second Q
@@ -1470,7 +1590,12 @@ $inew = mysql_num_rows($isnew);
 				     	
 			}
 			$semcntp[$semcnt] = $payst;
-			
+			if ($predcomp == '1') {
+				if ($semcnt==2 and $unpaid=0) {
+					$paylist = 'Second Semi-Annual Payment';
+					$amt2pay='0.00';
+				}
+			}
 			?>
 		
 			<tr>
@@ -1490,7 +1615,9 @@ $inew = mysql_num_rows($isnew);
 					$nrmv = $semcnt - 1;
 					if ($semcntp[$nrmv] != 'TAX WAIVED') {
 
-						require "includes/business_penalty.php";
+						if ($paidtaxes <= 0) {
+							require "includes/business_penalty.php";
+						}
 					}
 				}
 			} elseif ($stat != 'New') {
@@ -1592,23 +1719,30 @@ $inew = mysql_num_rows($isnew);
 			} else {
 				$paystat = 0;
 			}
-			   $checknew = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
+   $checknew = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
                                                 business_id='$business_id' and date_create like '$yearnow%' and
-                                                transaction='New' and active=1 ");
+                                                transaction='New' and active=1 and recpaid=0");
 $havnew = mysql_num_rows($checknew);
+$checknew121 = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
+                                                business_id='$business_id' and date_create like '$yearnow%' and
+                                                transaction='New' and active=1");
+$havnew121 = mysql_num_rows($checknew121);
+
  $isnew = mysql_query("select * from tempbusnature where owner_id='$owner_id' and
                                                 business_id='$business_id' and date_create like '$yearnow%' and
                                                 transaction='$stat' and active=1 and recpaid=1");
 $inew = mysql_num_rows($isnew);
-        if ($havnew>0 and $plspass=='' and $inew>0 and $swaive !='') { //may bago na line
+if ($inew > 0) {
+	
+        if ($havnew121>0 and $plspass=='' and $swaive !='') { //may bago na line
+        
                 $nat=0;
                 $xxo = 1;
                 while ($newnew = mysql_fetch_assoc($checknew)) {
                         $nature[$nat] = $newnew[bus_code];
                         $nat++;
                         $getmnth[$xxo] = date('m', strtotime($newnew[date_create]));
-           
-                        if ($havnew>0){
+						if ($havnew>0){
                         if ($getmnth[$xxo] > 0 and $getmnth[$xxo] <=6) {
                                 $getqqtr21 = 1;
                                 $getqqtr = 0;
@@ -1616,7 +1750,7 @@ $inew = mysql_num_rows($isnew);
                                 $getqqtr21 = 2;
                                 $getqqtr = 1;
                         }
-                        $nbsmonth = date('m');
+						$nbsmonth = date('m');
                         $getqqtr222 = $semcnt;
                                 //get fee
                                 $bis=0;
@@ -1624,7 +1758,7 @@ $inew = mysql_num_rows($isnew);
                         $biset = mysql_query("select * from tempassess
                                                 where owner_id='$owner_id' and business_id='$business_id' and
                                                 natureid='$nature[$bis]' and active=1 
-                                                and date_create like '$yearnow%' and transaction like 'ReNew'");
+                                                and date_create like '$yearnow%' and transaction like 'New'");
                                 $newtax = 0;
                                 $newfee = 0;
                                 while ($amtbis =mysql_fetch_assoc($biset)) {
@@ -1649,10 +1783,12 @@ $inew = mysql_num_rows($isnew);
                         
                         //$newfee = $newfee /(2-$getqqtr);
                         if ($getqqtr222 >= $getqqtr21) {
-                                $divfee = ($divfee / $gettqqtr) + $newfee;
+                                $divfee = $divfee + $newfee;
+                               // $divfee =  $newfee;
                         }else {
-                                $divfee = ($divfee / $gettqqtr);
+                                $divfee = ($divfee / $getqqtr21)+ $newfee;
                         }
+
                         $newtax = $newtax / 2;
                         
                         }
@@ -1660,7 +1796,9 @@ $inew = mysql_num_rows($isnew);
                 }
 		} else {
 			$newtax=0;
+		
 		}
+	}
 
                
 				if ($predcomp == '1' and $haveaddpay>=1 and $stat=='New') {
@@ -1672,9 +1810,15 @@ $inew = mysql_num_rows($isnew);
 				$isbad = (($divtax * 2) + $divfee);
 				$nbong = 2;
 			} else {
-				$isbad = ($divtax + $divfee + $getsumnun1) - $paymade;	
+				
+				$isbad = ($divtax + $divfee + $getsumnun1 ) - $paymade;	
 				
 			} 
+			//echo "$semcnt==2 and $getqqtr21==1 <br>";
+			if ($semcnt==1 and $getqqtr21==2) {//2nd q apply new line
+				$isbad=0;
+			}
+			
 		//echo "$isbad $divtax=$divfee==$getsumnun1===$newtax====$paymade";	
 			
 		//	$isbad = ($divtax + $divfee) - $paymade;
@@ -1834,6 +1978,7 @@ $inew = mysql_num_rows($isnew);
 					$payst = "PAID";
 				}
 			}
+		
 			if ($isbad > 0) {
 				$payst = "UNPAID";
 				$amt2pay = $isbad;
@@ -1863,8 +2008,16 @@ $inew = mysql_num_rows($isnew);
 			<tr>
 			<td > <?php echo $paylist; ?></td>
 			<td  width=20%><?php echo $paydue; ?></td>
-			<td align=right width=20%><?php echo number_format($amt2pay,2); 
+			<td align=right width=20%><?php
+			//if ($getqqtr21 == $semcnt) {
+			//	$amt2pay = $amt2pay + $newfee;
+			//}
+			
+			echo number_format($amt2pay,2); 
 			//will add penalty to divtax
+			if ($amt2pay <= 0) {
+				$unpaid = 0;
+			}
 			$ramt2 = $amt2pay;
  			if ($semcnt>1 and $stat=='New') {
 				$currdate = date('m-d')."-".date('Y');
@@ -1876,10 +2029,13 @@ $inew = mysql_num_rows($isnew);
 				$tempDateToday = date('Y-m-d');
  				//if ($nStartDate < $renewaldate) {
 				if ($tempDateToday > $tempStartDate) {
-	 				
+	 			
 					$nrmv = $semcnt - 1;
+					
 					if ($semcntp[$nrmv] != 'TAX WAIVED') {
-						require "includes/business_penalty.php";
+						if ($paidtaxes <= 0) {
+							require "includes/business_penalty.php";
+						}
 					}
 				} elseif (strtotime($yearnow."-".$paydue)<strtotime($renewaldate)) {
 					
@@ -1984,7 +2140,9 @@ $inew = mysql_num_rows($isnew);
 				if ($tempDateToday > $tempStartDate) {
 					$nrmv = $semcnt - 1;
 					if ($semcntp[$nrmv] != 'TAX WAIVED') {
-						require "includes/business_penalty.php";
+						if ($paidtaxes <= 0) {
+							require "includes/business_penalty.php";
+						}
 					}
 				}
 			} elseif ($stat<>'New') {
@@ -2258,12 +2416,21 @@ $otax = $totaltax;
 			<td align=right width=20%><?php echo number_format($amt2pay,2);
 			//will add penalty to divtax
 			$ramt2 = $amt2pay;
- 			if ($stat<>'New') {
-				
-				require "includes/business_penalty.php";
-				
-			}
+			$tempStartDate = date('Y-m-d', strtotime($nStartDate) + (60*60*24*30));
+			$tempDateToday = date('Y-m-d');
+ 			//if ($q>1 and $stat=='New') {
+			if ($stat=='New') {
+				$currdate = date('m-d')."-".date('Y');
+ 				//if ($nStartDate < $renewaldate) {
+				if ($tempDateToday > $tempStartDate) {
+					if ($paidtaxes <= 0) {
+						require "includes/business_penalty.php";
+					}
+				}
+			} 
 			if ($stat != "New") {
+				$divtax = $totaltax;
+				require "includes/business_penalty.php";
 				include_once "includes/backtax_compute.php";
 			}
 			include "includes/busgrand.php";
@@ -2304,6 +2471,17 @@ $otax = $totaltax;
 			<td align=right width=20%><?php echo number_format($amt2pay,2);?></td>
 			<td align=center width=20%><?php echo $payst; ?></td>
 			<?php
+			if ($stat<>'New') {
+				
+				require "includes/business_penalty.php";
+				
+			}
+			if ($stat != "New") {
+				include_once "includes/backtax_compute.php";
+			}
+			include "includes/busgrand.php";
+			include "includes/total_compute.php";
+			
 				if ($itemID_==2212) {
 			?>
 			

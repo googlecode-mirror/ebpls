@@ -902,11 +902,14 @@ $wil = UpdateQuery($dbtype,$dbLink,"tempassess","active=1",
 	                             
 $wil = UpdateQuery($dbtype,$dbLink,"tempbusnature","active=0",
 	                             "owner_id ='$owner_id' and business_id ='$business_id'");
+$cht = mysql_query("select distinct(bus_code)  from tempbusnature where owner_id='$owner_id' and business_id='$business_id'");
+$cnte = mysql_num_rows($cht);
+
 $wil = UpdateQuery($dbtype,$dbLink,"tempbusnature","active=1",
-	                             "owner_id ='$owner_id' and business_id ='$business_id' and date_create like '$yearnow2%'");
+	                             "owner_id ='$owner_id' and business_id ='$business_id' and date_create like '$yearnow2-12%' limit $cnte");
 
 	
-	                             
+$stat='ReNew';	                             
 	                             ?>
 
 <body onload="alert('Assessment Process Completed'); parent.location='index.php?part=4&class_type=Permits&itemID_=1221&owner_id=<?php echo $owner_id; ?>&com=<? echo $stat;?>&permit_type=Business&stat=<? echo $stat;?>&business_id=<?php echo $business_id; ?>&busItem=Business&predq=1';"></body>

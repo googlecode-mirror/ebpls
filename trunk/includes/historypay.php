@@ -62,7 +62,7 @@ while ($getcheck=FetchRow($dbtype,$getchek))
 	if (date('Y',strtotime($getcheck[4]))==date('Y')) {
 $getchecknf = number_format($getcheck[3], 2);                                                                                                               
 print "<tr>
-<td>$getcheck[2]</td><td align=right>$getchecknf</td>
+<td>".stripslashes($getcheck[2])."</td><td align=right>$getchecknf</td>
 <td>$getcheck[5]</td><td>$getcheck[6]</td>
 <td>";
 

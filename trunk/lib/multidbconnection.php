@@ -33,7 +33,7 @@ Function Open($dbType, $connectType = "c", $connect, $username = "", $password =
     }
 
 
-Function Query1($dbType,$idCon,$query)
+Function Query1($dbType,$idCon,$query) 
 {
 
     Switch ($dbType) {
@@ -41,7 +41,7 @@ Function Query1($dbType,$idCon,$query)
     $r = mssql_query($query, $idCon);
     Break;
     Case "mysql":
-    $r = mysql_query($query, $idCon);
+    $r = @mysql_query($query, $idCon)or die("Query Error: ".mysql_error());
     Break;
     Case "pg":
     $r = pg_exec($idCon, $query);
@@ -51,13 +51,13 @@ Function Query1($dbType,$idCon,$query)
     Break;
 	}
     return $r;
-
+		
 }
 
 Function InsertQuery($dbType,$idCon,$tblName,$fields,$values)
 {
-
-//echo "insert into $tblName $fields values ($values) <BR>";
+    
+//echo "insert into $tblName $fields values ($values) <BR>";  
     Switch ($dbType) {
     Case "mssql":
     $r = mssql_query("insert into $tblName $fields values ($values)", $idCon);
@@ -76,12 +76,12 @@ Function InsertQuery($dbType,$idCon,$tblName,$fields,$values)
     Break;
         }
     return $r;
-
+                                                                                                 
 }
 
 Function UpdateQuery($dbType,$idCon,$tblName,$values,$where)
 {
-
+                                                                                                 
     Switch ($dbType) {
     Case "mssql":
     $r = mssql_query("update $tblName set $values where $where", $idCon);
@@ -99,12 +99,12 @@ Function UpdateQuery($dbType,$idCon,$tblName,$values,$where)
     Break;
         }
     return $r;
-
+                                                                                                 
 }
 
 Function DeleteQuery($dbType,$idCon,$tblName,$where)
 {
-
+                                                                                                 
     Switch ($dbType) {
     Case "mssql":
     $r = mssql_query("delete from $tblName where $where", $idCon);
@@ -122,7 +122,7 @@ Function DeleteQuery($dbType,$idCon,$tblName,$where)
     Break;
         }
     return $r;
-
+                                                                                                 
 }
 
 
@@ -131,8 +131,8 @@ Function DeleteQuery($dbType,$idCon,$tblName,$where)
 
 Function FetchRow($dbType,$query)
 {
- Switch ($dbType)
-    {
+ Switch ($dbType) 
+    { 
     Case "mssql":
     $r = mssql_fetch_row($query);
     Break;
@@ -145,7 +145,7 @@ Function FetchRow($dbType,$query)
     Default:
     $r = False;
     Break;
-    }
+    }	
  return $r;
 
 }
@@ -212,15 +212,15 @@ Function NumRows($dbType, $result)
 
 Function SelectDataWhere($dbType,$idCon,$tblName,$where)
 {
- Switch ($dbType)
-    {
+ Switch ($dbType) 
+    {	
     Case "mssql":
     $r = mssql_query("select * from $tblName $where",$idCon);
     Break;
     Case "mysql":
 //echo "select * from $tblName $where<br>";
     $r = @mysql_query("select * from $tblName $where",$idCon);
-
+		
     Break;
     Case "pg":
     $r = pg_exec("select * from $tblName $where",$idCon);
@@ -241,7 +241,7 @@ Function SelectMultiTable($dbType,$idCon,$tblName,$fields,$where)
     Break;
     Case "mysql":
 //echo "select $fields from $tblName $where<br><br>";
-    $r = @mysql_query("select $fields from $tblName $where",$idCon)
+    $r = @mysql_query("select $fields from $tblName $where",$idCon) 
 		or die ("");
     $s = mysql_num_rows($r);
 //echo "num rows = $s<br>";

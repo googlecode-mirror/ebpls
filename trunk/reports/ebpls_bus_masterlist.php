@@ -117,7 +117,7 @@ $dateprinted = date('Y-m-d');
 $pdf->SetFont('Arial','B',8);
 $pdf->SetY($Y_Label_position);
 $pdf->SetX(5);
-$pdf->Cell(340,5,$dateprinted,0,1,'R');
+$pdf->Cell(340,5,'',0,1,'R');
 $pdf->SetFont('Arial','B',6);
 $pdf->SetX(5);
 $pdf->Cell(10,5,'NO.',1,0,'C');
@@ -138,6 +138,25 @@ $pdf->Cell(35,5,'ANNUAL GROSS SALES',1,1,'C');
 	} else {
 		$brgy_name = "$brgy_name";
 	}
+	if ($trans == 'Retire') {
+		$result = mysql_query ("select distinct (c.business_permit_code) as pid, a.business_name,
+        concat(a.business_lot_no, ' ', a.business_street, ' ', f.barangay_desc, ' ',
+        g.city_municipality_desc, ' ', h.province_desc, ' ', a.business_zip_code) as bus_add,
+        concat(b.owner_first_name, ' ', b.owner_middle_name, ' ', b.owner_last_name) as fulln,
+	b.owner_id, a.business_id
+        from ebpls_business_enterprise a, ebpls_owner b, ebpls_business_enterprise_permit c,
+	tempbusnature d, ebpls_buss_nature e , ebpls_barangay f , ebpls_city_municipality g , ebpls_province h where
+        d.bus_code like '$business_nature_code%'
+        and d.cap_inv between '$cap_inv1' and '$cap_inv2'
+        and d.bus_code = e.natureid and a.business_barangay_code = f.barangay_code and g.city_municipality_code = a.business_city_code 
+        and h.province_code = a.business_province_code and e.psiccode like '$psic%'
+        and b.owner_id = a.owner_id and a.business_id = c.business_id and
+        b.owner_last_name like '$owner_last%' and
+        c.transaction like '$trans%' and b.owner_id = d.owner_id and
+	a.business_id=d.business_id
+	and c.application_date between '$date_from 00:00:00' and '$date_to 23:59:59'
+        and a.business_barangay_code  like '$brgy_name' order by a.business_name ASC");
+	} else {
 	$result = mysql_query ("select distinct (c.business_permit_code) as pid, a.business_name,
         concat(a.business_lot_no, ' ', a.business_street, ' ', f.barangay_desc, ' ',
         g.city_municipality_desc, ' ', h.province_desc, ' ', a.business_zip_code) as bus_add,
@@ -155,6 +174,8 @@ $pdf->Cell(35,5,'ANNUAL GROSS SALES',1,1,'C');
 	a.business_id=d.business_id
 	and c.application_date between '$date_from 00:00:00' and '$date_to 23:59:59'
         and a.business_barangay_code  like '$brgy_name' order by a.business_name ASC");
+	}
+	
 
 
 	$i = 1;
@@ -168,11 +189,17 @@ $pdf->Cell(35,5,'ANNUAL GROSS SALES',1,1,'C');
 		
 		$pdf->Cell(150,5,$re[business_name]."/".$re[bus_add]."/".$re[fulln],1,0,'L');
 		
-	
-		$getline = mysql_query ("select * from tempbusnature a, ebpls_buss_nature b
+		if ($trans == 'Retire') {
+			$getline = mysql_query ("select * from tempbusnature a, ebpls_buss_nature b
+								 where a.owner_id='$re[owner_id]' and
+								 a.business_id='$re[business_id]' and a.bus_code=b.natureid and retire ='1'");
+		} else {
+			$getline = mysql_query ("select * from tempbusnature a, ebpls_buss_nature b
 								 where a.owner_id='$re[owner_id]' and
 								 a.business_id='$re[business_id]' and a.active=1
 								 and a.bus_code=b.natureid");
+		}
+		
 		while ($getl = mysql_fetch_assoc($getline)) {
 			
 		$pdf->SetX(190);

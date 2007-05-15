@@ -215,7 +215,6 @@ $pdf=new PDF('P','mm','A4');
 							$pdf->Cell(340,5,$dateprinted,0,1,'R');
 							$pdf->SetFont('Arial','B',10);
 							$pdf->SetX(5);
-/* start mulitcell */
 
 							$pdf->SetX(15);		
 							$pdf->Cell(70,5,strtoupper($re[business_name]),0,1,'L');
