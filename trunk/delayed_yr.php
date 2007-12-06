@@ -1068,7 +1068,7 @@ $res = InsertQuery($dbtype,$dbLink,"ebpls_business_enterprise_permit","
 				application_date,input_by, transaction, 
 				paid, steps, pin, active)",
                 		"$business_id, $owner_id,'$yearnow', 
-				now(), '$usern', 'ReNew', 
+				now(), '$usern', '$stat', 
 				0,'For Assessment', '$pin', 1");
 	                             
 	                             ?>

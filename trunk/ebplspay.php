@@ -219,17 +219,20 @@ if ($new_or==1) {
 	$owner_id = $getdet[trans_id];
 	$cmd = $getdet[or_entry_type];	
 	$or_no = $old_or;
-	
+	$getordet = @mysql_query("select * from ebpls_transaction_payment_or where or_no='$or_no'");
+	$getORdet = @mysql_fetch_assoc($getordet);
 	$upor = mysql_query("update ebpls_transaction_payment_or set payment_code='$or_new' where
 							or_no='$or_no'");
-	$upor = mysql_query("update comparative_statement set or_no='$or_new' where
-							or_no='$or_no'");						
+	$upor = @mysql_query("update comparative_statement set or_no='$or_new' where
+							or_no='$getORdet[payment_code]'");
+	$uppd = @mysql_query("update ebpls_payment_details set or_no='$or_new' where
+							or_no='$getORdet[payment_code]'");
 	$insor = mysql_query("insert into cancel_or values('','$or_no', '$or_new', '$reasoncan',now(),'$usern')");
 	$insor = mysql_query("insert into cancel_or values('','$or_no', '$or_new', '$reasoncan',now(),'$usern')");
 //robert	
 	?>
-<body onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
-<body onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
+<body onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cn=<?php echo $or_new; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
+
 <?php
 						
 } elseif ($new_or==2) {
@@ -262,7 +265,17 @@ $chkreference = FetchRow($dbtype,$chkreference);
 							or_no='$or_no'");
 	$upor = mysql_query("delete from  ebpls_transaction_payment_or_details where
 							 or_no='$or_no'");
-	$upor = mysql_query("delete from  comparative_statement where or_no='$pode'");	
+	$uppd = mysql_query("delete from  ebpls_payment_details where
+							 or_no='$pode'");
+	$upcs = mysql_query("delete from  comparative_statement where
+							 or_no='$pode'");
+	$sampledate = date('Y'); 
+	$checkotherp = @mysql_query("select * from ebpls_payment_details where owner_id = '$owner_id' and business_id = '$business_id' and date_create like '$sampledate%'");
+	$Checkotherp = @mysql_num_rows($checkotherp);
+	if ($Checkotherp == 0) {
+		$updatepermit = @mysql_query("update ebpls_business_enterprise_permit set paid = '0' where owner_id = '$owner_id' and business_id = '$business_id' and active = '1'");
+		$updateline = @mysql_query("update tempbusnature set recpaid = '0' where owner_id = '$owner_id' and business_id = '$business_id' and active = '1'");
+	}
 	?>
 <body onLoad='opener.location.reload(true); window.close();'></body>
 <?php
@@ -675,7 +688,7 @@ IF ($changestat<>'CLEARED') {
                                         "check_id=$or1");
 						}
 				}
-
+				
 			if ($guddah<>1) {
 			$updateit = UpdateQuery($dbtype,$dbLink, $permittable,
 					"steps='For Releasing'",

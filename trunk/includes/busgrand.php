@@ -68,6 +68,7 @@
 					}
 					$setdef2 = 1;
                                 }
+								$NgTotalTaxFee = $NgTotalTaxFee - $nbAwas;
 				$busvalues = "'', '$owner_id', '$business_id', '$NgTotalTaxFee', '$nSurchargeAmount', '$nInterestAmount', '$nbacktax', '$divtax', '', '1', '$stat', '$totalexptax', '$yearfornow', '$pmode', '$paympart'";
 			}
 			if ($nbong == '2' and $stat == 'New') {
@@ -81,7 +82,7 @@
 					$nBusTax = round($divtax,2);
 					$nBusFee = $amt2pay - ($divtax + $nbacktax + $nSurchargeAmount + $nInterestAmount);
 				}
-				$nhbusgrand = $amt2pay - ($nbacktax + $nSurchargeAmount + $nInterestAmount);
+				$nhbusgrand = ($amt2pay - ($nbacktax + $nSurchargeAmount + $nInterestAmount)) - $nbAwas;
 				$busvalues = "'', '$owner_id', '$business_id', '$nhbusgrand', '$nSurchargeAmount', '$nInterestAmount', '$nbacktax', '$totaltax', '', '1', '$stat', '$totalexptax', '$yearfornow', '$pmode', '$paympart'";
 				$insertbus = InsertQuery($dbtype,$dbLink,"bus_grandamt","",$busvalues);
 			} else {

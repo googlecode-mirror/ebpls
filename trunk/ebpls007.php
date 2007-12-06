@@ -111,10 +111,10 @@ if (empty($frmCorpNames)) {
         echo "<input type=\"BUTTON\" name=\"frmBtnAdd\" value=\"Add User\" onClick=\"javascript:
 popwin('" . getFilename(eBPLS_PAGE_USER_ADD) . "?frmDomain=$strCurDomain', 'adduser');\"> &nbsp;
 &nbsp;\n";
- echo "<input type=\"BUTTON\" name=\"frmBtnEdit\" value=\"Edit User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_UPDATE) . "?frmThreadId='+document.frmFormList.frmThreadId.value+'&frmDomain=$strCurDomain', 'edituser');\"> &nbsp; &nbsp;\n";
+ echo "<input type=\"BUTTON\" name=\"frmBtnEdit\" value=\"Edit User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_UPDATE) . "?frmThreadId='+document._FRM.frmThreadId.value+'&frmDomain=$strCurDomain', 'edituser');\"> &nbsp; &nbsp;\n";
         echo "<input type=\"SUBMIT\" name=\"frmBtnKick\" value=\"Kick User\"> &nbsp; &nbsp;\n";
         echo "<input type=\"SUBMIT\" name=\"frmBtnUnlock\" value=\"Unlock User\"> &nbsp; &nbsp;\n";
-        echo "<input type=\"BUTTON\" name=\"frmBtnDelete\" value=\"Delete User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_DELETE) . "?frmThreadId='+document.frmFormList.frmThreadId.value+'&frmDomain=$strCurDomain', 'deleteuser');\"> &nbsp; &nbsp;</span>\n";
+        echo "<input type=\"BUTTON\" name=\"frmBtnDelete\" value=\"Delete User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_DELETE) . "?frmThreadId='+document._FRM.frmThreadId.value+'&frmDomain=$strCurDomain', 'deleteuser');\"> &nbsp; &nbsp;</span>\n";
   */                                                                                               
 
 	echo $objDbTable->getDbHtmlTable(
@@ -128,9 +128,9 @@ popwin('" . getFilename(eBPLS_PAGE_USER_ADD) . "?frmDomain=$strCurDomain', 'addu
 	echo "<input type=\"HIDDEN\" name=\"frmBtnKick\" >\n";
 	echo "<input type=\"HIDDEN\" name=\"frmBtnUnlock\" >\n";
 	echo "<input type=\"BUTTON\" name=\"frmBtnAdd\" value=\"Add User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_ADD) . "?frmDomain=$strCurDomain', 'adduser');\"> &nbsp; &nbsp;\n";
-	//echo "<input type=\"BUTTON\" name=\"frmBtnEdit\" value=\"Edit User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_UPDATE) . "?frmThreadId='+document.frmFormList.frmThreadId.value+'&frmDomain=$strCurDomain', 'edituser');\"> &nbsp; &nbsp;\n";
+	//echo "<input type=\"BUTTON\" name=\"frmBtnEdit\" value=\"Edit User\" onClick=\"javascript: popwin('" . getFilename(eBPLS_PAGE_USER_UPDATE) . "?frmThreadId='+document._FRM.frmThreadId.value+'&frmDomain=$strCurDomain', 'edituser');\"> &nbsp; &nbsp;\n";
 	echo "<input type=\"BUTTON\" name=\"frmBtnEdit\" value=\"Edit User\" onClick=\"javascript: EditUserCheck();\"> &nbsp; &nbsp;\n";
-	echo "<input type=\"BUTTON\" name=\"BtnKick\" value=\"Kick User\" onClick=\"javascript: KickUser();\"> &nbsp; &nbsp;\n";
+	echo "<input type=\"BUTTON\" name=\"BtnKick\" value=\"Kick User\" onClick=\"KickUser();\"> &nbsp; &nbsp;\n";
 	echo "<input type=\"BUTTON\" name=\"BtnUnlock\" value=\"Unlock User\" onClick=\"javascript: UnlockUser();\"> &nbsp; &nbsp;\n";
 	echo "<input type=\"BUTTON\" name=\"frmBtnDelete\" value=\"Delete User\" onClick=\"javascript: DeleteUserCheck();\"> &nbsp; &nbsp;\n";
 	echo "</form>\n";
@@ -141,30 +141,30 @@ popwin('" . getFilename(eBPLS_PAGE_USER_ADD) . "?frmDomain=$strCurDomain', 'addu
 <script language="Javascript">
 function DeleteUserCheck()
 {
-	var frmFormList = document.frmFormList;
-	if (isNaN(frmFormList.frmThreadId.value) == true)
+	var _FRM = document._FRM;
+	if (isNaN(_FRM.frmThreadId.value) == true)
 	{
 		alert("Select Valid User.");
 		return false;
 	}
-	popwin('<? echo getFilename(eBPLS_PAGE_USER_DELETE);?>?frmThreadId='+document.frmFormList.frmThreadId.value+'&frmDomain=<? echo $strCurDomain;?>', 'deleteuser');
+	popwin('<? echo getFilename(eBPLS_PAGE_USER_DELETE);?>?frmThreadId='+document._FRM.frmThreadId.value+'&frmDomain=<? echo $strCurDomain;?>', 'deleteuser');
 	return true;
 }
 function EditUserCheck()
 {
-	var frmFormList = document.frmFormList;
-	if (isNaN(frmFormList.frmThreadId.value) == true)
+	var _FRM = document._FRM;
+	if (isNaN(_FRM.frmThreadId.value) == true)
 	{
 		alert("Select Valid User.");
 		return false;
 	}
-	popwin('<? echo  getFilename(eBPLS_PAGE_USER_UPDATE);?>?frmThreadId='+frmFormList.frmThreadId.value+'&frmDomain=<? echo $strCurDomain;?>', 'edituser');
+	popwin('<? echo  getFilename(eBPLS_PAGE_USER_UPDATE);?>?frmThreadId='+_FRM.frmThreadId.value+'&frmDomain=<? echo $strCurDomain;?>', 'edituser');
 	return true;
 }
 function UnlockUser()
 {
-	var frmFormList = document.frmFormList;
-	if (isNaN(frmFormList.frmThreadId.value) == true)
+	var _FRM = document._FRM;
+	if (isNaN(_FRM.frmThreadId.value) == true)
 	{
 		alert("Select Valid User.");
 		return false;
@@ -172,18 +172,18 @@ function UnlockUser()
 	confirmunlock = confirm("Unlock User Account?");
 	if (confirmunlock == true)
 	{
-		frmFormList.frmBtnUnlock.value = "Unlock User";
+		_FRM.frmBtnUnlock.value = "Unlock User";
 	} else {
 		alert("Transaction Cancelled!!");
 		return false;
 	}
-	frmFormList.submit();
+	_FRM.submit();
 	return true;
 }
 function KickUser()
 {
-	var frmFormList = document.frmFormList;
-	if (isNaN(frmFormList.frmThreadId.value) == true)
+	var _FRM = document._FRM;
+	if (isNaN(_FRM.frmThreadId.value) == true)
 	{
 		alert("Select Valid User.");
 		return false;
@@ -191,17 +191,17 @@ function KickUser()
 	confirmkick = confirm("Kick User Account?");
 	if (confirmkick == true)
 	{
-		
-		frmFormList.frmBtnKick.value = "Kick User";
+		_FRM.frmBtnKick.value = "Kick User";
 	} else {
 		alert("Transaction Cancelled!!");
 		return false;
 	}
-	frmFormList.submit();
+	_FRM.submit();
 	return true;
 }
 </script>
 <?
+
 // **********************  END HERE  **********************
 
 // *** Module Dependent User-defined Functions ***
@@ -240,11 +240,11 @@ function decodeGroup($intGroup)
 function setRadioButton($intId)
 {
 	global $intLoopCtr;
-	return "<input type=\"RADIO\" name=\"frmId_$intLoopCtr\" value=\"$intId\" onClick=\"document.frmFormList_$intLoopCtr.frmThreadId_$intLoopCtr.value=$intId;\">";
+	return "<input type=\"RADIO\" name=\"frmId_$intLoopCtr\" value=\"$intId\" onClick=\"document._FRM_$intLoopCtr.frmThreadId_$intLoopCtr.value=$intId;\">";
 }
 function setAdminRadioButton($intId)
 {
-	return "<input type=\"RADIO\" name=\"frmId\" value=\"$intId\" onClick=\"document.frmFormList.frmThreadId.value=$intId;\">";
+	return "<input type=\"RADIO\" name=\"frmId\" value=\"$intId\" onClick=\"document._FRM.frmThreadId.value=$intId;\">";
 }
 function decodeLockField($strDateTime)
 {

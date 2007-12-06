@@ -15,7 +15,7 @@ $thIntCronIntervalExp = 28800;
 $thDbHost = "localhost";
 $thDbUser = "root";
 $thDbUKey = "elguebpls";
-$thDbName = "ebpls";
+$thDbName = "ebplssample";
 $thDbLink = 0;
 $DBprefix = "ebpls_buss";
 

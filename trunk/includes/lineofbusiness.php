@@ -233,7 +233,7 @@ if ($business_id=='') {
 				<td align="left" valign="top" class='normal'>&nbsp;
 <?php
 		if ($stat=='New' || $stat=='ReNew' and $watdo=='') {
-                echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature ','natureid','naturedesc',$getit[bus_code], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id' and bus_code<>$getit[bus_code]) order by naturedesc");
+                echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature ','natureid','naturedesc',$getit[bus_code], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id' and bus_code<>$getit[bus_code] and retire < 1) order by naturedesc");
 		} else {
 		echo $getit[bus_nature];
 		}

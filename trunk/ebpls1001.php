@@ -249,7 +249,7 @@ if ($ctc_code=='') {
 				ctc_place_of_birth, ctc_basic_tax, ctc_additional_tax1, ctc_additional_tax2, ctc_additional_tax3, 
 				ctc_tax_interest, ctc_tax_exempted, ctc_tax_due) values 
 				('$ctc_code', '$ctc_first_name', '', '$ctc_middle_name', '$ctc_last_name', 
-				'$ctc_birth_date', '$ctc_address', '$ctc_gender', '$ctc_civil_status', '$ctc_acct_code', 
+				'$ctc_birth_day', '$ctc_address', '$ctc_gender', '$ctc_civil_status', '$ctc_acct_code', 
 				'$ctc_place_issued', now(), $tdate, '$ctc_tin_no', '$ctc_occupation', 
 				'$ctc_height', '$ctc_weight', '$ctc_icr_no', '$ctc_citizenship', $ctc_application_fee, 
 				'$ctc_place_of_birth', $ctc_basic_tax, $ctc_additional_tax1, $ctc_additional_tax2, $ctc_additional_tax3, 

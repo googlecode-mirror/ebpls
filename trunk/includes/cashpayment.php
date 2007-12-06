@@ -62,6 +62,7 @@ if ($cmd=='CHECK') {
 					'$pay_mode', '$ntax', '$fee', '$penamt', '$surcharge', 
  					'$amtpay', '$exemption', '$checkf', '$sbacktax', 
 					'$yearnow', '$orno', now(),'$monthnow'");
+			include "includes/payment_details.php";
 				
 				if ($cmd=='CHECK') {
                                 $insertcheck = InsertQuery($dbtype,$dbLink,
@@ -155,7 +156,7 @@ $updatepmode =  UpdateQuery($dbtype,$dbLink,"ebpls_business_enterprise",
 						if ($chkit==0) {
 						$getfee = SelectDataWhere($dbtype,$dbLink,
 						"ebpls_buss_tfo","where	tfoindicator=1 and 
-						taxfeetype=2 and tfostatus='A'");
+						taxfeetype!=1 and tfostatus='A'");
 
 						while ($getf=FetchRow($dbtype,$getfee))
 						{
@@ -166,10 +167,12 @@ $updatepmode =  UpdateQuery($dbtype,$dbLink,"ebpls_business_enterprise",
 
 						}
 						}
+						$updatebusnature=UpdateQuery($dbtype,$dbLink,"tempbusnature",
+                 "linepaid=5,recpaid=1","owner_id=$owner_id and business_id=$business_id and active='1'");
 					
                                                                               
 ?>
-                        <body onunload='opener.location.reload(true); ' onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&stat=<?php echo $istat; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
+                        <body onunload='opener.location.reload(true); ' onLoad='window.open("ebplsreceipt.php?owner_id=<?php echo $owner_id; ?>&business_id=<?php echo $business_id;?>&or_no=<?php echo $or_no; ?>&cn=<?php echo $orno; ?>&cmd=<?php echo $cmd; ?>&paymde=<?php echo $paymde; ?>&nature_id=<?php echo $nature_id; ?>&stat=<?php echo $istat; ?>&amtpay=<?php echo $amtpay; ?>");opener.location.reload(true); window.close();'></body>
                        
 <?php
 

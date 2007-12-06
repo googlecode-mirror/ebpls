@@ -185,7 +185,7 @@ if ($ctc_process=='SAVE') {
 					('$ctc_code', '$ctc_place_issued', now(), $yearnow, 
 					'$ctc_company', '', '$ctc_tin_no', '$ctc_organization_type', '$ctc_place_of_incorporation', 
 					'$ctc_business_nature', $ctc_basic_tax, $ctc_additional_tax1, $ctc_additional_tax2, $ctc_total_interest_due, 
-					'$ctc_company_address', now(), $ctc_total_amount_due,'$ctc_acct_code')") or die(mysql_error());
+					'$ctc_company_address', '$ctc_incorporation_day', $ctc_total_amount_due,'$ctc_acct_code')") or die(mysql_error());
 		$ctc_process='';
 		$comm='ctc';
 		$_search='';

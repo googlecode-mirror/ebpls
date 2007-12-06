@@ -106,8 +106,7 @@ function iCheckValues1() {
                                                 $ctc_company = $ctcrecord[2];
 //                                                $ctc_company_address=$ctcrecord[5].' '.$ctcrecord[6].' '.$ctcrecord[7].' '.$ctcrecord[8].' '.$ctcrecord[9].' '.$ctcrecord[10];
                                                 $ctc_tin_no = $ctcrecord[24];
-                                                $ctc_tin_no = $ctcrecord[15];
-                                                $ctc_birth_date = $ctcrecord[21];
+                                                $ctc_birth_date = $ctcrecord[27];
                                                 $ctc_business_name = $ctcrecord[2];
 						$getbarangay = mysql_query("select barangay_desc
 from ebpls_barangay where barangay_code='$ctcrecord[7]'");
@@ -144,7 +143,8 @@ from ebpls_city_municipality  where city_municipality_code='$ctcrecord[11]'");
 				&nbsp;<input name="ctc_company_address" size=50 maxlength=128 value='<?php echo $ctc_company_address;?>'>
 				</td>
 				<td align="" valign="top"  bgcolor='#ffffff' width=25% colspan=2><sup class='suptitle'>&nbsp;DATE OF REG./INCORPORATION<BR>
-				&nbsp;&nbsp;<?php set_form_date($ctc_incorporation_date) ?>
+				&nbsp;&nbsp;<?php echo date('m-d-Y', strtotime($ctc_birth_date)); ?>
+				<input type='hidden' name='ctc_incorporation_day' value=<?php echo date('m-d-Y', strtotime($ctc_birth_date));?>>
 				</td>
 			</tr>
 		</table>

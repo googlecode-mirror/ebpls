@@ -71,7 +71,7 @@ $intstr = substr($workstr,strlen - 2, 2);
 $workint = (integer)($intstr);
 if ($workint == 0)
   {
-  $moneystr .= "Zero";
+  $moneystr .= " Zero";
   }
 else
   {

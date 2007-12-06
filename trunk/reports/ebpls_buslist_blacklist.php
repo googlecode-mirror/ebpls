@@ -49,7 +49,7 @@ $getsignatories1 = @mysql_fetch_array($getsignatories);
 			<img src='../images/ebpls_logo.jpg' width="100" height="100">
 		</td>
 		<td align=center>
-			<font size=5><b><? echo $getprov[0];?></b></font>
+			<font size=5><b>Province of <? echo $getprov[0];?></b></font>
 		</td>
 	</tr>
 	<tr>

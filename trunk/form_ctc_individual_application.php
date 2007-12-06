@@ -128,6 +128,7 @@ function iCheckValues1() {
                                 echo $ctc_place_issued;
                                 ?></td>
  <input type='hidden' name=ctc_place_issued value='<?php echo $ctc_place_issued;?>'>
+ 
 
 				<td align="center" valign="top"  bgcolor='#ffffff' width=35% ><pre><sup class='suptitle'>DATE ISSUED</sup><BR><font class=ctc_date><?php echo $datetoday;?></font></pre></td>
 				<td align="center" valign="top" width=20% height=20  bgcolor='#ffffff' class='normaltax'>TAX PAYER'S COPY</td>
@@ -184,6 +185,7 @@ from ebpls_city_municipality  where city_municipality_code='$ctcrecord[10]'");
 						<td><input name="ctc_middle_name" value="<?php echo $ctc_middle_name;?>" size=20 maxlength=32 readonly></td>
 					</tr>
 					</table>
+					<input type='hidden' name='ctc_birth_day' value=<?php echo date('m-d-Y', strtotime($ctc_birth_date));?>>
 				</td>
 
 
@@ -217,7 +219,7 @@ from ebpls_city_municipality  where city_municipality_code='$ctcrecord[10]'");
 			</tr>
 			<tr>
 				<td align="" valign="middle"  bgcolor='#ffffff' class='normaltax' colspan=1>CIVIL STATUS<BR><input type='text' name="ctc_civil_status" size=20 maxlength=25 value=<?php echo $ctc_civil_status;?>></td>
-			        <td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>DATE OF BIRTH<BR><?php set_form_date($ctc_birth_date, "now", 0) ?></td>
+			        <td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>DATE OF BIRTH<BR><?php $ctc_tempbdate = date('m-d-Y', strtotime($ctc_birth_date)); echo $ctc_tempbdate; ?></td>
 			        <td align="" valign="center"  bgcolor='#ffffff' class='normaltax'>WEIGHT(kg)<BR><input type='text' name="ctc_weight" size=15 maxlength=128 value=<?php echo $ctc_weight;?>></td>
 			</tr>
 			<tr>

@@ -91,22 +91,23 @@ $getprov = @mysql_fetch_row($getprov);
 //$pdf=new FPDF('P','mm','A4');
 $pdf->AddPage();
 $pdf->image('../images/ebpls_logo.jpg',10,5,33);
-$pdf->SetFont('Arial','B',10);
+$pdf->SetFont('Arial','B',14);
 $pdf->Cell(190,5,'',0,2,'C');
 $pdf->Cell(190,5,'Republic of the Philippines',0,1,'C');
-$pdf->Cell(190,5,$getprov[0],0,1,'C');
+$pdf->Cell(190,5,'Province of '.$getprov[0],0,1,'C');
 
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(190,5,$getlgu[0],0,1,'C');
+$pdf->Cell(190,5,'Municipality of '.$getlgu[0],0,1,'C');
 $pdf->SetFont('Arial','B',14);
 $pdf->Cell(190,5,'',0,0,'C');
 $pdf->Cell(190,5,'Office of the Mayor',0,2,'C');
 $pdf->SetFont('Arial','B',14);
 $pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,30,"MAYOR'S PERMIT",0,0,'C');
 $pdf->SetX(170);
 $pdf->Cell(30,30," ",1,1,'C');
 $pdf->SetFont('Arial','B',16);
-$pdf->Cell(190,5,"MAYOR'S PERMIT",0,0,'C');
+//$pdf->Cell(190,5,"MAYOR'S PERMIT",0,0,'C');
 
 	$result=mysql_query("select a.business_permit_code, a.application_date, 
 				b.business_name, b.business_street, a.transaction, 
@@ -202,11 +203,11 @@ $rr = $permit_num;
 $per_num=substr($rr,$backpos+1);
 $per_num = date('Y').'-'.substr($per_num,6);
 //$permit_num=date('Y').'-'.$permit_num;
-$pdf->Cell(190,5,'',0,2,'C');
+//$pdf->Cell(190,5,'',0,2,'C');
 
 $pdf->SetFont('Arial','B',12);
 $pdf->SetX(5);
-$pdf->Cell(190,5,'',0,2,'C');
+//$pdf->Cell(190,5,'',0,1,'C');
 $pdf->Cell(45,5,'Permit No.: '.$per_num,0,0,'L');
 $pdf->SetX(170);
 $pdf->Cell(40,5,'Date: '.date('M d, Y'),0,0,'L');
@@ -232,7 +233,7 @@ $pdf->SetX(5);
 $pdf->Cell(190,5,'',0,2,'C');
 //$pdf->Cell(45,5,'Business Trade Name:',1,0,'L');
 $pdf->Cell(190,5,'',0,2,'C');
-$pdf->Cell(190,5,'',0,2,'C');
+//$pdf->Cell(190,5,'',0,2,'C');
 $pdf->SetFont('Arial','B',20);
 $pdf->Cell(190,5,strtoupper($resulta[2]),0,1,'C');
 $pdf->SetFont('Arial','',11);
@@ -476,22 +477,23 @@ $getprov = @mysql_fetch_row($getprov);
 //$pdf=new FPDF('P','mm','A4');
 $pdf->AddPage();
 $pdf->image('../images/ebpls_logo.jpg',10,5,33);
-$pdf->SetFont('Arial','B',10);
+$pdf->SetFont('Arial','B',14);
 $pdf->Cell(190,5,'',0,2,'C');
 $pdf->Cell(190,5,'Republic of the Philippines',0,1,'C');
-$pdf->Cell(190,5,$getprov[0],0,1,'C');
+$pdf->Cell(190,5,'Province of '.$getprov[0],0,1,'C');
 
-$pdf->SetFont('Arial','B',12);
-$pdf->Cell(190,5,$getlgu[0],0,1,'C');
 $pdf->SetFont('Arial','B',14);
-$pdf->Cell(190,5,'',0,0,'C');
-$pdf->Cell(190,5,'Office of the Mayor',0,2,'C');
+$pdf->Cell(190,5,'Municipality of '.$getlgu[0],0,1,'C');
 $pdf->SetFont('Arial','B',14);
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
+//$pdf->Cell(190,5,'Office of the Mayor',0,2,'C');
+$pdf->SetFont('Arial','B',14);
+$pdf->Cell(190,5,'',0,1,'C');
+$pdf->Cell(190,30,"MAYOR'S PERMIT",0,0,'C');
 $pdf->SetX(170);
 $pdf->Cell(30,30," ",1,1,'C');
 $pdf->SetFont('Arial','B',16);
-$pdf->Cell(190,5,"MAYOR'S PERMIT",0,0,'C');
+//$pdf->Cell(190,5,"MAYOR'S PERMIT",0,0,'C');
 
 	$result=mysql_query("select a.business_permit_code, a.application_date, 
 				b.business_name, b.business_street, a.transaction, 
@@ -590,7 +592,7 @@ $pdf->Cell(190,5,'',0,2,'C');
 
 $pdf->SetFont('Arial','B',12);
 $pdf->SetX(5);
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
 $pdf->Cell(45,5,'Permit No.: '.$per_num,0,0,'L');
 $pdf->SetX(170);
 $pdf->Cell(40,5,'Date: '.date('M d, Y'),0,0,'L');
@@ -615,8 +617,7 @@ $pdf->SetFont('Arial','B',10);
 $pdf->SetX(5);
 $pdf->Cell(190,5,'',0,2,'C');
 //$pdf->Cell(45,5,'Business Trade Name:',1,0,'L');
-$pdf->Cell(190,5,'',0,2,'C');
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
 $pdf->SetFont('Arial','B',20);
 $pdf->Cell(190,5,strtoupper($resulta[2]),0,1,'C');
 $pdf->SetFont('Arial','',11);
@@ -628,20 +629,18 @@ $pdf->Cell(190,5,'situated at '.strtoupper($getbadd[0]).' this Municipality',0,1
 //$pdf->SetFont('Arial','',10);
 //$pdf->SetX(50);
 //$pdf->Cell(155,5,$resulta[3],1,1,'L');
-
-$pdf->Cell(190,5,'',0,2,'C');
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(190,5,"Pursuant to the provision of Revenue Code of the Municipality of ".$getlgu[0]." MAYOR'S PERMIT",0,1,'L');
 $pdf->Cell(190,5,'is hereby granted',0,1,'L');
 $pdf->SetFont('Arial','B',10);
 //$pdf->Cell(40,5,'',0,1,'L');
 $pdf->SetFont('Arial','B',15);
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
 $pdf->Cell(190,5,strtoupper($resulta[5]),0,1,'C');
 $pdf->SetFont('Arial','',11);
 $pdf->Cell(190,5,'(Name of Applicant)',0,1,'C');
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
 
 //$pdf->Cell(190,5,'',0,2,'C');
 //$pdf->SetFont('Arial','',12);
@@ -661,7 +660,7 @@ if ($resulta[6]=='M') {
 
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(190,5,'registered proprietor owner/manager of which is',0,1,'C');
-$pdf->Cell(190,5,'',0,2,'C');
+$pdf->Cell(190,5,'',0,1,'C');
 $pdf->SetFont('Arial','BU',12);
 $pdf->Cell(190,5,strtoupper($resulta[5]),0,1,'C');
 $pdf->Cell(190,5,'',0,2,'C');
@@ -720,7 +719,10 @@ $pdf->SetX(5);
 //$pdf->Cell(100,5,'Recommend Approval:',0,0,'L');
 $pdf->SetX(105);
 //$pdf->Cell(100,5,'Approved:',0,1,'L');
-
+$pdf->SetX(15);
+$pdf->SetFont('Arial','',6);
+$pdf->Cell(25,25,'DOC. STAMPS',1,0,'C');
+$pdf->SetFont('Arial','',12);
 $pdf->Cell(200,5,'',0,1,'C');
 //$pdf->Cell(200,5,'',0,1,'C');
 
@@ -739,9 +741,6 @@ $pdf->Cell(100,5,$resulta[1],0,0,'C');
 
 
 $pdf->SetFont('Arial','',8);
-$pdf->SetX(15);
-$pdf->Cell(25,25,'DOC. STAMPS',1,0,'C');
-$pdf->SetFont('Arial','',12);
 $pdf->SetX(60);
 $pdf->Cell(190,5,'O.R. No.: ',0,0,'L');
 $pdf->SetFont('Arial','B',12);
@@ -755,8 +754,6 @@ $pdf->SetX(78);
 $pdf->Cell(190,5,substr($getor[1],0, 4),0,1,'L');
 
 
-$pdf->Cell(190,5,'',0,1,'L');
-$pdf->Cell(190,5,'',0,1,'L');
 $pdf->Cell(190,5,'',0,1,'L');
 $pdf->SetX(15);
 $pdf->SetFont('Arial','',8);

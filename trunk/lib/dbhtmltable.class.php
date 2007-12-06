@@ -479,7 +479,7 @@ class DbHtmlTable extends HtmlExt
             null
             );
         // set the <form> source
-        $strDisplay .= "<form method=\"POST\" name=\"frmFormList\" action=\"" . $this->_strCurrScript . "?" . $strNewQueryString . "\">$strEol";
+        $strDisplay .= "<form method=\"POST\" name=\"_FRM\" action=\"" . $this->_strCurrScript . "?" . $strNewQueryString . "\">$strEol";
         $strDisplay .= "Search <input type=\"TEXT\" name=\"dhtkey_{$intInstanceId}\" value=\"\" size=\"10\" /> in $strEol";
         $strDisplay .= "<select name=\"dhtfield_{$intInstanceId}\">$strEol";
         foreach ($arrSearchFields as $key => $val) {
