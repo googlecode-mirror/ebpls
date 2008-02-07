@@ -142,43 +142,53 @@ while ($gd = mysql_fetch_assoc($result)) {
 	$owner_id = $gd['owner_id'];
 	$business_id=$gd['business_id'];
 	//check if line is paid
-		$lp = mysql_query("select * from tempbusnature a, ebpls_buss_nature b,   ebpls_transaction_payment_or_details c where owner_id='$owner_id' and business_id='$business_id' and recpaid='1' and a.bus_code=b.natureid and
-		a.owner_id=c.trans_id and a.business_id=c.payment_id and c.ts between  '$date_from 00:00:00' and '$date_to 23:59:59'  limit 1");
-	
+		$lp = mysql_query("select * from ebpls_transaction_payment_or_details a, ebpls_transaction_payment_or b where a.trans_id='$owner_id' and a.payment_id='$business_id' and a.ts between '$date_from 00:00:00' and '$date_to 23:59:59' and a.or_no = b.or_no");
+		//echo "select * from tempbusnature where owner_id='$owner_id' and business_id='$business_id' and recpaid='1'";
+		//$lp = mysql_query("select * from tempbusnature a, ebpls_buss_nature b,   ebpls_transaction_payment_or_details c where owner_id='$owner_id' and business_id='$business_id' and recpaid='1' and a.bus_code=b.natureid and
+		//a.owner_id=c.trans_id and a.business_id=c.payment_id and c.ts between  '$date_from 00:00:00' and '$date_to 23:59:59'");
 		while ($gp = mysql_fetch_assoc($lp)) {
 			//get details
 				$f=0;
 	
 				$pdf->SetX(5);
 				$pdf->Cell(50,5,$gd[fulln],1,0,'C');
-				$pdf->Cell(240,5,$gd[business_name]."/".$gd[business_add]."/".$gp[naturedesc],1,0,'L');
+				$pdf->Cell(240,5,$gd[business_name]."/".$gd[business_add],1,0,'L');
 				
 				//get or
 				$getor = mysql_query("select * from ebpls_transaction_payment_or_details a, ebpls_transaction_payment_or b where a.trans_id='$owner_id' and a.payment_id='$business_id' and a.or_no=b.or_no");
 				$getor = mysql_fetch_assoc($getor);
-				$pdf->Cell(40,5,$getor[payment_code],1,0,'C');
+				$RX = $pdf->GetX();
+				$pdf->Cell(40,5,'',1,0,'C');
+				//$pdf->Cell(40,5,$getor[or_no],1,0,'C');
 				//get paytax/fee
 				$gettax = mysql_Query("select * from tempassess a where a.owner_id='$owner_id' and a.business_id='$business_id'");
-				
+				$dfv = 0;
 				while ($gett = mysql_fetch_assoc($gettax)) {
+				//while ($dfv < $v) {
+					$dfv++;
 					//display
 					$f++;
 					
-					$disp = mysql_Query("select * from tempassess a where a.owner_id='$owner_id' and a.business_id='$business_id' and a.natureid='$gp[bus_code]' and a.tfoid='$tfoid[$f]'");
+					$disp = mysql_Query("select sum(amount) from ebpls_payment_details a, rpt_temp_abs b where a.owner_id='$owner_id' and a.business_id='$business_id' and a.tfoid='$tfoid[$f]' and a.tfoid = b.tfoid and or_no = '$gp[payment_code]' order by or_no asc");
+					//echo "select * from ebpls_payment_details a where a.owner_id='$owner_id' and a.business_id='$business_id' and a.tfoid='$tfoid[$f]' <br>";
+					//$disp = mysql_Query("select * from tempassess a where a.owner_id='$owner_id' and a.business_id='$business_id' and a.natureid='$gp[bus_code]' and a.tfoid='$tfoid[$f]'");
 					$cntm = mysql_num_rows($disp);
 					if ($tfoid[$f]<>'') {
 						
 						if ($cntm==0 and $sassess==1) {
 							//reg fee
-								$disp = mysql_Query("select * from tempassess a where a.owner_id='$owner_id' and a.business_id='$business_id' and a.tfoid='$tfoid[$f]'");
+								$disp = mysql_Query("select sum(amount) from ebpls_payment_details a, rpt_temp_abs b where a.owner_id='$owner_id' and a.business_id='$business_id' and a.tfoid='$tfoid[$f]' and a.tfoid = b.tfoid and or_no = '$gp[payment_code]' order by or_no asc");
+								//$disp = mysql_Query("select * from tempassessz a where a.owner_id='$owner_id' and a.business_id='$business_id' and a.tfoid='$tfoid[$f]'");
 						} 
 						
-						$dis = mysql_fetch_Assoc($disp);
-						$pdf->Cell(30,5,number_format($dis[compval],2),1,0,'R'); //tax/fee name
+						$dis = mysql_fetch_row($disp);
+						$pdf->Cell(30,5,number_format($dis[0],2),1,0,'R'); //tax/fee name
 						
-						$newv[$f] = $newv[$f] + $dis[compval];
+						$newv[$f] = $newv[$f] + $dis[0];
 					}
 				}
+				$pdf->SetX($RX);
+				$pdf->Cell(40,5,$gp[payment_code],0,0,'C');
 				
 				
 				
