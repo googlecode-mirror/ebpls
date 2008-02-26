@@ -74,7 +74,7 @@ function AcceptPageBreak()
 	$this->Cell(190,5,'APPLICATION TO ENGAGE IN BUSINESS',0,1,'C');
 	$this->SetFont('Arial','B',12);
 
-	$this->Ln(22);
+	$this->Ln(2);
 	
 } 	
 //Page footer
@@ -86,6 +86,13 @@ function AcceptPageBreak()
 	    $this->SetFont('Arial','I',8);
 	    //Page number
 	    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+
+            $datetoday = date('Y - m - d');	
+	    $getuser = @mysql_query("select * from ebpls_user where username = '$usernm'") or die(mysql_error());
+            $getuser = @mysql_fetch_assoc($getuser);
+
+	    
+
 	}
 } // end of PDF class
 
@@ -285,8 +292,8 @@ $pdf->SetX(5);
 $pdf->Cell(190,5,'of the Tax Code of '.$getlgu[0].", ".$getprov[0],0,1,'C');
 
 $pdf->SetX(5);
-$pdf->Cell(45,5,'',0,1,'L');
-$pdf->Cell(45,5,'',0,1,'L');
+//$pdf->Cell(45,5,'',0,1,'L');
+//$pdf->Cell(45,5,'',0,1,'L');
 $pdf->Cell(45,5,'',0,1,'L');
 $pdf->Cell(45,5,'',0,1,'L');
 $pdf->SetX(5);
@@ -298,33 +305,42 @@ $pdf->Cell(45,5,'Place of Issue',0,0,'C');
 $pdf->SetX(150);
 $pdf->Cell(45,5,'Date',0,1,'C');
 $pdf->Cell(45,5,'',0,1,'L');
-$pdf->Cell(45,5,'',0,1,'L');
+//$pdf->Cell(45,5,'',0,1,'L');
 
-$pdf->Cell(270,5,'',0,1,'C');
-$pdf->Cell(270,5,'',0,1,'C');
+//$pdf->Cell(270,5,'',0,1,'C');
+//$pdf->Cell(270,5,'',0,1,'C');
 
 //$pdf->SetY(-18);
+
 $pdf->SetX(5);
 
-$pdf->SetFont('Arial','B',10);
-$pdf->Cell(172,5,'Prepared By :',0,1,'L');
+//--------------------------------------------------------------------------------------------------
+//$pdf->SetFont('Arial','B',10);
+//$pdf->Cell(172,5,'Prepared By :',0,1,'L');
 
 $getuser = @mysql_query("select * from ebpls_user where username = '$usernm'") or die(mysql_error());
 $getuser = @mysql_fetch_assoc($getuser);
 
-$pdf->SetX(5);
-$pdf->SetFont('Arial','B',10);
-$pdf->Cell(172,5,$getuser[firstname].' '.$getuser[lastname],0,1,'L');
+//$pdf->SetX(5);
+//$pdf->SetFont('Arial','B',10);
+//$pdf->Cell(172,5,$getuser[firstname].' '.$getuser[lastname],0,1,'L');
 
-$pdf->SetFont('Arial','B',10);
-$pdf->SetX(5);
+//$pdf->SetFont('Arial','B',10);
+//$pdf->SetX(5);
 $datetoday = date('Y - m - d');
-$pdf->Cell(172,5,$datetoday,0,0,'L');
+//$pdf->Cell(172,5,$datetoday,0,0,'L');
 
+//$pdf->Cell(45,5,'',0,1,'L');
+//$pdf->Cell(45,5,'',0,1,'L');
+//--------------------------------------------------------------------------------------------------
 
+//LEO RENTON
+$pdf->SetFont('Arial','I',8);
+$pdf->Cell(172,5,'Prepared By :'.$getuser[firstname].' '. $getuser[lastname]. ' ' .$datetoday,0,1,'R');
 $pdf->Cell(45,5,'',0,1,'L');
-$pdf->Cell(45,5,'',0,1,'L');
+$pdf->SetFont('Arial','I',8);
 
+$pdf->SetFont('Arial','B',10);
 $pdf->SetX(5);
 $pdf->Cell(45,5,'COMPUTATIONS: ',0,0,'C');
 $grandtot=0;

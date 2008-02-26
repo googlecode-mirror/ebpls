@@ -12,11 +12,12 @@ var
         $outquery,
         $outid;
 
+        // LEO RENTON 
 	function GetBusinessByName($bname,$bbranch) 
 	{
 	$this->outselect = SelectDataWhereDB("ebpls_business_enterprise",
-                "where business_name  like '$bname%' and
-                 business_branch  like '$bbranch%' and retire=1 and blacklist<>1 "); 
+                "where business_name  like '%$bname%' and
+                 business_branch  like '%$bbranch%' and retire=0 and blacklist<>1 "); 
 	$this->outnumrow = NumRowsDB($this->outselect);
 	}
 

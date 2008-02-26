@@ -15,8 +15,7 @@ var
 	function GetTaxPayerByName($fname,$sname) 
 	{
 	$this->outselect = SelectDataWhereDB("ebpls_owner",
-                "where owner_last_name like '$sname%' and
-                 owner_first_name like '$fname%'"); 
+                "where (owner_last_name like '%$sname%' or owner_middle_name like '%$sname%') and owner_first_name like '%$fname%'"); //Leo Renton
 	$this->outnumrow = NumRowsDB($this->outselect);
 	}
 

@@ -11,8 +11,7 @@ if ($order=="") {
 }
 //echo $page."VooDoo";
 $limitpage = ($pager - 1) * 10;
-$limit = "where owner_last_name like '$search_last%' and owner_first_name like '$search_first%' 
-order by $order $isdesc limit $limitpage , $max_resultsr";
+$limit = "where (owner_last_name like '%$search_last%' or owner_middle_name like '%$search_last%') and owner_first_name like '%$search_first%' order by $order $isdesc limit $limitpage , $max_resultsr";  // Leo Renton
 if ($isdesc == 'ASC') {
 	$ascdesc = 'DESC';
 } else {

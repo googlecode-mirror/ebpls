@@ -31,7 +31,7 @@ if ($permit_type=='Business' and $ssap==1 ||  $ulev==6 || $ulev==7) {
 	
 $slash='update';
 require_once "includes/stripslash.php";
-
+// LEO RENTON
 if($disapp=='') {
 $searchsql = "select distinct ($permittable.owner_id),ebpls_business_enterprise.business_id,
 $permittable.$incode, concat($owner.owner_last_name, ', ',$owner.owner_first_name, ' ' ,
@@ -39,36 +39,37 @@ $owner.owner_middle_name) as fullname,
 ebpls_business_enterprise.business_name,ebpls_business_enterprise.business_branch,$permittable.$appdate,
 $permittable.transaction,$permittable.released,$permittable.paid
 from $owner, $permittable, ebpls_business_enterprise
-where $owner.owner_last_name like '$search_lastname%' and $permittable.transaction like '$search_status%' and
+where $owner.owner_last_name like '%$search_lastname%' and $permittable.transaction like '$search_status%' and  
 $owner.owner_first_name like '$search_firstname%' and ebpls_business_enterprise.retire = 0 and
 $owner.owner_middle_name like '$search_middlename%' and $owner.owner_id = $permittable.owner_id
 and ebpls_business_enterprise.business_id = $permittable.business_id 
 and $permittable.active = 1 $orderby limit $from, $max_results";
-
+// LEO RENTON
 $cntsql = "select count(*) as NUM
 from $owner, $permittable, ebpls_business_enterprise
-where $owner.owner_last_name like '$search_lastname%' and $permittable.transaction like '$search_status%' and
+where $owner.owner_last_name like '%$search_lastname%' and $permittable.transaction like '$search_status%' and
 $owner.owner_first_name like '$search_firstname%' and ebpls_business_enterprise.retire = 0 and
 $owner.owner_middle_name like '$search_middlename%' and $owner.owner_id = $permittable.owner_id
 and ebpls_business_enterprise.business_id = $permittable.business_id and $permittable.active = 1";
 } else {
+// LEO RENTON
 $searchsql = "select distinct ($permittable.owner_id),ebpls_business_enterprise.business_id,
 $permittable.$incode, concat($owner.owner_last_name, ', ',$owner.owner_first_name, ' ' ,
 $owner.owner_middle_name) as fullname,
 ebpls_business_enterprise.business_name,ebpls_business_enterprise.business_branch,$permittable.$appdate,
 $permittable.transaction,d.dec_comment,$permittable.paid
 from $owner, $permittable, ebpls_business_enterprise, ebpls_buss_approve d
-where $owner.owner_last_name like '$search_lastname%' and $permittable.transaction like '$search_status%' and
+where $owner.owner_last_name like '%$search_lastname%' and $permittable.transaction like '$search_status%' and
 $owner.owner_first_name like '$search_firstname%' and ebpls_business_enterprise.retire = 0 and
 $owner.owner_middle_name like '$search_middlename%' and $owner.owner_id = $permittable.owner_id
 and ebpls_business_enterprise.business_id = $permittable.business_id and
 $permittable.owner_id=d.owner_id and $permittable.business_id=d.business_id and
 d.decision=0 and $permittable.active = 1 $orderby limit $from, $max_results";
 
-
+// LEO RENTON
 $cntsql = "select count(*) as NUM
 from $owner, $permittable, ebpls_business_enterprise, ebpls_buss_approve d
-where $owner.owner_last_name like '$search_lastname%' and $permittable.transaction like '$search_status%' and
+where $owner.owner_last_name like '%$search_lastname%' and $permittable.transaction like '$search_status%' and
 $owner.owner_first_name like '$search_firstname%' and ebpls_business_enterprise.retire = 0 and
 $owner.owner_middle_name like '$search_middlename%' and $owner.owner_id = $permittable.owner_id
 and ebpls_business_enterprise.business_id = $permittable.business_id and
@@ -79,6 +80,7 @@ d.decision=0 and $permittable.active = 1";
 $ty = mysql_query($searchsql);
 $ty = mysql_num_rows($ty);
 
+// LEO RENTON
  if ($ty==0 and $disapp==''){
  $searchsql = "select distinct ($permittable.owner_id),ebpls_business_enterprise.business_id,
  $permittable.$incode, concat($owner.owner_last_name, ', ',$owner.owner_first_name, ' ' ,
@@ -86,7 +88,7 @@ $ty = mysql_num_rows($ty);
  ebpls_business_enterprise.business_name,ebpls_business_enterprise.business_branch,$permittable.$appdate,
  $permittable.transaction
  from $owner, $permittable, ebpls_business_enterprise
- where ebpls_business_enterprise.business_name like '$search_lastname%' and 
+ where ebpls_business_enterprise.business_name like '%$search_lastname%' and 
  $permittable.transaction like '$search_status%' 
  and ebpls_business_enterprise.retire = 0 
  and $owner.owner_id = $permittable.owner_id
@@ -106,12 +108,13 @@ $slash='update';
 require_once "includes/stripslash.php";
 //$result= mysql_query( "
 
+// LEO RENTON
 $searchsql = "select distinct $owner.owner_id,$permittable.$incode,
                         concat($owner.owner_last_name,  ', ',
                         $owner.owner_first_name, ' ',$owner.owner_middle_name) as fullname ,
                         $permittable.$appdate,$permittable.transaction
                         from $owner, $permittable
-                        where $owner.owner_last_name like '$search_lastname%' and
+                        where $owner.owner_last_name like '%$search_lastname%' and
                         $owner.owner_first_name like '$search_firstname%' and
                         $owner.owner_middle_name like '$search_middlename%' and
                         $owner.owner_id = $permittable.owner_id and
@@ -119,10 +122,10 @@ $searchsql = "select distinct $owner.owner_id,$permittable.$incode,
 			and $permittable.active = 1
                         $orderby limit $from, $max_results";
 
-
+// LEO RENTON
 $cntsql = "select count(*) as NUM 
                         from $owner, $permittable
-                        where $owner.owner_last_name like '$search_lastname%' and
+                        where $owner.owner_last_name like '%$search_lastname%' and
                         $owner.owner_first_name like '$search_firstname%' and
                         $owner.owner_middle_name like '$search_middlename%' and
                         $owner.owner_id = $permittable.owner_id and
