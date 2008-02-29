@@ -63,10 +63,12 @@ function AcceptPageBreak()
 	    //Arial bold 15
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
+	//$this->Image('../images/ebpls_logo2.jpg',165,8,33);
+
 	$this->SetFont('Arial','B',12);
-	$this->Cell(190,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
-	$this->Cell(190,5,$this->lgu,0,1,'C');
-	$this->Cell(190,5,$this->prov,0,2,'C');
+	$this->Cell(190,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');   
+	$this->Cell(190,5,"Province of " . $this->prov,0,1,'C');     // leo renton, kaya pala ang lumalabas sa value ng $this->lgu ay province kasi baliktad ang valueng ipinasa sa function sa ibaba... chow
+	$this->Cell(190,5,"Municipality of " . $this->lgu,0,2,'C');
 	$this->SetFont('Arial','B',14);
 	$this->Cell(190,5,$this->office,0,2,'C');
 	$this->Cell(30,5,'',0,2,'C');	
@@ -110,7 +112,7 @@ $iAssess = $resulta[3];
    
 //$pdf=new FPDF('P','mm','A4');
 $pdf=new PDF('P','mm','A4');
-$pdf->setLGUinfo($getlgu[0],$getprov[0],'');
+$pdf->setLGUinfo($getprov[0],$getlgu[0],'');  // leo renton ' baliktad kasi ang pagkakalagay ng variable nauna ang getlgu sa getprov kaya binaliktad ko muna. ..
 $pdf->AddPage();
 $pdf->AliasNbPages();
 

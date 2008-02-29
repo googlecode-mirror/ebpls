@@ -1149,8 +1149,9 @@ if ($action_==0){
 <tr>
 <td colspan=2><br><br>&nbsp;<!--To add new record click here.-->
 
-&nbsp;<input type = submit name=cbut value ='Add New Record'><br><br>
-<input type=text name=searcheenat size=20 maxlength=255>&nbsp;<input type = submit name=searchnat value ='Search Nature'><br><br>
+&nbsp;<input type=text name=searcheenat size=20 maxlength=255>&nbsp;<input type = submit name=searchnat value ='Search Nature'><br><br>
+<input type = submit name=cbut value ='Add New Record'><br><br>   <!--LEO RENTON.-->
+
 </td>
 </tr>
 
@@ -1222,7 +1223,7 @@ $max_results = $thIntPageLimit;
 $from = abs((($page * $max_results) - $max_results));
 
 if ($searcheenat<>"") {
-	$addends = "where naturedesc like '$searcheenat%'";
+	$addends = "where naturedesc like '%$searcheenat%'";
 } else {
 	$addends = "";
 }
@@ -1232,11 +1233,17 @@ if ($valueofdesc=='desc') {
 	//if ($searchnat=='Search Nature') {
 	//	$searchsql = "SELECT * FROM $tbl_current where naturestatus='A' and naturedesc like '$searcheenat%' ORDER BY naturedesc $ascdesc1 limit $from, $max_results";
 	//} else {
-		$searchsql = "SELECT * FROM $tbl_current $addends ORDER BY naturedesc $ascdesc1 limit $from, $max_results";
+		//$searchsql = "SELECT * FROM $tbl_current $addends ORDER BY naturedesc $ascdesc1 limit $from, $max_results";
+		$searchsql = "SELECT * FROM ebpls_buss_nature $addends ORDER BY naturedesc $ascdesc1 limit $from, $max_results";
 	//}
 }
+
+
+// echo $searcheenat . " ". $searchsql;
+
+
 if ($searcheenat<>"") {
-	$addends = "where naturedesc like '$searcheenat%'";
+	$addends = "where naturedesc like '%$searcheenat%'";
 } else {
 	$addends = "";
 }
