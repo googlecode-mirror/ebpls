@@ -1,4 +1,7 @@
 <?php
+/*  Modification History:
+	2008.04.04 Minor text change to ensure centering by Ron Crabtree
+*/
 require_once "includes/variables.php";
 
 if ($ord == 'desc') {
@@ -28,7 +31,7 @@ Payments with pending checks</a></div>
 <table border=0 width=100% align=center>
 
 <tr>
-<td class="hdr" align=center>Permit # </td>
+<td class="hdr" align=center width=13%>Permit&nbsp;No.</td>
 <td class="hdr" align=center>
 <a href="index.php?part=4&class_type=Permits&itemID_=<?php echo $itemID_; ?>&permit_type=Business&busItem=Business&search_businesstype=<?php echo $search_businesstype; ?>&mtopsearch=SEARCH&orderby='order by <?php echo $owner; ?>.owner_last_name <?php echo $ord;?>'&ord=<?php echo $ord;?>">
  Owner </a> </td>
@@ -38,11 +41,11 @@ Payments with pending checks</a></div>
 <td class="hdr" align=center>
 <a href="index.php?part=4&class_type=Permits&itemID_=<?php echo $itemID_; ?>&permit_type=Business&busItem=Business&search_businesstype=<?php echo $search_businesstype; ?>&mtopsearch=SEARCH&orderby='order by ebpls_business_enterprise.business_branch <?php echo $ord;?>'&ord=<?php echo $ord;?>">
  Branch </a> </td>
-<td class="hdr" align=center>
+<td class="hdr" align=center width=12%>
 <a href="index.php?part=4&class_type=Permits&itemID_=<?php echo $itemID_; ?>&permit_type=Business&busItem=Business&search_businesstype=<?php echo $search_businesstype; ?>&mtopsearch=SEARCH&orderby='order by <?php echo $permittable; ?>.<?php echo $appdate; ?> <?php echo $ord;?>'&ord=<?php echo $ord;?>">
- Last Application 	</a> </td>
+ Last&nbsp;Application</a> </td>
 <td class="hdr" align=center>Transaction </td>
-<td class="hdr" align=center>Action </td>
+<td class="hdr" align=center width=12%>Action</td>
 
 </tr>
 	
@@ -53,11 +56,10 @@ Payments with pending checks</a></div>
 <table border=0 width=100% align=center>
 <tr>
 <td class="hdr" align=center width=15%>Permit Number </td>
-<td class="hdr" align=center width=35%>
+<td class="hdr" align=center>
 <a href="index.php?part=4&class_type=Permits&itemID_=<?php echo $itemID_; ?>&permit_type=<?php echo $permit_type; ?>&busItem=<?php echo $permit_type; ?>&search_businesstype=<?php echo $search_businesstype; ?>&mtopsearch=SEARCH&orderby='order by <?php echo $owner; ?>.owner_last_name <?php echo $ord;?>'&ord=<?php echo $ord;?>">
-
  Fullname </a> </td>
-<td class="hdr" align=center width=20%>
+<td class="hdr" align=center>
 <a href="index.php?part=4&class_type=Permits&itemID_=<?php echo $itemID_; ?>&permit_type=<?php echo $permit_type; ?>&busItem=<?php echo $permit_type; ?>&search_businesstype=<?php echo $search_businesstype; ?>&mtopsearch=SEARCH&orderby='order by <?php echo $permittable; ?>.<?php echo $appdate; ?> <?php echo $ord;?>'&ord=<?php echo $ord;?>">
  Last Application Date </a></td>
 <td class="hdr" align=center width=15%>Transaction </td>

@@ -1,11 +1,14 @@
 <?php
-print "<tr bgcolor=#EEEEEE></tr>";
+/* Prepares display of businesses (one line per business) when assessments requested.
+Modification History:
+2008.04.04 Add NOWRAP to permit#, Date and Action to improve readability by Ron Crabtree
+*/
 //populate table
-//while ($get_info = mysql_fetch_row($result)){
+// display with alternating light then dark bands
 include'tablecolor-inc.php';
 print "<tr bgcolor='$varcolor'>\n";
 //foreach ($get_info as $field )
-                                                                                                                                                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                                                                                                                                    
 $a= ucfirst(stripslashes($get_info[2]));
 $b= ucfirst(stripslashes($get_info[3]));
 $c= ucfirst(stripslashes($get_info[4]));
@@ -13,7 +16,7 @@ print "<td>&nbsp;$a&nbsp</td>\n";
 print "<td>&nbsp;$b&nbsp</td>\n";
 print "<td>&nbsp;$c&nbsp</td>\n";
 print "<td>&nbsp;$get_info[5]&nbsp</td>\n";
-print "<td>&nbsp;$get_info[6]&nbsp</td>\n";
+print "<td NOWRAP>&nbsp;$get_info[6]&nbsp</td>\n";
 print "<td>&nbsp;$get_info[7]&nbsp</td>\n";
 
 $staxfee = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_preference",
@@ -55,10 +58,11 @@ if ($predcomp==1 ) {
 
 
 
-print "<td>
+print "<td NOWRAP>
 <a href='index.php?part=4&newpred=$newpred&noregfee=$noregfee&class_type=Permits&itemID_=4212&owner_id=$get_info[0]&com=edit&permit_type=$tag&stat=$get_info[7]&business_id=$get_info[1]&busItem=Business&istat=$get_info[7]'> ReAssess</a>
 &nbsp;|&nbsp;<a href='index.php?part=4&newpred=$newpred&noregfee=$noregfee&class_type=Permits&itemID_=4212&owner_id=$get_info[0]&com=assess&permit_type=$tag&stat=$get_info[7]&business_id=$get_info[1]&busItem=Business&istat=$get_info[7]'>Assess</a>
 </td>";
 //}//end while
+print "</tr>\n";
 ?>
 

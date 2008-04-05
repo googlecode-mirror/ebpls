@@ -1,4 +1,10 @@
 <?php
+/* Prepares display of businesses (one line per business) when releasing requested.
+Modification History:
+2008.04.04 Add NOWRAP to permit#, Date and Action to improve readability by Ron Crabtree (RJC)
+	Add </tr> at end and remove unnecessary winpopup javascript code PM(x,pn)
+*/
+
 //populate table
 //while ($get_info = mysql_fetch_row($result)){
 include'tablecolor-inc.php';
@@ -8,11 +14,11 @@ if ($permit_type=='Business') {
 $a= ucfirst(stripslashes($get_info[2]));
 $b= ucfirst(stripslashes($get_info[3]));
 $c= ucfirst(stripslashes($get_info[4]));
-print "<td>&nbsp;$a&nbsp</td>\n";
+print "<td NOWRAP>&nbsp;$a&nbsp</td>\n";
 print "<td>&nbsp;$b&nbsp</td>\n";
 print "<td>&nbsp;$c&nbsp</td>\n";
 print "<td>&nbsp;$get_info[5]&nbsp</td>\n";
-print "<td>&nbsp;$get_info[6]&nbsp</td>\n";
+print "<td NOWRAP>&nbsp;$get_info[6]&nbsp</td>\n";
 print "<td>&nbsp;$get_info[7]&nbsp</td>\n";
 } else {
 $a= stripslashes($get_info[1]);
@@ -58,24 +64,9 @@ $amtchange =  $totpay - $amtchange[0] ;
                 
                 
                 if ($get_info[8]<>1) {
-	                ?>
-                                <td>
-                              
-                                Not yet paid
-                                
-                                </td>
-                            <?php
+	                print "<td> Not yet paid! </td>\n";
                 } elseif ($checka==0) {
-	            		 ?>
-                                <td>
-                                
-                                
-                                Not yet approve
-                                
-                                
-                                </td>
-                            <?php
-                                        
+	            	print "<td> Not yet approved! </td>\n";
             	} elseif ($getre[0]==1) {
 
                         if ($ge==$gt) {
@@ -115,22 +106,9 @@ $get_info[2]=(int)($get_info[2]);
 ?>
         <td>
 <a href='index.php?part=4&class_type=Permits&itemID_=3212&owner_id=<?php echo $get_info[0]; ?>&com=PrintReport&permit_type=<?php echo $tag; ?>&stat=<?php echo $get_info[4];?>&busItem=<?php echo $permit_type; ?>' class=subnavwhite> Print </a>&nbsp
-</tr>
+
 <?php
         }
 //}//end while
-
+print "</tr>\n";
 ?>
-<script language="JavaScript" src="javascripts/default.js"></script>
-<script language="javascript">
-function PM(x, pn)
-        {
-alert (x.value);
-       //winpopup=window.open('ebpls_buss_permit.php','popup','height=500,width=800,menubar=no,scrollbars=yes,status=no,toolbar=no,screenX=100,screenY=0,left=100,top=0');
-                                                                                                                                                            
-         winpopup = window.open('ebpls_buss_permit.php?permit_num=' + pn ,'popup','height=500,width=800,menubar=no,scrollbars=yes,status=no,screenX=100,screenY=0,left=100,top=0');
-                                                                                                                                                            
-        }
-                                                                                                                                                            
-</script>
-<?php
