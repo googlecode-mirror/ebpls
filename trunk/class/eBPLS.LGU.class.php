@@ -14,6 +14,8 @@ Created By : Robert M. Verzosa
 Email : rmv71279@yahoo.com, verzosar@dap.edu.ph
 Date Created : 12/12/2005
 
+Modification History: 
+2008.04.04 About line 278, allow municipalities with same names in different provinces.
 	
 ************************************************************************************/
 
@@ -275,8 +277,8 @@ class EBPLSLGU extends DataEncapsulator {
 
 	function searchcomp1($lgu_code, $lgu_desc, $province) {
 
-		$iflguexist = @mysql_query("select * from ebpls_city_municipality where (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");
-		//$iflguexist = @mysql_query("select * from ebpls_city_municipality where upper = '$province' and (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");
+		//$iflguexist = @mysql_query("select * from ebpls_city_municipality where (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");"Ron"
+		$iflguexist = @mysql_query("select * from ebpls_city_municipality where upper = '$province' and (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");
 		$ifexist = @mysql_num_rows($iflguexist);
 		$this->rcount = $ifexist;
         }
@@ -284,7 +286,7 @@ class EBPLSLGU extends DataEncapsulator {
 	function searchcomp2($bbo, $lgu_code, $lgu_desc, $province) {
 
                 $iflguexist = @mysql_query("select * from ebpls_city_municipality where city_municipality_code <> '$bbo' and (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");
-				//$iflguexist = @mysql_query("select * from ebpls_city_municipality where upper = '$province' and city_municipality_code <> '$bbo' and (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");
+		//$iflguexist = @mysql_query("select * from ebpls_city_municipality where upper = '$province' and city_municipality_code <> '$bbo' and (city_municipality_code = '$lgu_code' or city_municipality_desc = '$lgu_desc')");
                 $ifexist = @mysql_num_rows($iflguexist);
                 $this->rcount = $ifexist;
         }
