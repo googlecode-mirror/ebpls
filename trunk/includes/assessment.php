@@ -1,27 +1,14 @@
 <?php
-
 /*
-
-		GGGGGGGGGGGGGGGGGGG         	OOOOOOOOOOOOO		
-	GGGGGGGGGGGGGGGGGGGGGGG			OOOOOOOOOOOOOOOOOOOOO
-	GGGGGGGG						OOOOOOOOOOOOOOOOOOOOO
-	GGGGGGGG						OOOOO            OOOO
-	GGGGGGGG						OOOOO            OOOO
-	GGGGGGGG						OOOOO            OOOO	
-	GGGGGGGG						OOOOO            OOOO
-	GGGGGGGG						OOOOO            OOOO
-	GGGGGGGG			GGGGGGGGG	OOOOO            OOOO		
-	GGGGGGGG			GGGGGGGGG   OOOOO            OOOO
-	GGGGGGGG				GGGGG   OOOOO            OOOO
-	GGGGGGGG				GGGGG   OOOOO            OOOO
-	GGGGGGGG				GGGGG   OOOOO            OOOO
-	GGGGGGGGGGGGGGGGGGGGGGGGGGGGG   OOOOO            OOOO
-	GGGGGGGGGGGGGGGGGGGGGGGGGGGGG   OOOOOOOOOOOOOOOOOOOOO
-	GGGGGGGGGGGGGGGGGGGGGGGG        OOOOOOOOOOOOOOOOOOOOO
-	GGGGGGGGGGGGGGG                     OOOOOOOOOOOOO
+	Purpose: To calculate Business Permit Fees, Taxes and Other Charges (TFO) for a specific business
+	Inputs: Online inputted values on assessment screen, reference data from several tables
+	Outputs: Generates tempassess table with results of calculation
+	Prepared by:
+	
+Modification History:
+2008.04.15: Corrected Complex Formula where NULL caused improper processing (at line 810)
 	
 */
-
 					
 //Delete Per Stab default
 
@@ -810,7 +797,9 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 						$newvar=substr($get_varx[var_complex],1);
 					
 		$formula = substr_replace($complex_formula,$repval,strpos($complex_formula,$get_varx[var_complex]));
-	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
+//2008.04.15 Added NULL handling because of error in Capas.
+	        $complex_formula = str_replace("$get_varx[var_complex]",$repval==NULL?0:$repval,$complex_formula);
+//	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
 	  //  echo "$formula ---$to<BR>";
 	$cnto++;  
 		$vari[$cnto] = $get_varx[var_complex];
@@ -842,11 +831,6 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 		//	} else {
 		//		$complex_formula = str_replace($vari,$rp,$complex_formula);
 			}
-			
-	
-	
-     
-                
                 
 //		echo "$get_varx[var_complex],$replace_var[compval],$complex_formula";
                 @eval("\$totind=$is_dec$complex_formula;");
