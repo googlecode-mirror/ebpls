@@ -1,7 +1,12 @@
 <?php
-//-------------------------------------------------------------------
-//	utility functions
-//-------------------------------------------------------------------
+/*
+	utility functions
+Modification History:
+2008.04.04 in get_select_data_where (Ln 358), change class=select300 to class=select
+		This allows more complete display of Line of Business by Ron Crabtree
+		(also needs new class 'select' in default.css stylesheet.
+
+*/
 
 //--- connect to DB
 define('DB_HOST1','192.168.100.1');
@@ -353,7 +358,8 @@ function get_select_data_where($dblink,$selectname,$table,$field_code,$field_des
 	$sql    	= "SELECT distinct($field_code),$field_desc FROM $table WHERE $where";
 //echo $sql;
 	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname'  class='select200'>";
+//	$select_str     .= "<select name='$selectname'  class='select200'>";
+	$select_str     .= "<select name='$selectname' class='select300'>";
 	while($datarow 	= @mysql_fetch_assoc($resultset))
 	{
 		$K	= $datarow["$field_code"];

@@ -4,6 +4,10 @@
 *	Version		:	ver1.1
 *	Date		:	12-12-2001
 *	Author		:	bayugyug
+
+Modification History:
+2008.04.04  new class select.select with no width specified 
+		(allows more character to display in select option list) by Ron Crabtree
 */
 
 /* set default font for document - 'td' and 'th' must also be set due to a bug in IE */
@@ -485,7 +489,19 @@ td.subtitle
 	color: #000000;
 	background-color: transparent;
 }
-
+select.select{
+	  height:17pt;
+	  line-height: normal;
+	  font: normal 9pt "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; 
+	  color:#000000;
+ 	}
+select.select300{
+	  height:17pt;
+	  line-height: normal;
+	  width:300; 
+	  font: normal 9pt "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; 
+	  color:#000000;
+ 	}
 select.select200Multi{
 	  height:80pt;
 	  line-height: normal;
@@ -493,7 +509,6 @@ select.select200Multi{
 	  font: normal 9pt "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; 
 	  color:#000000;
  	}
-
 select.select200{
 	  height:17pt;
 	  line-height: normal;
