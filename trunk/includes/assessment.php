@@ -6,7 +6,8 @@
 	Prepared by:
 	
 Modification History:
-2008.04.15: Corrected Complex Formula where NULL caused improper processing (at line 810)
+2008.04.15: Corrected Complex Formula where NULL caused improper processing (at line 810) RJC
+2008.04.18: Corrected to process more than 9 variables in complex formula RJC
 	
 */
 					
@@ -628,18 +629,14 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 //			}
                 print "<input type=hidden name=minus_hm value=1>";
                 }
-
 	
                 if ($getyr[or_print] <= $bill_date || $getyr[or_print]=='') {
-	            	
-	                
 	                $checktempass = mysql_query("select * from tempassess where natureid='$getn[0]'
 	                					and owner_id='$owner_id' and business_id='$business_id' and
 	                					active=1 and date_create like '$yearnow%'") or die (mysql_error());
 	                $checktp = mysql_num_rows($checktempass);
 	                if ($checktp==0 and $itemID_==4212 and $gross>0) {
 		                $PROCESS='';
-		                
 	                }
 
 			if ($PROCESS=='COMPUTE' and $stat=='Retire') {
@@ -654,15 +651,13 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
                                  a.natureid=b.natureid and a.taxfeeid=b.taxfeeid and a.natureid='$getn[0]'
                                  and b.tfo_id=c.tfoid $tft");
 				$letme = NumRows($dbtype, $temp);
-					if ($letme=='0') {
+				if ($letme=='0') {
 						$PROCESS='';
 					}
 			}
 
                         if ($PROCESS=='COMPUTE') {
-//gety tempassess
-
-
+//get tempassess
                         $temp = SelectMultiTable($dbtype,$dbLink,
 				"tempassess a, ebpls_buss_taxfeeother b, ebpls_buss_tfo c",
 				"a.natureid, a.taxfeeid, a.multi,
@@ -674,53 +669,50 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
                                  a.natureid=b.natureid and a.taxfeeid=b.taxfeeid and a.natureid='$getn[0]'
 				 and b.tfo_id=c.tfoid $tft");
                         $gethuh = FetchArray($dbtype,$temp);
-					if ($gethuh[indicator]==2) { //compute formula
-						if ($gethuh[mode]==2) { //complex
-		 include_once "class/TaxFeeOtherChargesClass.php";
-                        $searchme = new TaxFee;
-                        $searchme->CountTaxFeeComplex($gethuh[taxfeeid]);
-                        $how_many = $searchme->outnumrow;
-                        $loop=0;
-                //sub X0
-                $complex_formula =str_replace("X0",$gethuh[multi],strtoupper($gethuh[amtformula]));
-                $gTFO = new TaxFee;
-          if ($sassesscomplex==1) {      
-                while ($loop<$how_many) {
-                        $loop++;
-                        $gTFO->FetchTaxFeeArray($searchme->outselect);
-                        $get_varx = $gTFO->outarray;
-                        $gTempAssess = new TaxFee;
-                $gTempAssess->ReplaceValue($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
-                $replace_var = $gTempAssess->outarray;
-                
-                
-                  $getyears = mysql_query("select  a.*, b.* from tempassess a, ebpls_buss_tfo b where
+			if ($gethuh[indicator]==2) { //compute formula
+				if ($gethuh[mode]==2) { //complex
+		 			include_once "class/TaxFeeOtherChargesClass.php";
+			                $searchme = new TaxFee;
+			                $searchme->CountTaxFeeComplex($gethuh[taxfeeid]);
+			                $how_many = $searchme->outnumrow;
+			                $loop=0;
+			        //sub in for X0
+			        	$complex_formula =str_replace("X0",$gethuh[multi],strtoupper($gethuh[amtformula]));
+                			$gTFO = new TaxFee;
+	          if ($sassesscomplex==1) {      
+	                while ($loop<$how_many) {
+	                	//echo "$complex_formula..0 \n";
+	                        $loop++;
+	                        $gTFO->FetchTaxFeeArray($searchme->outselect);
+	                        $get_varx = $gTFO->outarray;
+	                        $gTempAssess = new TaxFee;
+	                $gTempAssess->ReplaceValue($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
+	                $replace_var = $gTempAssess->outarray;
+ 	                $getyears = mysql_query("select  a.*, b.* from tempassess a, ebpls_buss_tfo b where
 	       					a.owner_id='$owner_id' and a.business_id='$business_id'
 	       					and a.active=0 and a.tfoid=b.tfoid and a.tfoid='$get_varx[complex_tfoid]' and
 	       					a.natureid='$getn[0]'");   
-                     $havemat = mysql_num_rows($getyears);
-					  $getyr  = mysql_fetch_assoc($getyears);	
-							
-                        
-                $gTempAssess->ReplaceValue($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
-                $replace_var = $gTempAssess->outarray;
+                     	$havemat = mysql_num_rows($getyears);
+			$getyr  = mysql_fetch_assoc($getyears);	
+	                $gTempAssess->ReplaceValue($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
+	                $replace_var = $gTempAssess->outarray;
                 
-                				if ($havemat>0) { //have prev record
-								//check if will bill
-								$howmanydec = $havemat/$getyr[counter];
-								$isdeci = strpos($howmanydec,".");
-								
-									if ($havemat % $getyr[counter]<>0) {
-												$replace_var[compval] = 0;
-									}
-								}
-                
-                
-                
-                $complex_formula = str_replace("$get_varx[var_complex]",$replace_var[compval],$complex_formula);
+			if ($havemat>0) { //have prev record
+					//check if will bill
+				$howmanydec = $havemat/$getyr[counter];
+				$isdeci = strpos($howmanydec,".");
+			
+				if ($havemat % $getyr[counter]<>0) {
+					$replace_var[compval] = 0;
+				}
+			}
+// 2008.04.18 handle more than 9 variables (previously X1 replaced X10, X11.. X19)
+               $Xvariable=$get_varx[var_complex]; $Yvariable = str_replace("X","Y",$Xvariable);
+                $complex_formula = ereg_replace($Xvariable."([0-9])",$Yvariable."\\1",$complex_formula);
+                $complex_formula = str_replace($get_varx[var_complex],
+                	$replace_var[compval],$complex_formula);
+               $complex_formula = ereg_replace($Yvariable."([0-9])",$Xvariable."\\1",$complex_formula);
                 }
-                
-                         
       	} else {  
 	      	
 	      	 while ($loop<$how_many) {
@@ -729,120 +721,101 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
 			$get_varx = $gTFO->outarray;
 			$gTempAssess = new TaxFee;
 			
-		$gTempAssess->ReplaceValueDef($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
-		$replace_var = $gTempAssess->outarray;
+			$gTempAssess->ReplaceValueDef($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
+			$replace_var = $gTempAssess->outarray;
 		
-					if ($replace_var[compval]>0) {
-							$repval = $replace_var[compval];
-							
-					} else {
-							$repval = $replace_var[defamt];
-							
-							$havegar = strpos(strtolower(trim($replace_var[tfodesc])),'garbage');
-
-
-								if ($g_zone==0) {
-									if ($havegar>-1) {
-										$exemptedfee = $exemptedfee + $repval;
-										$repval=0;
-										$nyenye = 1;
-										
-									}
-								}
-								
-								$getex = SelectMultiTable($dbtype,$dbLink,"ebpls_business_enterprise a, fee_exempt b,
-			                        ebpls_buss_tfo c","a.*",
-									"where a.business_id=$business_id and
-									a.business_category_code=b.business_category_code and
-									c.tfoid='$replace_var[tfoid]' and b.tfoid='$replace_var[tfoid]' and
-									b.active=1");
-						$getfeex = NumRows($dbtype,$getex);
-						if ($getfeex>0) {
-							$exemptedfee = $exemptedfee + $replace_var[defamt];
-							$repval=0;
-							$nyenye=1;
-							
-						}
-						/////////////////
-							$havemat=0;
-						$getyears = mysql_query("select  a.*, b.* from tempassess a, ebpls_buss_tfo b where
-							       	a.owner_id='$owner_id' and a.business_id='$business_id' and a.active=0
-							       	and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' order by date_create asc");
-							       					
-						$yearsi = mysql_query("select  a.*  from tempassess a, ebpls_buss_tfo b where
-							       	a.owner_id='$owner_id' and a.business_id='$business_id' and active=0
-							       	 and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' ");							
-							
-						$havemat = mysql_num_rows($yearsi);
-				
-          $getyr  = mysql_fetch_assoc($getyears);
-          
-			if ($havemat>0) { //have prev record
-			//check if will bill
-			@$howmanydec = $havemat/$getyr[counter];
-			$isdeci = strpos($howmanydec,".");
-			
-			if ($isdeci>0) { // will not bill
-	
-				$repval=0;
-
-			}
-		}	
-								
-								
-						///////////////////////	
-						}
-				
-						$to = strpos($complex_formula,"X1");
-						$newvar=substr($get_varx[var_complex],1);
+			if ($replace_var[compval]>0) {
+				$repval = $replace_var[compval];
+			} else {
+				$repval = $replace_var[defamt];
+				$havegar = strpos(strtolower(trim($replace_var[tfodesc])),'garbage');
+				if ($g_zone==0) {
+					if ($havegar>-1) {
+						$exemptedfee = $exemptedfee + $repval;
+						$repval=0;
+						$nyenye = 1;
+					}
+				}
 					
+				$getex = SelectMultiTable($dbtype,$dbLink,"ebpls_business_enterprise a, fee_exempt b,
+                        			ebpls_buss_tfo c","a.*",
+						"where a.business_id=$business_id and
+						a.business_category_code=b.business_category_code and
+						c.tfoid='$replace_var[tfoid]' and b.tfoid='$replace_var[tfoid]' and
+						b.active=1");
+				$getfeex = NumRows($dbtype,$getex);
+				if ($getfeex>0) {
+					$exemptedfee = $exemptedfee + $replace_var[defamt];
+					$repval=0;
+					$nyenye=1;
+				}
+				/////////////////
+				$havemat=0;
+				$getyears = mysql_query("select  a.*, b.* from tempassess a, ebpls_buss_tfo b where
+					       	a.owner_id='$owner_id' and a.business_id='$business_id' and a.active=0
+					       	and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' order by date_create asc");
+					       					
+				$yearsi = mysql_query("select  a.*  from tempassess a, ebpls_buss_tfo b where
+					       	a.owner_id='$owner_id' and a.business_id='$business_id' and active=0
+					       	 and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' ");							
+					
+				$havemat = mysql_num_rows($yearsi);
+		
+				$getyr  = mysql_fetch_assoc($getyears);
+          
+				if ($havemat>0) { //have prev record
+					//check if will bill
+					@$howmanydec = $havemat/$getyr[counter];
+					$isdeci = strpos($howmanydec,".");
+					
+					if ($isdeci>0) { // will not bill
+						$repval=0;
+					}
+				}	
+			}
+
+		$to = strpos($complex_formula,"X1");
+		$newvar=substr($get_varx[var_complex],1);
+echo complex_formula."\n";	
 		$formula = substr_replace($complex_formula,$repval,strpos($complex_formula,$get_varx[var_complex]));
+//2008.04.18 handle more than 9 variables (previously X# replaced X#0) by changing them to Y#n
+               $Xvariable=$get_varx[var_complex]; $Yvariable = str_replace("X","Y",$Xvariable);
+                $complex_formula = ereg_replace($Xvariable."([0-9])",$Yvariable."\\1",$complex_formula);
 //2008.04.15 Added NULL handling because of error in Capas.
-	        $complex_formula = str_replace("$get_varx[var_complex]",$repval==NULL?0:$repval,$complex_formula);
-//	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
-	  //  echo "$formula ---$to<BR>";
-	$cnto++;  
+	        $complex_formula = str_replace("$get_varx[var_complex]",
+	        		"$repval==NULL?0:$repval",$complex_formula);
+               $complex_formula = ereg_replace($Yvariable."([0-9])",$Xvariable."\\1",$complex_formula);
+		$cnto++;  
 		$vari[$cnto] = $get_varx[var_complex];
 		$rp[$cnto] = $repval;
                 }
         } 
-		 
-		$yo = 0;
-		if ($cnto>9) {
-			$eks = strpos($complex_formula,"X10");
-			$dfor =  substr($complex_formula,0,$eks-1);
-			$orig = $dfor;
-			while($yo<9) {
-				$yo++;
-			
-				$dfor = str_replace($vari[$yo],$rp[$yo],$dfor);
-				
+	 
+	$yo = 0;
+	if ($cnto>9) {
+		$eks = strpos($complex_formula,"X10");
+		$dfor =  substr($complex_formula,0,$eks-1);
+		$orig = $dfor;
+		while($yo<9) {
+			$yo++;
+			$dfor = str_replace($vari[$yo],$rp[$yo],$dfor);
 			}
-			$complex_formula = str_replace($orig,$dfor,$complex_formula);
-			
-			while($yo<$cnto) {
-				$yo++;
-			
-				$complex_formula = str_replace($vari[$yo],$rp[$yo],$complex_formula);
-				
-			}
-			
-			
-		//	} else {
-		//		$complex_formula = str_replace($vari,$rp,$complex_formula);
-			}
-                
-//		echo "$get_varx[var_complex],$replace_var[compval],$complex_formula";
-                @eval("\$totind=$is_dec$complex_formula;");
-                $show_complex = $gethuh[amtformula];
-                $gethuh[amtformula]='complex formula: ';
+		$complex_formula = str_replace($orig,$dfor,$complex_formula);
+		
+		while($yo<$cnto) {
+			$yo++;
+			$complex_formula = str_replace($vari[$yo],$rp[$yo],$complex_formula);
+		}
+	}
+        
+        @eval("\$totind=$is_dec$complex_formula;");
+        $show_complex = $gethuh[amtformula];
+        $gethuh[amtformula]='complex formula: ';
 
-
-
-		        	       		} elseif ($gethuh[mode]==1 || $gethuh[mode]==0) { //normal
+	} elseif ($gethuh[mode]==1 || $gethuh[mode]==0) { //normal
 		$formula_rep = str_replace("X0",$gethuh[multi],strtoupper($gethuh[amtformula]));
                 @eval("\$totind=$is_dec$formula_rep;");
-						}
+	}
                         		} elseif ($gethuh[indicator]==3) { //get range
                                         	$gethuh[amtformula]='range';
 					$getrange = SelectMultiTable($dbtype,$dbLink,
@@ -866,76 +839,67 @@ $getd1 = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_taxfeeother a,
                                  		}
 				}
 
-                                  $range = FetchRow($dbtype,$getrange);
+                                $range = FetchRow($dbtype,$getrange);
 
-                                        if (is_numeric($range[0])) {
-                                                $totind=$range[0];
-                                        } else {
-                                                $gethuh[amtformula]=$range[0];
-		$formula_rep = str_replace("X0",$gethuh[multi],strtoupper($range[0]));
-                @eval("\$totind=$is_dec$formula_rep;");
-                                        }
-                                        $totind = round($totind,2);
-
-                                } else { //constant
-                                		$totind = $gethuh[multi] * $gethuh[amtformula];
+                                if (is_numeric($range[0])) { $totind=$range[0]; }
+                                else {
+                                	$gethuh[amtformula]=$range[0];
+					$formula_rep = str_replace("X0",$gethuh[multi],strtoupper($range[0]));
+                			@eval("\$totind=$is_dec$formula_rep;");
                                 }
+                                $totind = round($totind,2);
+			} 
+                        else { //constant
+                                		$totind = $gethuh[multi] * $gethuh[amtformula];
+                        }
                         $gethuh[multi] = round($gethuh[multi],2);
                         $grandamt = $grandamt + $totind;
                         
-$gethuh[tfodesc]=stripslashes($gethuh[tfodesc]);
+			$gethuh[tfodesc]=stripslashes($gethuh[tfodesc]);
 	
-        if ($getd[indicator]==2 or $getd[indicator]==3 and $getd[basis]<>3) { //formula and range
-		if ($stt=='New') {
-			
-			 if ($getd[basis]==3) {
-                                $basis = 0;
-                        } else {
-	                	$basis = $getn[2];
-			}
-        } else {
-	        
-			 if ($getd[basis]==3) {
-                                $basis = 0;
-                        } else {
-		                $basis=$getn[3];
-			}
-                }
+        		if ($getd[indicator]==2 or $getd[indicator]==3 and $getd[basis]<>3) { //formula and range
+				if ($stt=='New') {
+					 if ($getd[basis]==3) { $basis = 0; } 
+					 else { $basis = $getn[2]; }
+	        		} 
+	        		else {
+					 if ($getd[basis]==3) { $basis = 0; } 
+					 else { $basis=$getn[3]; }
+	                	}
 	
-			$btc = number_format($basis, 2);
-
+				$btc = number_format($basis, 2);
 
 		if ($getd[basis]<>3) {
                 print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
 		<td align=right><input type=hidden  name=x[$varx] size=5 value=$gethuh[multi] $lockit >$btc </td>";
 		} else {	
 
-
-		 if ($itemID_<>4212) {
-		  print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
-                  <td align=right>$gethuh[uom] &nbsp <input type=hidden  name=x[$varx] size=5 value=$gethuh[multi] $lockit >
+		if ($itemID_<>4212) {
+		print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
+                  <td align=right>$gethuh[uom] &nbsp <input type=hidden name=x[$varx] size=5 value=$gethuh[multi] $lockit >
                   $gethuh[multi]</td>";
-                 } else {
+                } 
+                else {
               	print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
-                <td align=right>$gethuh[uom] &nbsp <input type=text  name=x[$varx] size=5 value=$gethuh[multi] $lockit ></td>";
+                <td align=right>$gethuh[uom] &nbsp <input type=text name=x[$varx] size=5 value=$gethuh[multi] $lockit ></td>";
 		}
 
 		 //print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
                 //<td align=right>$gethuh[uom] &nbsp <input type=text  name=x[$varx] size=5 value=$gethuh[multi] $lockit ></td>";
-        $tbut=1;
+        	$tbut=1;
 		}
 
 
 	} elseif ($getd[basis]==3) {
 		if ($itemID_<>4212) {
-  print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
+  		print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
                 <td align=right>$gethuh[uom] &nbsp <input type=hidden  name=x[$varx] size=5 value=$gethuh[multi] $lockit >
 		$gethuh[multi]</td>";		
 		} else {
-	      print "<tr><td align=left width=25%>$gethuh[tfodesc] </td>
+	      	print "<tr><td align=left width=25%>$gethuh[tfodesc] </td>
                 <td align=right>$gethuh[uom] &nbsp <input type=text  name=x[$varx] size=5 value=$gethuh[multi] $lockit ></td>";			
 		}
-	$tbut=1; 
+		$tbut=1; 
         } else { //constant
 
                 print "<tr><td align=left width=25%>$gethuh[tfodesc]</td>
@@ -959,9 +923,7 @@ if ($chkiffee[taxfeetype]<>1){
 	
 }
 
-
 $havegar = strpos(strtolower($getd[tfodesc]),'garbage');
-
 
 if ($g_zone==0) {
 	if ($havegar>-1) {
@@ -1203,23 +1165,20 @@ $nat_id = $getn[0];
                 $gTempAssess->ReplaceValue($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
                 $replace_var = $gTempAssess->outarray;
                 
-                				if ($havemat>0) { //have prev record
-								//check if will bill
-								$howmanydec = $havemat/$getyr[counter];
-								$isdeci = strpos($howmanydec,".");
-								
-									if ($havemat % $getyr[counter]<>0) {
-												$replace_var[compval] = 0;
-									}
-								}
-                
+		if ($havemat>0) { //have prev record
+				//check if will bill
+			$howmanydec = $havemat/$getyr[counter];
+			$isdeci = strpos($howmanydec,".");
+			
+			if ($havemat % $getyr[counter]<>0) {
+				$replace_var[compval] = 0;
+			}
+		}
                 
                 $complex_formula = str_replace("$get_varx[var_complex]",$replace_var[compval],$complex_formula);
                 }
                 
-                         
       	} else {  
-	      	
 	      	 while ($loop<$how_many) {
 			$loop++;
 			$gTFO->FetchTaxFeeArray($searchme->outselect);
@@ -1229,47 +1188,44 @@ $nat_id = $getn[0];
 		$gTempAssess->ReplaceValueDef($get_varx[complex_tfoid],$owner_id,$business_id,$getn[0]);
 		$replace_var = $gTempAssess->outarray;
 		
-					if ($replace_var[compval]>0) {
-							$repval = $replace_var[compval];
-					} else {
-							$repval = $replace_var[defamt];
-							
-							$havegar = strpos(strtolower(trim($replace_var[tfodesc])),'garbage');
-
-
-								if ($g_zone==0) {
-									if ($havegar>-1) {
-										$exemptedfee = $exemptedfee + $repval;
-										$repval=0;
-										
-									}
-								}
-								
-								$getex = SelectMultiTable($dbtype,$dbLink,"ebpls_business_enterprise a, fee_exempt b,
-			                        ebpls_buss_tfo c","a.*",
-									"where a.business_id=$business_id and
-									a.business_category_code=b.business_category_code and
-									c.tfoid='$replace_var[tfoid]' and b.tfoid='$replace_var[tfoid]' and
-									b.active=1");
-						$getfeex = NumRows($dbtype,$getex);
-						if ($getfeex>0) {
-							$exemptedfee = $exemptedfee + $replace_var[defamt];
-							$repval=0;
-							
-						}
-						/////////////////
-							$havemat=0;
-						$getyears = mysql_query("select  a.*, b.* from tempassess a, ebpls_buss_tfo b where
-							       	a.owner_id='$owner_id' and a.business_id='$business_id' and a.active=0
-							       	and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' order by date_create asc");
-							       					
-						$yearsi = mysql_query("select  a.*  from tempassess a, ebpls_buss_tfo b where
-							       	a.owner_id='$owner_id' and a.business_id='$business_id' and active=0
-							       	 and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' ");							
-							
-						$havemat = mysql_num_rows($yearsi);
+			if ($replace_var[compval]>0) {
+				$repval = $replace_var[compval];
+			} else {
+				$repval = $replace_var[defamt];
 				
-          $getyr  = mysql_fetch_assoc($getyears);
+				$havegar = strpos(strtolower(trim($replace_var[tfodesc])),'garbage');
+				if ($g_zone==0) {
+					if ($havegar>-1) {
+						$exemptedfee = $exemptedfee + $repval;
+						$repval=0;
+						
+					}
+				}
+								
+				$getex = SelectMultiTable($dbtype,$dbLink,"ebpls_business_enterprise a, fee_exempt b,
+			                        ebpls_buss_tfo c","a.*",
+						"where a.business_id=$business_id and
+						a.business_category_code=b.business_category_code and
+						c.tfoid='$replace_var[tfoid]' and b.tfoid='$replace_var[tfoid]' and
+						b.active=1");
+				$getfeex = NumRows($dbtype,$getex);
+				if ($getfeex>0) {
+					$exemptedfee = $exemptedfee + $replace_var[defamt];
+					$repval=0;
+				}
+						/////////////////
+				$havemat=0;
+				$getyears = mysql_query("select  a.*, b.* from tempassess a, ebpls_buss_tfo b where
+					       	a.owner_id='$owner_id' and a.business_id='$business_id' and a.active=0
+					       	and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' order by date_create asc");
+					       					
+				$yearsi = mysql_query("select  a.*  from tempassess a, ebpls_buss_tfo b where
+					       	a.owner_id='$owner_id' and a.business_id='$business_id' and active=0
+					       	 and a.tfoid=b.tfoid and a.tfoid='$replace_var[tfoid]' ");							
+					
+				$havemat = mysql_num_rows($yearsi);
+				
+          			$getyr  = mysql_fetch_assoc($getyears);
 			if ($havemat>0) { //have prev record
 			//check if will bill
 			@$howmanydec = $havemat/$getyr[counter];
@@ -1283,7 +1239,6 @@ $nat_id = $getn[0];
 		}	
 								
 								
-						///////////////////////	
 						}
 	        $complex_formula = str_replace("$get_varx[var_complex]",$repval,$complex_formula);
                 }
@@ -1297,7 +1252,7 @@ $nat_id = $getn[0];
 
 
 
-               // echo $complex_formula."===";
+                //echo $complex_formula."===\n";
                 @eval("\$totind=$is_dec$complex_formula;");
                 $show_complex = $getd[amtformula];
 
@@ -1600,12 +1555,6 @@ $compval = 0;
 	 
 				}
 		}
-
-
-
-
-
-
 
 // 	$result = InsertQuery($dbtype,$dbLink,"tempassess",
 // 	  	      "(assid, owner_id, business_id, natureid, taxfeeid, 
