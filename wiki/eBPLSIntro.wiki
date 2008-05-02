@@ -1,0 +1,10 @@
+#summary EBPLS Introduction.
+
+= Introduction =
+
+_*eBPLS*_ or electronic Business Permit and Licensing System is a sofware product and web applicntion that will enable Local Government Units (LGUs) to process business applications electronically. This system will standardize the business process flow in the application of business permit and licenses and will provide faster turnover time in
+the processing. The tedious mnnual processes that required much applicant follow-ups will be replaced by a system that enables applications, queries on approval status, as well as remaining tax dues. It also gratifies Community Tax Certificate (CTC) processing which every LGU requires.
+
+Processing of other types of permits: Fishery, Motorized, Occupationnl, and Peddlers, is also included in the system.
+
+The collections on business permits and licenses, being the primary source of income of LGUs, lay the benchmark from which the plans and programs of a city or municipality are established.
