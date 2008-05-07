@@ -1,16 +1,17 @@
 <?php
 /*  Modification History:
-	2008.04.04 Minor text change to ensure centering by Ron Crabtree
+	2008.04.04 RJC Minor text change to ensure centering
+	2008.05.06 RJC Handle undefined variables to reduce clutter in phperror.log
 */
 require_once "includes/variables.php";
 
-if ($ord == 'desc') {
+if(!isset($ord) or $ord == 'desc') {	//2008.05.06 set ascending if undefined
        $ord ='asc';
 } else {
        $ord ='desc';
 }
 
-
+$search_businesstype = isset($search_businesstype) ? $search_businesstype : ''; //2008.05.06 resolve undefined
 if ($permit_type=='Business') {
 	if ($itemID_==1221 || $itemID_==5212) {
 ?>

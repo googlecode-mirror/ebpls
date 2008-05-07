@@ -200,6 +200,10 @@ while ($getnats = @mysql_fetch_assoc($getnat))
 	$pdf->Cell(30,5,$get3new,1,0,'R');
 	$pdf->Cell(30,5,$get3renew,1,0,'R');
 	$yloop = $yloop + 5;
+	if ($yloop > 120) {
+		$yloop = 0;
+		$pdf->AddPage();
+	}
 }
 $pdf->Cell(270,5,'',0,1,'C');
 $pdf->Cell(270,5,'',0,1,'C');

@@ -423,23 +423,24 @@ if ($editline<>'y' || $kulit=='1' and $stat<>'Retire') {
 <tr>
 <td align="left" valign="top" class='normal'>&nbsp;
 <?php
-                echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature','natureid','naturedesc',$datarow[naturedesc], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id') order by naturedesc");
-               
-                if ($stat<>'New') {
-                 ?>
-                 
-                &nbsp; <input type=checkbox name=addrenew> Add as ReNew
-                <?php
-            	}
-            	?>
- </td>
-<td align="center" valign="top" class='normal'>&nbsp;<br> 
+    echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature','natureid','naturedesc',$datarow[naturedesc], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id') order by naturedesc");
+?>               
+</td>
+<td align="center" valign="top" class='normal'> 
 <input type='text'align=right name='business_capital_investment' maxlength=255 size=10 value=0.00></td>
 <td align="left" valign="top" class='normal'>&nbsp;</td> 
  <td align="center" valign="top" class='normal'>&nbsp;<br>
+
+<?php
+      if ($stat<>'New') {
+?>
+	      <input type=checkbox name=addrenew> Add as ReNew
+<?php
+      	} 
+?>
 <!--von-->
 <?php
-	if ($owner_id>0 and $business_id>0) {
+ 	if ($owner_id>0 and $business_id>0) {
 ?>
 <a href='#' onClick='_FRM.savethis.value=23; javascript:CLine("New");' class='subnavwhite'>Save</a>
 <?php

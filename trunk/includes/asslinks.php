@@ -1,7 +1,8 @@
 <?php
 /* Prepares display of businesses (one line per business) when assessments requested.
 Modification History:
-2008.04.04 Add NOWRAP to permit#, Date and Action to improve readability by Ron Crabtree
+2008.04.04: Add NOWRAP to permit#, Date and Action to improve readability by Ron Crabtree
+2008.04.25: Handle undefined variables with isset
 */
 //populate table
 // display with alternating light then dark bands
@@ -56,8 +57,8 @@ if ($predcomp==1 ) {
 			
 }
 
-
-
+$newpred=isset($newred)?$newpred:0; //2008.04.25
+$noregfee=isset($noregfee)?$noregfee:0;
 print "<td NOWRAP>
 <a href='index.php?part=4&newpred=$newpred&noregfee=$noregfee&class_type=Permits&itemID_=4212&owner_id=$get_info[0]&com=edit&permit_type=$tag&stat=$get_info[7]&business_id=$get_info[1]&busItem=Business&istat=$get_info[7]'> ReAssess</a>
 &nbsp;|&nbsp;<a href='index.php?part=4&newpred=$newpred&noregfee=$noregfee&class_type=Permits&itemID_=4212&owner_id=$get_info[0]&com=assess&permit_type=$tag&stat=$get_info[7]&business_id=$get_info[1]&busItem=Business&istat=$get_info[7]'>Assess</a>

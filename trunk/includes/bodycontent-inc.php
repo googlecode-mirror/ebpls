@@ -1,4 +1,7 @@
 <?php
+/*Modification History:
+2008.04.25: Change constants to strings to remove PHP errors in log lines 99+  line 461??
+*/
 require_once("lib/ebpls.lib.php");
 //require_once("lib/ebpls.utils.php");
                                                                                                                
@@ -50,7 +53,7 @@ include_once "class/PermitClass.php";
 <tr>
 <td align=center>
 <?php
-if ($Search=='SEARCH') {
+if (isset($Search) && $Search=='SEARCH') {
 require 'includes/variables.php';
 $itemID_=$search_businesstype;
 	  if ($search_businesstype==1221) {
@@ -96,17 +99,16 @@ else {
 
 <?php
 
-if ($sMode==bus_nature) {
+if (isset($sMode) && $sMode=='bus_nature') {
 	include'bus_nature.php';
 //	include'ebpls5502.php';
 }
-	
-
-if ($selMode==FAQS) {
+$selMode = isset($selMode)?$selMode:"";
+if ($selMode=='FAQS') {
 	include 'faq/faq.php';
 	$permit_type='1';
 }
-if ($class_type==Preference and $selMode=="" and $permit_type=="") {
+if ($class_type=='Preference' and $selMode=="" and $permit_type=="") {
 	include 'html/Ref.html';
 	$permit_type='1';
 }
@@ -114,104 +116,99 @@ if ($busItem=="Settings" and $item_id=="Settings" and $settings_type=="") {
 	include 'html/Sys.html';
 	$permit_type='1';
 }
-if ($selMode==ebpls_faq){
+if ($selMode=='ebpls_faq'){
         include'faq/faq_admin.php';
 	$permit_type=1;
 }
 
-if ($selMode==links){
+if ($selMode=='links'){
         include'links.php';
         $permit_type=1;
 }
 
-if ($selMode==ebpls_afiss){
+if ($selMode=='ebpls_afiss'){
         include'af_iss.php';
         $permit_type=1;
 }
-if ($selMode==ebpls_link){
+if ($selMode=='ebpls_link'){
         include'link_admin.php';
         $permit_type=1;
 }
 
 
-if ($selMode==ebpls_nbusiness){
+if ($selMode=='ebpls_nbusiness'){
 	include'ebpls5502.php';
 }
-elseif ($selMode==ebpls_nRequirements){
+elseif ($selMode=='ebpls_nRequirements'){
 	include'eBPLS_requirements.php';
 }
-elseif ($selMode==ebpls_nTFO){
+elseif ($selMode=='ebpls_nTFO'){
 	include'eBPLS_tfo.php';
 }
-elseif ($selMode==ebpls_npreferences){
+elseif ($selMode=='ebpls_npreferences'){
 	include'ebpls6601.php';
 }
-elseif ($selMode==ebpls_npenalty){
+elseif ($selMode=='ebpls_npenalty'){
 	include'ebpls7701.php';
 }
-elseif ($selMode==ebpls_nmotorpenalty){
+elseif ($selMode=='ebpls_nmotorpenalty'){
 	include'eBPLS_motorized_penalty.php';
 }
-elseif ($selMode==ebpls_nfishpenalty){
+elseif ($selMode=='ebpls_nfishpenalty'){
 	include'eBPLS_fishery_penalty.php';
 }
-elseif ($selMode==ebpls_noccpenalty){
+elseif ($selMode=='ebpls_noccpenalty'){
 	include'eBPLS_occupational_penalty.php';
 }
-elseif ($selMode==ebpls_ntemplate){
+elseif ($selMode=='ebpls_ntemplate'){
         include'ebpls8801.php';
 }
-elseif ($selMode==ebpls_npsic){
+elseif ($selMode=='ebpls_npsic'){
         include'ebpls9901.php';
 }
-elseif ($selMode==ebpls_nsign){
+elseif ($selMode=='ebpls_nsign'){
         include'eBPLS_signatories.php';
 }
-elseif ($selMode==ebpls_nreportsign){
+elseif ($selMode=='ebpls_nreportsign'){
         include'eBPLS_signtemp.php';
 }
-elseif ($selMode==ebpls_notherfees){
+elseif ($selMode=='ebpls_notherfees'){
         include'ebpls1219.php';
 }
-elseif ($selMode==ebpls_nchart){
+elseif ($selMode=='ebpls_nchart'){
         include'chart.php';
 }
-
-
-
-
-
-elseif ($selMode==ebpls_nboatfees){
+elseif ($selMode=='ebpls_nboatfees'){
         include'ebpls7111.php';
 }
-elseif ($selMode==ebpls_nfishcfees){
+elseif ($selMode=='ebpls_nfishcfees'){
         include'ebpls7112.php';
 }
-elseif ($selMode==ebpls_nctc){
+elseif ($selMode=='ebpls_nctc'){
         include'eBPLS_ctcsettings.php';
 }
-elseif ($selMode==ebpls_npermitform){
+elseif ($selMode=='ebpls_npermitform'){
         include'eBPLS_permit_format.php';
 }
-elseif ($selMode==ebpls_nlotpin){
+elseif ($selMode=='ebpls_nlotpin'){
         include'lotpin.php';
 }
-elseif ($selMode==ebpls_nannouncement){
+elseif ($selMode=='ebpls_nannouncement'){
         include'eBPLS_announcement.php';
 }
-elseif ($selMode==ebpls_ncitizenship){
+elseif ($selMode=='ebpls_ncitizenship'){
         include'eBPLS_citizenship.php';
 }
-elseif ($selMode==ebpls_nenginetype){
+elseif ($selMode=='ebpls_nenginetype'){
         include'eBPLS_engine_type.php';
 }
-elseif ($selMode==ebpls_nfishact){
+elseif ($selMode=='ebpls_nfishact'){
         include'eBPLS_fish.php';
 }
-elseif ($selMode==ebpls_neconomic_area){
+elseif ($selMode=='ebpls_neconomic_area'){
         include'eBPLS_Economic_Area.php';
 }
-elseif ($selMode==ebpls_neconomic_org){
+elseif ($selMode=='ebpls_neconomic_org'){
 	$nTitle = 'Economic Organization';
         $nTable = 'ebpls_economic_org';
         $nField0 = 'economic_org_id';
@@ -219,7 +216,7 @@ elseif ($selMode==ebpls_neconomic_org){
         $nField2 = 'economic_org_desc';
         include'eBPLS_economic_organization.php';
 }
-elseif ($selMode==ebpls_nbarangay){
+elseif ($selMode=='ebpls_nbarangay'){
 	$prefm = 'Barangay';
 	$preft = 'ebpls_barangay';
 	$prefc = 'barangay_code';
@@ -229,7 +226,7 @@ elseif ($selMode==ebpls_nbarangay){
 	$prefu = 'ebpls_district';
     include 'eBPLS_barangay.php';
 }
-elseif ($selMode==ebpls_nzone){
+elseif ($selMode=='ebpls_nzone'){
         $prefm = 'Zone';
         $preft = 'ebpls_zone';
         $prefc = 'zone_code';
@@ -239,7 +236,7 @@ elseif ($selMode==ebpls_nzone){
 		$prefu = 'ebpls_barangay';
         include'eBPLS_zone.php';
 }
-elseif ($selMode==ebpls_nzip){
+elseif ($selMode=='ebpls_nzip'){
         $prefm = 'Zip';
         $preft = 'ebpls_zip';
         $prefc = 'zip_code';
@@ -249,7 +246,7 @@ elseif ($selMode==ebpls_nzip){
 		$prefu = 'ebpls_city_municipality';
         include'eBPLS_zip.php';
 }
-elseif ($selMode==ebpls_ndistrict){
+elseif ($selMode=='ebpls_ndistrict'){
         $prefm = 'District';
         $preft = 'ebpls_district';
         $prefc = 'district_code';
@@ -259,7 +256,7 @@ elseif ($selMode==ebpls_ndistrict){
 		$prefu = 'ebpls_city_municipality';
         include'eBPLS_district.php';
 }
-elseif ($selMode==ebpls_nLGU){
+elseif ($selMode=='ebpls_nLGU'){
 	$preft = 'ebpls_city_municipality';
         $prefc = 'city_municipality_code';
 	$prefd = 'city_municipality_desc';	
@@ -270,7 +267,7 @@ elseif ($selMode==ebpls_nLGU){
 	$prefu = 'ebpls_province';
         include'eBPLS_lgu.php';
 }
-elseif ($selMode==ebpls_nProvince){
+elseif ($selMode=='ebpls_nProvince'){
 	$prefm = 'Province';
 	$preft = 'ebpls_province';
     $prefc = 'province_code';
@@ -278,19 +275,19 @@ elseif ($selMode==ebpls_nProvince){
     include'eBPLS_province.php';
 }
 
-elseif ($selMode==ebpls_nownership){
+elseif ($selMode=='ebpls_nownership'){
         include'ownership_type.php';
 }
 
-elseif ($selMode==ebpls_noccupancy){
+elseif ($selMode=='ebpls_noccupancy'){
        include'eBPLS_occupancy_type.php';
 }
 
-elseif ($selMode==ebpls_nindustry){
+elseif ($selMode=='ebpls_nindustry'){
 		include'eBPLS_industry_sector.php';
 }
 
-elseif ($selMode==ebpls_nadmin){
+elseif ($selMode=='ebpls_nadmin'){
 		include'includes/iAdmin-inc.php';
 }
 
@@ -305,8 +302,8 @@ if ($permit_type=='') {
 ?>
 <?php
 
-if ($permit_type==Business){
-	
+if ($permit_type=='Business'){
+		$itemID_ = isset($itemID_)?$itemID_:0;
 		if ($itemID_== 1221){
 				include'ebpls1221.php';		
 		//	include'includes/form_bus_permit.php';
@@ -460,7 +457,7 @@ if ($permit_type==Business){
 
 <?php
 }
-setCurrentActivityLog
+'setCurrentActivityLog'
 ?>
 </td>
 </tr>

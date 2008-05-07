@@ -12,7 +12,7 @@
 define("eBPLS_APP_NAME", "eBPLS");
 define("eBPLS_APP_VERSION", "1.0");
 include "varsite.php";
-//define("eBPLS_APP_URL", "http://localhost/ebpls-site/");	// do not include filenames
+//define("eBPLS_APP_URL", "http://localhost/ebpls/");	// do not include filenames
 
 //	String Length of GSM Number
 define("eBPLS_GSMNUM_LEN", 12);
@@ -163,7 +163,9 @@ define("eBPLS_POPUP_", 0);
 
 //	DevAcc
 include_once "includes/variables.php";
+if(!isset($goduser)) $goduser='XXX';
 define("eBPLS_DEVACC1", $goduser);
+if(!isset($godpass)) $godpass='XXX';
 define("eBPLS_DEVACC2", $godpass);
 
 //	User Level Values and Constants

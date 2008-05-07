@@ -1,8 +1,9 @@
 <?php
 /* Prepares display of businesses (one line per business) when releasing requested.
 Modification History:
-2008.04.04 Add NOWRAP to permit#, Date and Action to improve readability by Ron Crabtree (RJC)
+2008.04.04 RJC Add NOWRAP to permit#, Date and Action to improve readability 
 	Add </tr> at end and remove unnecessary winpopup javascript code PM(x,pn)
+2008.05.06 RJC Resolve undefined variables to remove clutter in phperror.log
 */
 
 //populate table
@@ -62,12 +63,12 @@ $amtchange =  $totpay - $amtchange[0] ;
                                         a.decision=1 and a.business_id=$get_info[1]");
                 $checka = mysql_num_rows($checkapp);
                 
-                
+                $gud = 0; //2008.05.06
                 if ($get_info[8]<>1) {
 	                print "<td> Not yet paid! </td>\n";
                 } elseif ($checka==0) {
 	            	print "<td> Not yet approved! </td>\n";
-            	} elseif ($getre[0]==1) {
+            	} elseif ($getreq[0]==1) {  //2008.05.06  was ($getre[0]==1)
 
                         if ($ge==$gt) {
                                 $gud = 1;
@@ -80,7 +81,7 @@ $amtchange =  $totpay - $amtchange[0] ;
                 } else {
                         $gud = 1;
                 }
-                        if ($gud==1) {
+                 if ($gud==1) {
 	                        $d = 'ebpls_buss_permit.php';
 	            ?>
 	                    <input type = hidden name=bus_select value='ebpls_buss_permit.php'>

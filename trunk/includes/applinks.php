@@ -1,7 +1,11 @@
 <?php
-
+/*Modification History:
+2008.04.05 RJC add NOWRAP to some columns to improve display
+2008.05.06 RJC Resolve undefined variables to clear phperror.log
+*/
 //                while ($get_info = mysql_fetch_row($result)){
 include'tablecolor-inc.php';
+
 print "<tr bgcolor='$varcolor'>\n";
 foreach ($get_info as $field )
                                                                                                                                                                                                                                                                                                                                                                                                        
@@ -48,16 +52,14 @@ if ($predcomp==1 ) {
              if ($orignat < $nat) {
 					$newpred='1';
 					$noregfee=1;
-					
-			 }
-			
+	     }
 }
+$newpred = isset($newpred) ? $newpred : '0';  //2008.05.06
+$noregfee = isset($noregfee) ? $noregfee : 0;
 
-
-
-                print "<td NOWRAP>
-                <a href='index.php?part=4&newpred=$newpred&noregfee=$noregfee&class_type=Permits&itemID_=5212&permitid=$get_info[2]&owner_id=$get_info[0]&com=approve&permit_type=$tag&stat=$get_info[7]&business_id=$get_info[1]&busItem=Business&istat=$get_info[7]'> Select </a>&nbsp
-                </td>";
+print "<td NOWRAP>
+            <a href='index.php?part=4&newpred=$newpred&noregfee=$noregfee&class_type=Permits&itemID_=5212&permitid=$get_info[2]&owner_id=$get_info[0]&com=approve&permit_type=$tag&stat=$get_info[7]&business_id=$get_info[1]&busItem=Business&istat=$get_info[7]'> Select </a>&nbsp
+            </td>";
   //              }//end while
 print "</tr>\n";
 ?>

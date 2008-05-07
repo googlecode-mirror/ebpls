@@ -1,9 +1,11 @@
 <?php
-
+/*
+Modification History:
+2008.04.25: Checks for undefined variables added to reduce PHP error log
+*/
 $browsers = "mozilla msie gecko firefox ";
 $browsers.= "konqueror safari netscape navigator ";
 $browsers.= "opera mosaic lynx amaya omniweb";
-
 
 $browsers = split(" ", $browsers);
 
@@ -27,7 +29,6 @@ for ($i=0; $i<count($browsers); $i++){
   }
 }
 
-
 $watbrowser = $GLOBALS["nav"] ;
 $watversion = $GLOBALS["ver"];
 
@@ -37,12 +38,7 @@ $max_len_error = '"exceeds max length."';
 $invalid_input_error = '"Please insert valid"';
 $cant_neg ='"cannot be negative."';
 
-
-
-
-
-
-$usern = (strtoupper($ThUserData['username']));
+$usern = isset($ThUserData['username'])?(strtoupper($ThUserData['username'])):""; //2008.04.25
 $currdate = getdate();
 $today =array($currdate['year'],$currdate['mon'],$currdate['mday']);
 $today = implode('-', $today);
@@ -52,7 +48,7 @@ $tdate = date('Y-m-d H:i:s');
 $yearnow=date('Y');
 $monthnow=date('m');
 $daynow=date('d');
-$paytype = $com;
+$paytype = (isset($com))?$com:""; //2008.04.25
 $buttag='Add';
 $buttag1='Clear';
 $temptbl='tempfees';
@@ -71,7 +67,8 @@ $formulalength=20;
 $i=1;
 $varx=1;
 
-if ($stat=='New' or $stat=='' ) {
+if (!isset($stat)) $stat='';   //2008.04.25
+if ($stat=='New' or $stat=='') {
         $disablecapinv='';
         $disablelastyr = 'readonly';
         $lb = 'Add';
@@ -88,7 +85,8 @@ if ($stat=='New' or $stat=='' ) {
 	$ly = 'Current';
 }
 
-
+if (!isset($permit_type)) $permit_type = 'Business';  //2008.04.25
+if (!isset($fee)) $fee = '';  //2008.04.25
 if ($permit_type=='Business') {
 	$rrtt = 'ebpls_owner';
 	$owner = 'ebpls_owner';

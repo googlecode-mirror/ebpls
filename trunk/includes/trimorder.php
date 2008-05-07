@@ -1,5 +1,5 @@
 <?php
-if ($orderby<>'') {
+if (isset($orderby) && $orderby<>'') {
         $orderby = stripslashes($orderby);
         $orderby = substr($orderby,1);
         $orderby = substr($orderby,0,-1);

@@ -1,4 +1,10 @@
 <?php                                  
+/*	Purpose: Prepares Business Permit in a PDF file  using the FPDF library functions
+
+Modifcation History:
+2008.04.04 RJC Removed boxes and reformatted to be cleaner looking
+2008.05.06 RJC Resolved undefined variables and improper constants
+*/
 require_once("../lib/ebpls.utils.php");
 define('FPDF_FONTPATH','font/');
 require('../ebpls-php-lib/html2pdf_lib/fpdf.php');     
@@ -11,6 +17,7 @@ include_once("../lib/multidbconnection.php");
                                                                                                  
 $dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 
+$reportpermit = isset($reportpermit) ? $reportpermit : ''; //2008.05.06
 if ($reportpermit == '1') {
 	if ($owner_last <> "") {
 	$getinfo = @mysql_query("select owner_id from ebpls_owner where owner_last_name = '$owner_last' limit 1");
@@ -544,10 +551,10 @@ $getdata = mysql_query("select * from ebpls_owner a, ebpls_barangay b,
 $getda=FetchArray($dbtype,$getdata);
 // 2008.04.04 build owner address from known pieces where * indicates unknown
 $owner_add = "$getda[owner_street]";
-if ($getda[barangay_desc] != "*") {
+if ($getda['barangay_desc'] != "*") {
 	$owner_add .= ", $getda[barangay_desc]";
 	}
-if ($getda[city_municipality_desc] != "*") {
+if ($getda['city_municipality_desc'] != "*") {
 	$owner_add .= ", $getda[city_municipality_desc]";
 	}
 $owner_add .= ", $getda[province_desc]";
@@ -583,7 +590,7 @@ $bodyp = substr($mainp,0,$f-$d-1);//permit format
 $sequence = substr($mainp,$f-$d-1);//add 1 to sequence
                                                                                                                
         //get first
-        if ($fgh==''){
+        if (!isset($fgh) or $fgh==''){	//2008.05.06
                 $sequence = '1'.$sequence;
 		$sequence = $sequence - $loppage;
                 $fgh='1';
@@ -699,7 +706,7 @@ $or_no = $getor[0];
 $getsignatories = mysql_query("select * from report_signatories where report_file='$report_desc' and sign_type=1") 
 or die(mysql_error());
 $getsignatories1 = mysql_fetch_array($getsignatories);
-$sign_id = $getsignatories1[sign_id];
+$sign_id = $getsignatories1['sign_id'];
 $result=mysql_query("select gs_name, gs_pos, gs_office from global_sign where sign_id = '$sign_id'") 
 or die(mysql_error()."dasd");
 

@@ -1,8 +1,6 @@
 <?php
-// SAKIT NG ULO KO DITO AH
-// 48 years ko inisip
-//display assessment
-
+/*  Purpose: display assessment
+*/
 $result = SelectMultiTable($dbtype,$dbLink,"$owner, ebpls_business_enterprise",
 		"concat($owner.owner_first_name,' ', $owner.owner_middle_name, ' ', 
 		$owner.owner_last_name) as full, ebpls_business_enterprise.business_name, 
@@ -12,15 +10,11 @@ $result = SelectMultiTable($dbtype,$dbLink,"$owner, ebpls_business_enterprise",
 		ebpls_business_enterprise.business_id=$business_id");
 $list = FetchRow($dbtype,$result);
 
-
 $cntrec = SelectDataWhere($dbtype,$dbLink,"tempassess",
 		"where owner_id=$owner_id and business_id=$business_id
 		and active=1 and transaction='$stat' and date_create like '$yearnow%'");
 $cnt = NumRows($dbtype,$cntrec);
-if ($cnt<>0){
-$PROCESS="COMPUTE";
-}
-
+if ($cnt<>0){ $PROCESS="COMPUTE"; }
 ?>
 
 <link rel="stylesheet" href="stylesheets/default.css" type="text/css"/>

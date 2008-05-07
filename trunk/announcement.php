@@ -149,12 +149,15 @@ if ($getinfo1[5]==1) {
 		<tr><td colspan=3 ><br></td></tr>
 
 		<tr width=90%>
-			<td align=left valign=top colspan=3><div align=center><textarea rows=5 cols=60 align=left name='announcements' class=text180><?php echo $announcements; ?></textarea></div>
+			<td align=left valign=top colspan=3>
+			<div align=center><textarea rows=5 cols=60 align=left 
+				name='announcements' class=text180><?php echo $announcements; ?>
+				</textarea></div>
 			</td>
 			<td> &nbsp </td>
 		</tr>
 		<tr width=90%>
-			<td align=right valign=top> Announced By : </td>
+			<td align=right valign=top> Announced By: </td>
 			<td align='left' valign=top> &nbsp; <input type=text name='announced_by' size=30 class=text180 value='<?php echo $announced_by;?>'></td>
 			<td> &nbsp </td>
 		</tr>
@@ -213,24 +216,18 @@ $total_pagesa = ceil($total_resultsa / $max_resultsa);
                                                                                                                                                                                                    
 echo "<table border=0 width=90%><tr><td><div align=left><br />";
                                                                                                                                                                                                    
-                        if($pagea > 1){
-                        $preva = ($pagea- 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0part=4&page=$prev1><< Prev</a>&nbsp;";
-                        }
-                                                                                                                                                                                                   
-                                                                                                                                                                                                   
-                        for($i = 1; $i <= $total_pagesa; $i++){
-                        if(($pagea) == $i){
-                                echo "Page $i&nbsp;";
+          if($pagea > 1){
+               $preva = ($pagea- 1);
+               echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0part=4&page=$prev1><< Prev</a>&nbsp;";
+               }
+	for($i = 1; $i <= $total_pagesa; $i++){
+		if(($pagea) == $i){
+			echo "Page $i&nbsp;";
                         } else {
                         echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0&page=$i>$i</a>&nbsp;";
                         }
-                        }
-                                                                                                                                                                                                   
-                                                                                                                                                                                                   
-                                                                                                                                                                                                   
+		}
                // Build Next Link
-                                                                                                                                                                                                   
                         if($pagea < $total_pagesa){
                         $nexta = ($pagea + 1);
                         echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0part=4&page=$nexta>Next>></a>";
@@ -247,7 +244,7 @@ echo "</td></tr></table>";
 <a href='index.php?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0&orderby=announcements&wator=<?php echo $wator; ?>'>Announcement</a></td>
 <td  class='hdr' width=20%>
 <a href='index.php?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0&orderby=announced_by&wator=<?php echo $wator; ?>'>
-Annouced By</a></td>
+Announced By</a></td>
 <td class='hdr' width=15%>
 <a href='index.php?part=4&class_type=Preference&selMode=ebpls_nannouncement&action_=8&itemEvent=1&data_item=0&orderby=date_modified&wator=<?php echo $wator; ?>'>
 Date Announce</a></td>

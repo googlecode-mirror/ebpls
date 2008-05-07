@@ -17,7 +17,7 @@ require_once "includes/variables.php";
 <div align="center">
 <table border=0 cellspacing=0 cellpadding=0  width='100%'>
 	<?php
-	
+		$class_type = isset($class_type)?$class_type:"Permits"; //2008.04.25
 		if ($class_type=='Permits' and $permit_type=='' and $itemID_=='') {
 	?>
 			<tr>

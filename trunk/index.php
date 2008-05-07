@@ -1,9 +1,11 @@
 <?php
 /*
-*	eBPLS
-*
-*	Author: Pagod Na Kami Inc.
-*	Date Started: Limot na sa tagal
+	Prupose: Initial login screen for eBPLS
+	Author: Pagod Na Kami Inc.
+	Date Started: Limot na sa tagal
+
+Modification History:
+2008.04.25: Fix problems reported in phperror.log
 */
 // application initialization
 ob_start();
@@ -36,7 +38,7 @@ if ($checktaxfeeother1 == 0 || $checktaxfeeother == "") {
 	}
 	$deleteall = @mysql_query("delete from ebpls_buss_taxfeeother where taxfeeid > 0");
 }
-if ($part=='') {
+if (!isset($part) or $part=='') {	// 2008.04.25 add isset check
 		if ($GLOBALS['watbrowser']=='msie') {
 			
 			$strQuery =mysql_query("UPDATE ebpls_user SET login = NOW(), logout = NOW() WHERE id = '$ThUserData[id]'");
@@ -45,29 +47,29 @@ if ($part=='') {
 		setUserLogout();
 		}
 
-		$ThUserData[id]='';
+		$ThUserData['id']='';	//2008.04.25 add quotes
 
 }
 
-$ses = $_COOKIE[PHPSESSID];
+$ses = isset($_COOKIE['PHPSESSID'])?$_COOKIE['PHPSESSID']:'';  //2008.05.06
 
 //validates login session
-if (getenv(HTTP_X_FORWARDED_FOR)) {							
-    $remoteip = getenv(HTTP_X_FORWARDED_FOR); 
+if (getenv('HTTP_X_FORWARDED_FOR')) {							
+    $remoteip = getenv('HTTP_X_FORWARDED_FOR'); 
 } else { 
-    $remoteip = getenv(REMOTE_ADDR);
+    $remoteip = getenv('REMOTE_ADDR');
 }	
 $seslog = mysql_query("select * from user_session where ip_add='$remoteip'");
 $haveses = mysql_num_rows($seslog);
 $getses = mysql_fetch_assoc($seslog);
 
 if ($ses=='') { //new browser
-			$frmUserKey = crypt_md5($frmUserKey, $decoder);
-			$hulog = mysql_query("select * from ebpls_user where username='$frmUserName' and
-									password='$frmUserKey'");
-			$gethu = mysql_fetch_assoc($hulog);
+	$frmUserKey = crypt_md5($frmUserKey, $decoder);
+	$hulog = mysql_query("select * from ebpls_user where username='$frmUserName' and
+								password='$frmUserKey'");
+	$gethu = mysql_fetch_assoc($hulog);
 
-			$willlog = $gethu['id'];
+	$willlog = $gethu['id'];
 			
 	if ($haveses>0) { //na close ang browser dapat logout
 		//$updses = mysql_query("Update user_session set date_input=now() where ip_add='$remoteip'");
@@ -80,19 +82,19 @@ if ($ses=='') { //new browser
 		$seslog = mysql_query("select * from user_session where user_id='$willlog'");
 		$haveses = mysql_num_rows($seslog);
 		$getses = mysql_fetch_assoc($seslog);
-			if ($haveses>0) { //hindi na close ang browser lipat pc dapat logout
+		if ($haveses>0) { //hindi na close ang browser lipat pc dapat logout
 		
-				$lastlog = strtotime(date("Y-m-d h:i:s")) - strtotime($getses['date_input']) ;
+			$lastlog = strtotime(date("Y-m-d h:i:s")) - strtotime($getses['date_input']) ;
 			
-				if ($lastlog >= $thIntCookieExp) {
+			if ($lastlog >= $thIntCookieExp) {
 
-					$delses = mysql_query("delete from user_session where ip_add='$remoteip' and user_id='$willlog'");
+				$delses = mysql_query("delete from user_session where ip_add='$remoteip' and user_id='$willlog'");
 		
-					$strQuery =mysql_query("UPDATE ebpls_user SET login = NOW(), logout = NOW() WHERE id = '$willlog'") 
+				$strQuery =mysql_query("UPDATE ebpls_user SET login = NOW(), logout = NOW() WHERE id = '$willlog'") 
 						or die (mysql_error());
-				}
+			}
 		
-			}		
+		}		
 	
 	}
 }
@@ -108,14 +110,12 @@ if ($ses=='') { //new browser
 		    $count++;
 		}
 
-
 		if (md5($frmUserName)==$goduser and md5($frmUserKey)==$godpass) {
-		
 
 		} else {
-		$frmUserKey = crypt_md5($frmUserKey, $decoder);		
+			$frmUserKey = crypt_md5($frmUserKey, $decoder);		
 		}
-			$strNewOp = (stristr($HTTP_SERVER_VARS['HTTP_REFERER'], '?')) ? '&' : '?';
+		$strNewOp = (stristr($HTTP_SERVER_VARS['HTTP_REFERER'], '?')) ? '&' : '?';
 	
 		//error if invalid user
 		$invuser = mysql_query("select * from ebpls_user where username='$frmUserName'") or die(mysql_error());
@@ -124,9 +124,8 @@ if ($ses=='') { //new browser
 			header("Location: " . $HTTP_SERVER_VARS['HTTP_REFERER'] . $strNewOp . "errlog=0" . $intRsltLog);
 			$count=0;
 		} else {
-		
-		
-		
+	
+		//$frmLoginDomain = isset($frmLoginDomain)?$frmLoginDomain:'0.0.0.0'; //2008.04.25
 		$intRsltLog = (is_dir("setup/{$frmLoginDomain}")) ? setUserLogin($frmUserName, $frmUserKey, $frmLoginDomain) : 0;
 		
 		
@@ -178,7 +177,7 @@ if ($ses=='') { //new browser
 		<?php	
 	}
 		
-	
+	if (!isset($part)) $part = "";  // 2008.04.25
 	if (empty($part) || $part == eBPLS_PAGE_LOGIN || intval($intUserLevel) < 0) {
 
 
@@ -229,6 +228,7 @@ if ($ses=='') { //new browser
 		}
 	} else {
 	
+	$thStrLogAction = isset($thStrLogAction) ? $thStrLogAction : '';  //2008.05.06
 	if ($intUserLevel > -1) setCurrentActivityLog($thStrLogAction);
 	}
 

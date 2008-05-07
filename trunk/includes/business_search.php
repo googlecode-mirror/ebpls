@@ -1,4 +1,7 @@
 <?php
+/*Modification History:
+2008.05.06 RJC Set undefined variables if used to reduce reporting in phperror.log
+*/
 require 'setup/setting.php';
 if(!isset($_GET['page'])){
     $page = 1;
@@ -12,25 +15,25 @@ $max_results = $thIntPageLimit;
 // on the current page number.
 $from = abs((($page * $max_results) - $max_results));
 
-
+$search_lastname = isset($search_lastname) ? $search_lastname : ''; //2008.05.06
 if ($search_lastname<>'') {
         $from = 0;
 	$max_results =$thIntPageLimit;
 }
 
-
-
 $r = mysql_query("update $permittable set active=0 where  transaction=''");	
 	
-
 if ($permit_type=='Business' and $ssap==1 ||  $ulev==6 || $ulev==7) {
 
-	
-
-	
-	
 $slash='update';
 require_once "includes/stripslash.php";
+
+$disapp = isset($disapp) ? $disapp : ''; //2008.05.06
+$search_lastname = isset($search_lastname) ? $search_lastname : '';
+$search_status = isset($search_status) ? $search_status : '';
+$search_firstname = isset($search_firstname) ? $search_firstname : '';
+$search_middlename = isset($search_middlename) ? $search_middlename : '';
+
 // LEO RENTON
 if($disapp=='') {
 $searchsql = "select distinct ($permittable.owner_id),ebpls_business_enterprise.business_id,

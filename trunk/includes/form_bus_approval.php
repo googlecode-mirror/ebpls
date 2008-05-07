@@ -61,10 +61,10 @@ $add = "$getda[owner_street] $getda[barangay_desc] $getda[zone_desc] ,$getda[dis
             	<td align="center" valign="top" class='header2' colspan=4 > 
                 	Owner Information</td>
             </tr>
-            <tr> 
+<!--            <tr> 
 	        	<td align="right" valign="top" class='normal' colspan=4>&nbsp; </td>
             </tr>
-            <tr> 
+-->            <tr> 
             	<td align="right" valign="top" class='normal' colspan=1> &nbsp; 
                 </td>
               	<td align="left" valign="top" class='normal' colspan=3>&nbsp;
@@ -107,10 +107,10 @@ $owner_last_name=$getit[3];
             <tr> 
             	<td align="right" valign="top" class='normal' colspan=4>&nbsp; </td>
             </tr>
-	    <tr>
+<!--	    <tr>
                 <td align="right" valign="top" class='normal' colspan=4>&nbsp; </td>
             </tr>
-
+-->
            <!-- <tr> 
             	<td align="right" valign="top" class='normal'> &nbsp; </td>
             	<td align="left" valign="top" class='normal' >&nbsp;  </td>
@@ -167,8 +167,8 @@ $owner_last_name=$getit[3];
 	        <!--// start listing of line of business //-->
 	
 
-				<table border=1 cellspacing=0 cellpadding=0 width=90% align=center>
-		 			<tr>
+			<table border=1 cellspacing=0 cellpadding=0 width=90% align=center>
+		 	<tr>
                     	<td align='center' valign='top' class='normalbold'>Description</td>
                     	<td align='center' valign='top' class='normalbold'>Capital Investment</td>
                     	<td align='center' valign='top' class='normalbold'>Last Year's Gross</td>
@@ -192,9 +192,9 @@ $owner_last_name=$getit[3];
                			print "<td align='center' valign='top' class='normal'>$last_yr</td>\n";
 				        print "</tr>\n";
 				}	
-              			
-				print "</table><br>";
-
+?>
+			</table><font size=1>&nbsp</br></font>
+<?php
 $chkbacktax = SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
 $chkbacktax = FetchArray($dbtype,$chkbacktax);
  $pmode=$datarow[business_payment_mode];
@@ -210,7 +210,7 @@ $total_tax_compute = $grandamt;
 <?php
 } else {
 ?>
-	<table width=100% align = left border=0><br><br>
+	<table width=100% align = left border=0>
 		<tr><td align=center>
 				<?php
 				

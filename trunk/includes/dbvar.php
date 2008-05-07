@@ -2,6 +2,6 @@
 
 $dbuser = 'root';
 $dbpass = 'elguebpls';
-$dbname = 'ebplssample';
+$dbname = 'ebpls';
 
 ?>

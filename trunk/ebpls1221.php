@@ -1,8 +1,11 @@
 <?php
-//	Description:ebpls1221.php - one file that serves all other permit applications
-//	author: Vnyz Sofhia Ice
-//	Trademark: [V[f]X]S!73n+_K!77er
-//	Last Updated: Feb 2, 2006 DAP
+/*	Description: ebpls1221.php - one file that serves all other permit applications
+	author: Vnyz Sofhia Ice
+
+Modification History:
+2006.02.02 DAP
+2008.05.06: RJC Resolving errors reported in phperror.log
+*/
 //	- start page for owner search
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
@@ -15,7 +18,7 @@ require_once "includes/variables.php";
 require_once "class/BusinessEstablishmentClass.php";
 include_once "class/PermitClass.php";
 include_once "class/TaxpayerClass.php";
-$ownerID = $owner_id;
+$ownerID = isset($owner_id) ? $owner_id : 0; //2008.05.06
 if ($permit_type=='Motorized' || $permit_type=='Franchise') {
 $checkrentype = @mysql_query("select * from ebpls_motorized_penalty where permit_type = '$permit_type'");
 $checkrentype1 = @mysql_fetch_assoc($checkrentype);
@@ -43,22 +46,22 @@ if ($checkrentype1['renewaltype'] == '1' and $stat == "ReNew" and $nghji =="yuhs
 }
 }
 
+$PROCESS = isset($PROCESS) ? $PROCESS : '';  //2008.05.06
 if ($PROCESS=='ASSESSMENT') {
 	$PROCESS='SAVE';
 }
 
-
+$addveh = isset($adaveh) ? $addveh : ''; //2008.05.06
 if ($addveh=='transfer') {
-	
 	include "ebpls1223.php";
 	$vekatt=0;
 }
 
-
+$vekatt = isset($vekatt) ? $vekatt :  0 ; //2008.05.06
 if ($vekatt==1) {
 	
-$buttag = 'Add';
-$buttag1='Cancel';
+	$buttag = 'Add';
+	$buttag1='Cancel';
 
 //check for duplicates
 
@@ -96,6 +99,9 @@ if ($permit_type=='Franchise') {
 	require_once "includes/form_add_middlepermit.php";
 	require_once "includes/mtop.php";	
 }
+
+//2008.05.06 define undefined variables
+$becancel = isset($becancel) ? $becancel : '';
 
  if ($becancel=="true") {
 // 	$Biz = new BusinessEstablishment;
@@ -144,9 +150,12 @@ require_once "includes/body.php";
  require_once "includes/business_search.php";
  }
 
+$linkpro = isset($linkpro) ? $linkpro : '';  //2008.05.06
 if ($linkpro=='PAYMENT') {
 	$PROCESS='SAVE';
 }
+
+$orderby = isset($orderby) ? $orderby : ''; //2008.05.06
 if ($orderby<>'') {
 	$orderby = stripslashes($orderby);
 	$orderby = substr($orderby,1);
@@ -197,7 +206,16 @@ if ($PROCESS=='SAVE' and $itemID_==1221 and $permit_type<>'Fishery') {
 
         }
 }
+// 2008.05.06 set undefined variables
+$mtopadd = isset($mtopadd) ? $mtopadd : '';  $addOwner = isset($addOwner) ? $addOwner : ''; $addveh = isset($addveh) ? $addveh : '';
+$upOwner = isset($upOwner) ? $upOwner : ''; $com = isset($com) ? $com : '';
+$addfee = isset($addfee) ? $addfee : ''; $delfee = isset($delfee) ? $delfee : ''; $mtopsearch = isset($mtopsearch) ? $mtopsearch : '';
+$addbiz = isset($addbiz) ? $addbiz : ''; $clearveh = isset($clearveh) ? $clearveh : '';
+$useboat = isset($useboat) ? $useboat : ''; $fishactive = isset($fishactive) ? $fishactive : '';
+$mainfrm = isset($mainfrm) ? $mainfrm : ''; $subfish = isset($subfish) ? $subfish : '';
+
 // display search form
+$addEmp = isset($addEmp) ? $addEmp : ''; //2008.05.06
 if ($mtopadd<>' A D D ' and  $addOwner<>'ADD' and $addveh<>'Add' and 
     $upOwner<>'UPDATE' and $com<>'Select' and $com<>'Edit' and $mtopsearch<>'SEARCH' and
     $com<>'Delete' and $addveh<>'Edit' and $com<>'ReNew' and $addEmp<>'A D D' and 
@@ -216,16 +234,16 @@ if ($mtopadd<>' A D D ' and  $addOwner<>'ADD' and $addveh<>'Add' and
 print "";
 }
 
-if ($permit_type==Fishery and $subfish=='PROCESS' and $useboat=='' and $fishactive=='') {
+if ($permit_type=='Fishery' and $subfish=='PROCESS' and $useboat=='' and $fishactive=='') {
 echo "<div align=center><font color=red>Succesfully Processed</font></div>";
 $mtopsearch='SEARCH';
 $useboat='';
 }
-if ($permit_type==Fishery and $reg_close=='Close') {
+if ($permit_type=='Fishery' and $reg_close=='Close') {
 $useboat='';
 $mainfrm='Main';
 }
-if ($permit_type==Fishery and $useboat<>'' ) {
+if ($permit_type=='Fishery' and $useboat<>'' ) {
 	$owner_id=$ownerID;
         require_once "includes/form_add_mtoppermit.html";
         require_once "includes/regboat.php";
@@ -234,7 +252,7 @@ if ($permit_type==Fishery and $useboat<>'' ) {
 		require_once "includes/form_add_lastpermit.html";
 }
 
-if ($fishactive=='Add' and $permit_type==Fishery) {
+if ($fishactive=='Add' and $permit_type=='Fishery') {
 
 	if ($actcom=='Delete') {
 		$de = DeleteQuery($dbtype,$dbLink,"fish_assess","ass_id=$assid");
@@ -251,16 +269,16 @@ if ($fishactive=='Add' and $permit_type==Fishery) {
 }
 
 if ($mainfrm=='Main') {
-	if ($permit_type==Business) {
+	if ($permit_type=='Business') {
 		require_once("includes/form_bus_permit.php");
-	} elseif ($permit_type==Franchise || $permit_type==Motorized) {
+	} elseif ($permit_type=='Franchise' || $permit_type=='Motorized') {
 		$owner_id=$ownerID;
 		require_once "includes/form_add_mtoppermit.html";
 		if ($owner_id<>'') {
 		require_once "includes/form_add_middlepermit.php";
 		require_once "includes/mtop.php";
 		}
-	} elseif ($permit_type==Occupational) {
+	} elseif ($permit_type=='Occupational') {
 		$owner_id=$ownerID;
 		
                 require_once "includes/form_add_mtoppermit.html";
@@ -268,7 +286,7 @@ if ($mainfrm=='Main') {
                 require_once "includes/form_add_midoccu.php";
 				require_once "includes/mtop.php";
 			}
-    	} elseif ($permit_type==Peddlers) {
+    	} elseif ($permit_type=='Peddlers') {
 	    	$owner_id=$ownerID;
 	    	
 	    	require_once "includes/form_add_mtoppermit.html";
@@ -276,7 +294,7 @@ if ($mainfrm=='Main') {
 				require_once "includes/form_add_midpeddler.html";
 				require_once "includes/mtop.php";
 			}
-	} elseif ($permit_type==Fishery) {
+	} elseif ($permit_type=='Fishery') {
 		$owner_id=$ownerID;
 		require_once "includes/form_add_mtoppermit.html";
 		if ($owner_id<>'') {
@@ -527,6 +545,9 @@ if ($stat<>'New') {
 }
 }
 }
+$page = isset($page) ? $page : '';  //2008.05.06 Define undefined
+$howmany = isset($howmany) ? $howmany : '';
+
 if ($mtopsearch=='SEARCH') { //search existing
 	if ($page<>'') {
 		require_once "includes/business_search.php";
@@ -544,7 +565,8 @@ if ($mtopsearch=='SEARCH') { //search existing
 	if ($howmany=='') {
 		require_once "includes/business_search.php";
 	}
-
+	$search_businesstype = isset($search_businesstype) ? $search_businesstype : 0;  //2008.05.06 Define undefined
+	
 	if ($search_businesstype==1 || $permit_type<>'s') {
 		if ($PROCESS=='SAVE') {
 			 $xc=0;
@@ -628,7 +650,7 @@ if ($predcomp==1 and $stat=='New') {
 
 			}
 		}
-
+	$transfer_it  = isset($transfer_it) ? $transfer_it : 0 ; //2008.05.06 Define undefined
 	if ($transfer_it==1) {
 			 //save to trans_his
                         $tra = InsertQuery($dbtype,$dbLink,"trans_his","",
@@ -749,6 +771,7 @@ if ($owner_id=='') {
 	}
 }
 
+$business_id = isset($business_id) ? $business_id : 0 ; //2008.05.06 Define undefined
 //add code for renew
 if ($business_id<>'') {
 $g = SelectDataWhere($dbtype,$dbLink,$permittable,

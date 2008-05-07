@@ -7,7 +7,14 @@ if(!isset($_GET['page'])){
 } else {
     $page = $_GET['page'];
 }
-                                                                                                 
+ //2008.05.06 Define undefined                                                                                                
+$disapp = isset($disapp) ? $disapp : ''; 
+$search_lastname = isset($search_lastname) ? $search_lastname : '';
+$search_status = isset($search_status) ? $search_status : '';
+$search_firstname = isset($search_firstname) ? $search_firstname : '';
+$search_middlename = isset($search_middlename) ? $search_middlename : '';
+$orderby = isset($orderby) ? $orderby : '';
+
 // Define the number of results per page
 $max_results = $thIntPageLimit;
 // Figure out the limit for the query based

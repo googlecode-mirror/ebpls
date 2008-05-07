@@ -8,10 +8,10 @@ if (isset($iSubmitSearch)){
 
 
 
-if (getenv(HTTP_X_FORWARDED_FOR)) {							
-    $remoteip = getenv(HTTP_X_FORWARDED_FOR); 
+if (getenv('HTTP_X_FORWARDED_FOR')) {							
+    $remoteip = getenv('HTTP_X_FORWARDED_FOR'); 
 } else { 
-    $remoteip = getenv(REMOTE_ADDR);
+    $remoteip = getenv('REMOTE_ADDR');
 }	
 
 

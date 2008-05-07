@@ -68,6 +68,7 @@ if ($get_info[9]==1) {
 print "|
 <a href='index.php?part=4&class_type=Permits&itemID_=1221&owner_id=$get_info[0]&com=Drop&permit_type=$tag&stat=Retire&business_id=$get_info[1]&busItem=Business'  class=subnavwhite>Retire</a>";
 }
+$disapp = isset($disapp) ? $disapp : 0 ;
 if ($disapp==1) {
 ?>
 |

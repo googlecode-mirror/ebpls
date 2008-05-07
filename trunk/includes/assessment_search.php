@@ -1,4 +1,7 @@
 <?php
+/*Modification History:
+2008.05.06 RJC Resolve undefined variables to clear phperror.log
+*/
 require_once "includes/trimorder.php";
 require 'setup/setting.php';
 if(!isset($_GET['page'])){
@@ -17,6 +20,14 @@ $from = abs((($page * $max_results) - $max_results));
 <link rel="stylesheet" href="stylesheets/default.css" type="text/css"/>
 <?php
 $slash='update';
+
+//2008.05.06 Define undefined
+$search_lastname = isset($search_lastname) ? $search_lastname : '';
+$search_status = isset($search_status) ? $search_status : '';
+$search_firstname = isset($search_firstname) ? $search_firstname : '';
+$search_middlename = isset($search_middlename) ? $search_middlename : '';
+$orderby = isset($orderby) ? $orderby : '';
+ 
 if ($search_lastname<>'') {
         $from = 0;
         $max_results = 100;

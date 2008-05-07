@@ -1,9 +1,11 @@
 <?php
-//      Description:ebpls2212.php - one file that serves all other permit payments
-//      author: Vnyz Sofhia Ice
-//      Trademark: [V[f]X]S!73n+_K!77er
-//      Last Updated: Dec 20, 2004 Trece Martires, Cavite
-//	Note: Please Fill-up "Please Populate"
+/* 	Purpose: serves all other permit payments
+	author: Vnyz Sofhia Ice
+
+Modication History:
+2004.12.20 Trece Martires, Cavite
+2008.05.06 RJC Define undefined to clean up phperror.log
+*/
 
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
@@ -15,11 +17,14 @@ require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 global $ThUserData;
 require_once "includes/variables.php";
 $getyearnow = date('Y');
+
+$linkpro = isset($linkpro) ? $linkpro : ''; //2008.05.06
 if ($linkpro=='RELEASING') {
         $PROCESS='SAVE';
 }
 
 // display search page
+$delproc = isset($delproc) ? $delproc :''; //2008.05.06
 if ($delproc == 'yes') {
 /*	$deletepaid = DeleteQuery($dbtype,$dbLink,"temppayment",
 				"owner_id = $owner_id and permit_type='$permit_type' 
@@ -52,6 +57,8 @@ if ($delproc == 'yes') {
                      <!--	<body onload='javascript:alert("Payment Record Deleted."); parent.location="index.php?part=4&class_type=Permits&itemID_=2212&owner_id=<? echo $owner_id;?>&stat=<? echo $stat;?>&com=cash&permit_type=<? echo $permit_type;?>&busItem=<? echo $permit_type;?>"'></body>-->
 <?php
 }
+
+$com = isset($com) ? $com : ''; //2008.05.06
 if ($com=='cash' || $com=='check' || $com=='reassess' and $addpay<>'Compute') {
 	if ($addpay=='' and $cmd=='' and $PROCESS<>'PROCESS') {
 	} else {
@@ -305,9 +312,14 @@ $updateit = UpdateQuery($dbtype,$dbLink,"ebpls_motorized_vehicles",
         	}
 	}
 
-if ($com<>'cash' and  $com<>'check' and $com<>'reassess' and $com<>'Select' and $com<>'Edit' and $com<>'Delete' and $com<>'ReNew' and $addpay<>'Compute' and $cmd<>'delete') {
+$addpay = isset($addpay) ? $addpay : ''; //2008.05.06
+$cmd = isset($cmd) ? $cmd : ''; 
+
+if ($com<>'cash' and  $com<>'check' and $com<>'reassess' and $com<>'Select' and $com<>'Edit' and $com<>'Delete' and $com<>'ReNew' 
+and $addpay<>'Compute' and $cmd<>'delete') {
                                                                                                                
 // process successful
+	$PROCESS = isset($PROCESS) ? $PROCESS : ''; //2008.05.06
         if ($PROCESS=='SAVE') {
                                                                                                                
                 if ($permit_type=='Business') {

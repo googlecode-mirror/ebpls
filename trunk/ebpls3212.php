@@ -1,18 +1,23 @@
 <?php
-//      Description:ebpls3221.php - one file that serves all other permit releasing
-//      author: Vnyz Sofhia Ice
-//      Trademark: [V[f]X]S!73n+_K!77er
+/*     Description: Permit Releasing
+	Author: Vnyz Sofhia Ice
+
+Modification History:
+2008.05.06 RJC Resolve undefined variables from cluttering phperror.log
+*/    
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 global $ThUserData;
 require_once "includes/variables.php";
 // display search form
+$com = isset($com) ? $com : '';  //2008.05.06
 if ($com<>'PrintReport') {
 
 //require_once("includes/form_mtop_release.html");
 
 }
+$mtopsearch = isset($mtopsearch) ? $mtopsearch : ''; //2008.05.06
 if ($mtopsearch=='SEARCH') { //search existing
 require_once "includes/release_search.php";
 } elseif ($com=='PrintReport') {

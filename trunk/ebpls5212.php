@@ -1,7 +1,14 @@
 <?php
-// approval
+/* Purpose: Approval processing
+
+Modication History:
+2008.05.06 RJC Define undefined to clean up phperror.log
+*/
+
 require_once "includes/variables.php";
 
+$PROCESS = isset($PROCESS) ? $PROCESS : ''; //2008.05.06 define undefined
+$com = isset($com) ? $com : '';
 if ($com<>'approve') {
 
 	// process successful

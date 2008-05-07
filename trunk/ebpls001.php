@@ -1,9 +1,13 @@
 <?php
 //	eBPLS_PAGE_LOGIN: Login Page
-if (getenv(HTTP_X_FORWARDED_FOR)) {							
-    $remoteip = getenv(HTTP_X_FORWARDED_FOR); 
+/*
+Modification History:
+2008.04.25: Correct strings NOT constants for getenv function
+*/
+if (getenv('HTTP_X_FORWARDED_FOR')) {							
+    $remoteip = getenv('HTTP_X_FORWARDED_FOR'); 
 } else { 
-    $remoteip = getenv(REMOTE_ADDR);
+    $remoteip = getenv('REMOTE_ADDR');
 }	
 //echo $remoteip;
 ?>

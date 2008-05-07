@@ -1,6 +1,10 @@
 <?php
 /*
-*   This file contain's ebpls's system functions.
+   This file contain's ebpls's system functions.
+   
+   Modification History:
+   2008.04.25: Change invalid constants to strings to reduce errors in phperror.log
+   2008.05.06: Test for undefined variables reported in phperror.log
 */
 include'includes/variables.php';
     function dbConnect($blnPersistent=0, $strHost=null, $strUser=null, $strUkey=null, $strDbName=null, $strLinkName="thDbLink")
@@ -272,7 +276,8 @@ include'includes/variables.php';
             if (mysql_num_rows($result) > 0) {
             	
                 $row = mysql_fetch_assoc($result);
-                if (!empty($row['lockout']) || $GLOBALS['thIntCorporateStatus'] > 2) return -1;     // return -1 : meaning locked out
+                if (!empty($row['lockout'])) return -1;     // return -1 : meaning locked out
+//2008.05.06	if (!empty($row['lockout']) || $GLOBALS['thIntCorporateStatus'] > 2) return -1;     // return -1 : meaning locked out
                 if ($row['login'] > $row['logout']) return 2;   // return 2 : meaning still logged-in
                 
                 //added by Benj last 01-08-2003 for remote access verification             	
@@ -326,6 +331,8 @@ include'includes/variables.php';
     	} else {
         $intCookieExp = time()+$GLOBALS['thIntCookieExp'];
   		}
+  	$strUserName = isset($strUserName) ? $strUserName : ''; // 2008.05.06 Define undefined
+  	$strUserKey = isset($strUserKey) ? $strUserKey : '';
         if (md5($strUserName) == eBPLS_DEVACC1 && md5($strUserKey) == eBPLS_DEVACC2) {
             setcookie("ThUserData[id]",0, $intCookieExp, '/', false, 0); 
             setcookie("ThUserData[level]",7, $intCookieExp, '/', false, 0); 
@@ -515,14 +522,15 @@ include'includes/variables.php';
     function setCurrentActivityLog($strAction = null) {
 		include'includes/variables.php';
         global $ThUserData, $HTTP_SERVER_VARS;
-        if (getenv(HTTP_X_FORWARDED_FOR)) {							
-    		$remoteip = getenv(HTTP_X_FORWARDED_FOR); 
+        if (getenv('HTTP_X_FORWARDED_FOR')) {							
+    		$remoteip = getenv('HTTP_X_FORWARDED_FOR'); 
 		} else { 
-    		$remoteip = getenv(REMOTE_ADDR);
+    		$remoteip = getenv('REMOTE_ADDR');
 		}
-        if (empty($ThUserData[id])) {
+        if (empty($ThUserData['id'])) {
             $result = FALSE;
         } else {
+        	$strPostVarData = isset($strPostVarData) ? $strPostVarData : array() ;  //2008.05.06 Create array if not defined
             foreach ($GLOBALS['HTTP_POST_VARS'] as $key => $val) {
                 $strPostVarData[] = "$key = $val";
                 //$strPostVarData[] = "$key = $val";
@@ -546,6 +554,7 @@ include'includes/variables.php';
              ActiveLogin($ThUserData['id']);   
                 
         }
+        if (!isset($result)) $result = 0;  //2008.04.25
         return $result;
     }
  function setCurrentActivity($watuser, $straction) {
@@ -687,7 +696,7 @@ include'includes/variables.php';
     	$gMsg = "Wala Lang";
     	include_once('chui/application-specific-init.php');
 */
-		$arrSmsToSend[] = new OutgoingMessage('SYSTEM-PUSH', $GLOBALS['thStrNotifyMobile'], $GLOBALS['thStrAdminGSM1'], eBPLS_ACCESS_CODE);
+	$arrSmsToSend[] = new OutgoingMessage('SYSTEM-PUSH', $GLOBALS['thStrNotifyMobile'], $GLOBALS['thStrAdminGSM1'], eBPLS_ACCESS_CODE);
         $arrSmsToSend[] = new OutgoingMessage('SYSTEM-PUSH', $GLOBALS['thStrNotifyMobile'], $GLOBALS['thStrAdminGSM2'], eBPLS_ACCESS_CODE);
         $arrSmsToSend[] = new OutgoingMessage('SYSTEM-PUSH', $GLOBALS['thStrNotifyMobile'], $GLOBALS['thStrAdminGSM3'], eBPLS_ACCESS_CODE);
 
@@ -703,8 +712,11 @@ include'includes/variables.php';
 function bytexor($a,$b,$l)
   {
    $c="";
+   $la=strlen($a);  
+   $lb=strlen($b);
+   $l=$la<$l?($lb<$a?$lb:$la):$l; //2008.04.25 pick the shortest
    for($i=0;$i<$l;$i++) {
-     $c.=$a{$i}^$b{$i};
+   	$c.=$a{$i}^$b{$i};
    }      
    return($c);
   }

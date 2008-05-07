@@ -29,7 +29,7 @@ if ($sb=='Submit') {
 			$nAnnounce->setData(SMS_SEND,$smsend);
 			$nAnnounce->add();
 if ($sms_send==1) {
- $msgcom = 'Annoucement:'.$announcements.'-'.$announced_by;
+ $msgcom = 'Announcement:'.$announcements.'-'.$announced_by;
 
                 $check1 = mysql_query("select * from sms_archive
                                 where msg='$msgcom'") or die(mysql_error());

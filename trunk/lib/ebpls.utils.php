@@ -1,11 +1,8 @@
 <?php
-/*
-	utility functions
-Modification History:
-2008.04.04 in get_select_data_where (Ln 358), change class=select300 to class=select
-		This allows more complete display of Line of Business by Ron Crabtree
-		(also needs new class 'select' in default.css stylesheet.
+/*	Purpose: 	utility functions
 
+Revision History:
+2008.04.25:	Add undefined checking to remove items in phperror.log
 */
 
 //--- connect to DB
@@ -14,20 +11,20 @@ define('DB_NAME1','ebpls');
 define('DB_USER1','root');
 define('DB_PASS1','elguebpls');
 
-define("eBPLS_APP_NAME", "eBPLS");
-define("eBPLS_APP_VERSION", "1.0");
-define("eBPLS_APP_URL", "http://192.168.100.1/ebpls/");       // do not include filenames
+if (!defined("eBPLS_APP_NAME"))define("eBPLS_APP_NAME", "eBPLS");  //2008.04.25 errors from redefine
+if (!defined("eBPLS_APP_VERSION"))define("eBPLS_APP_VERSION", "1.0");
+if (!defined("eBPLS_APP_URL"))define("eBPLS_APP_URL", "http://192.168.100.1/ebpls/");       // do not include filenames
 //define("eBPLS_APP_URL", "http://localhost/ebpls-site/");      // do not include filenames
                                                                                                  
 //      String Length of GSM Number
-define("eBPLS_GSMNUM_LEN", 12);
+if (!defined("eBPLS_GSMNUM_LEN"))define("eBPLS_GSMNUM_LEN", 12);
                                                                                                  
 //      Alert Strings: System developers' contact variables
-define("eBPLS_MAIL_WEBMASTER", "vdsa_15@yahoo.com,asuquev@dap.edu.ph,radomingo@dap.edu.ph,bobbet_a_domingo@yahoo.com");     // does not support multiple email addresses
-define("eBPLS_GSM_WEBMASTER", "+639193354369");  // no spaces (" ") please!!!
+if (!defined("eBPLS_MAIL_WEBMASTER"))define("eBPLS_MAIL_WEBMASTER","vdsa_15@yahoo.com,asuquev@dap.edu.ph,radomingo@dap.edu.ph,bobbet_a_domingo@yahoo.com");     // does not support multiple email addresses
+if (!defined("eBPLS_GSM_WEBMASTER"))define("eBPLS_GSM_WEBMASTER", "+639193354369");  // no spaces (" ") please!!!
                                                                                                  
 //      Module Index Handler
-define("eBPLS_MODULE_FNAME", "ebplsNNN.php");
+if (!defined("eBPLS_MODULE_FNAME"))define("eBPLS_MODULE_FNAME", "ebplsNNN.php");
 
 
 /*########################################################################################*/

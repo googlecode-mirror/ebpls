@@ -1,23 +1,27 @@
 <?php
+/*
+Modification History:
+2008.04.25: Change invalid constants to strings to reduce PHP errors in log
+*/
 include("includes/variables.php");
 include_once("lib/multidbconnection.php");                                                                                                
 $dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 //$dbupen = Open();
 
 
-if ($GLOBALS['watbrowser']=='msie' and $ThUserData[id]<>'') {
-setcookie("ThUserData[id]",$ThUserData[id], $intCookieExp, '/', false, 0); 
-$ieuser=$_COOKIE[ieuser];
+if ($GLOBALS['watbrowser']=='msie' and $ThUserData['id']<>'') {
+setcookie("ThUserData['id']",$ThUserData['id'], $intCookieExp, '/', false, 0); 
+$ieuser=$_COOKIE['ieuser'];
 }
 
-$user_id = $ThUserData[id];
-$ses = $_COOKIE[PHPSESSID];
+$user_id = isset($ThUserData['id'])?$ThUserData['id']:""; //2008.04.25
+$ses = $_COOKIE['PHPSESSID'];
 
 //validates login session
-if (getenv(HTTP_X_FORWARDED_FOR)) {							
-    $remoteip = getenv(HTTP_X_FORWARDED_FOR); 
+if (getenv('HTTP_X_FORWARDED_FOR')) {							
+    $remoteip = getenv('HTTP_X_FORWARDED_FOR'); 
 } else { 
-    $remoteip = getenv(REMOTE_ADDR);
+    $remoteip = getenv('REMOTE_ADDR');
 }	
 $seslog = mysql_query("select * from user_session where ip_add='$remoteip'");
 $haveses = mysql_num_rows($seslog);
@@ -25,12 +29,9 @@ $getses = mysql_fetch_array($seslog);
 if ($haveses>0) {
 	$updses = mysql_query("Update user_session set date_input=now(), user_id='$ThUserData[id]' where ip_add='$remoteip'");
 } else {
-	$insses = mysql_query("insert into user_session values ('','$remoteip','$ses','$ThUserData[id]',now())");
+//4008.05.06	$insses = mysql_query("insert into user_session values ('','$remoteip','$ses','$ThUserData[id]',now())");
+	$insses = mysql_query("insert into user_session values ('','$remoteip','$ses','$user_id',now())");
 }
-
-
-
-
 
 
 if ($ieuser=='') {
@@ -50,7 +51,7 @@ function setCookie( name, value, expires, path, domain, secure ) {
     ( ( secure ) ? ";secure" : "" );
 }
 </script>
-<body onload='setCookie("ieuser ","<?php echo $ThUserData[id]; ?>","50","","","");'></body>
+<body onload='setCookie("ieuser ","<?php echo $ThUserData['id']; ?>","50","","","");'></body>
 <?
 $ieuser=$_COOKIE[ieuser];
 	//$ieuser=$ThUserData[id];
@@ -63,12 +64,12 @@ if ($ieuser=='' || $part=='' || $user_id=='') {
 <?php
 }
 
-if ($GLOBALS['watbrowser']=='msie' and $ThUserData[id]=='') {
-	$user_id=$_COOKIE[ieuser];
-	$ThUserData[id] = $_COOKIE[ieuser];
+if ($GLOBALS['watbrowser']=='msie' and $ThUserData['id']=='') {
+	$user_id=$_COOKIE['ieuser'];
+	$ThUserData['id'] = $_COOKIE['ieuser'];
 }
 
-
+if (!isset($fuploadname)) $fuploadname='';  //2008.04.25
 ?>
 
 
@@ -110,7 +111,7 @@ include"includes/ctclevel.php";
 include"includes/setlevel.php";
 include"includes/reportlevel.php";
 include"includes/referlevel.php";
-if ($ThUserData[id]==0  and $ThUserData[username]==md5("cookienamo") and $ThUserData[level]==7) {
+if ($ThUserData['id']==0  and $ThUserData['username']==md5("cookienamo") and $ThUserData['level']==7) {
 $godmode = 'on';
 $ulev=6;
 } else {
@@ -164,10 +165,11 @@ if ($chkpenalty==0) {
 <td colspan="2" height="10" class="header" align=center>SEARCH </td>
 </tr>
 <form action = 'index.php?part=4' method=post name="_FRM1">
-<input type=hidden name=superlog value=<?php echo $superlog; ?>>
+<input type=hidden name=superlog value=<?php echo isset($superlog)?$superlog:0 ; ?>>
 <tr><input type=hidden name=ieuser value=<?php echo $ieuser; ?>>
 <td height="19">&nbsp;<b>Business/Lastname</b></td>
-<td height="19"><input type=text name=search_lastname size=15 value="<?php echo $itxt_Search;?>" style="font-size:10"></td>
+<td height="19"><input type=text name=search_lastname size=15 
+	value="<?php echo isset($itxt_Search)?$itxt_Search:'';?>" style="font-size:10"></td>
 </tr>
 
 <tr>
@@ -277,7 +279,7 @@ if ($chkpenalty==0) {
 } // end pm = 1
 if ($part<>""){
 	//include 'includes/imagesrc.php';
-	if ($class_type==Permits) {
+	if ($class_type=='Permits') {
 ?>
 
 <?php if ($bp==1 || $ulev==6 || $ulev==7) { ?>
@@ -288,7 +290,7 @@ if ($part<>""){
 
 <?php
 }
-	if ($busItem==Business){
+	if (isset($busItem) && $busItem=='Business'){
 ?>
 
 <?php if ($bpap==1 ||  $ulev==6 || $ulev==7) { ?>
@@ -344,7 +346,7 @@ if ($bpar==1 ||  $ulev==6 || $ulev==7) {
 
 <?php
 }
-if ($busItem==Franchise){
+if ($busItem=='Franchise'){
 ?>
 
 <?php
@@ -560,7 +562,7 @@ if ($ppar==1 ||  $ulev==6 || $ulev==7) {
 </tr>
 
 <?php 
-if ($busItem==CTC) { 
+if ($busItem=='CTC') { 
 ?>	
 
 
@@ -703,7 +705,7 @@ if ($reflevel==1 ||  $ulev==6 || $ulev==7) { ?>
 </tr>
 <?php
 }
-	if ($class_type==Preference) {
+	if ($class_type=='Preference') {
 if ($pcl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
@@ -1065,7 +1067,7 @@ if ($gsl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <?php 
 }
-if ($busItem==Settings and $item_id==Settings) { 
+if ($busItem=='Settings' and $item_id=='Settings') { 
 ?>	
 <?php if ($ssl==1 ||  $ulev==6 || $ulev==7) { ?>
 
@@ -1245,7 +1247,7 @@ include "includes/security.php";
 
 ?>
 </td>
-<!--<td width=20% align=center valign=top><?php include'includes/quotes-inc.php'; ?></td>-->
+
 </tr>
 </table>
 

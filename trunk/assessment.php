@@ -54,7 +54,7 @@ print "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
                         if ($gethuh[5]==2) { //compute formula
 //$d = '((int)';
 //$d='';
-										
+echo "\$totind=$getn[2]$gethuh[4];\n";
                                         eval("\$totind=$getn[2]$gethuh[4];");
 
                                 } elseif ($gethuh[5]==3) { //get range

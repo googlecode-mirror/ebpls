@@ -202,9 +202,9 @@ $owner=FetchRow($dbtype,$reload);
 	  <tr> 
 	    <td align="right" valign="top" class='normal' width=20%> <font color="#FF0000">* 
 	      </font>Address : </td>
-	    <td align="left" valign="top" class='normal' width=33%>&nbsp; <input type='text' name='owner_street' maxlength=255 class='text180' value="<?php echo $owner[5].' '.$owner[4]; ?>"  onchange='javascript:flagchange(changeondin);'> 
+	    <td align="left" valign="top" class='normal' width=80%>&nbsp; <input type='text' name='owner_street' maxlength=255 class='text180' value="<?php echo $owner[5].' '.$owner[4]; ?>"  onchange='javascript:flagchange(changeondin);'> 
 	    </td>
-
+</tr><tr>
 <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Province
               : </td>
             <td align="left" valign="top" class='normal'>&nbsp;
@@ -222,144 +222,43 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 ?>
                                                                                                  
 </td>
-
-
-
-	  </tr>
-	  <tr>
-
- <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>City
-              : </td>
-            <td align="left" valign="top" class='normal'>&nbsp; 
-<?php
-	if ($owner_city_code<>$owner[9] and $owner_city_code<>'') {
-                $owner[9]=$owner_city_code;
-	} else {
-		$owner_city_code = $owner[9];
-	}
-
-
-echo get_select_city($dbLink,'owner_city_code','ebpls_city_municipality','city_municipality_code','city_municipality_desc',$owner[9],$owner[10]);
-?>
-
-
-            </td>
-<?php
-    $getzip = SelectMultiTable($dbtype,$dbLink,"ebpls_zip","zip_desc",
-			"where upper = '$owner[9]'");
-        $owner_zip = mysql_fetch_row($getzip);
-        $owner_zip = $owner_zip[0];
-?>
-                                                                                                 
-            <td align="right" valign="top" class='normal'> Zip : </td>
-            <td align="left" valign="top" class='normal'>&nbsp;
-            <input type=hidden name='owner_zip_code' value='<?php echo $owner_zip; ?>' readonly
-                maxlength=10 class='text180'><?php echo $owner_zip; ?>
-
-
- 
-	  </tr>
-	  <tr>
-
- <td align="right" valign="top" class='normal'> District
-              : </td>
-            <td align="left" valign="top" class='normal'>&nbsp;
-<?php 
-
-if($owner[8]<>$owner_district_code and $owner_district_code<>'') {
-$owner[8]=$owner_district_code;
-} else {
-$owner_district_code=$owner[8];
-}
-
-echo get_select_dist($dbLink,'owner_district_code','ebpls_district','district_code','district_desc',$owner[8],$owner_city_code);?>
-                </td>
-
- 
-	    <td align="right" valign="top" class='normal'> Telephone No : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_phone_no' maxlength=255 class='text180' value="<?php echo $owner[17];?>" onchange='javascript:flagchange(changeondin);'> 
-	    </td>
-	  </tr>
-	  <tr>
-
-<td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Barangay
-               : </td>
-            <td align="left" valign="top" class='normal'>
-                 <input type='hidden' name='owner_house_no' maxlength=255 class='text180' value=''>
-                 &nbsp;
-<?php
-if($owner[6]<>$owner_barangay_code and $owner_barangay_code<>'') {
-$owner[6]=$owner_barangay_code;
-} else {
-$owner_barangay_code=$owner[6];
-}
-
-
-echo get_select_barg($dbLink,'owner_barangay_code','ebpls_barangay','barangay_code','barangay_desc',$owner[6],$owner_district_code);?>
-            </td>
- 
-	    <td align="right" valign="top" class='normal'> Mobile No : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_gsm_no' maxlength=13 class='text180' value="<?php echo $owner[18];?>" onchange='javascript:flagchange(changeondin);'> 
-	    </td>
-	  </tr>
-	  <tr>
-
-<td align="right" valign="top" class='normal'> Zone
-              : </td>
-            <td align="left" valign="top" class='normal'>&nbsp;
-            
-<?php 
-
-if($owner[7]<>$owner_zone_code and $owner_zone_code<>'') {
-$owner[7]=$owner_zone_code;
-} else {
-$owner_zone_code=$owner[7];
-}
-
-
-echo get_select_zone($dbLink,'owner_zone_code','ebpls_zone','zone_code','zone_desc',$owner[7],$owner_barangay_code);?>
-                                                                                     
-            </td>
-
-
- 
-	    <td align="right" valign="top" class='normal'> Email Address : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_email_address' maxlength=255 class='text180' value="<?php echo $owner[19];?>" onchange='javascript:flagchange(changeondin);'> 
-	    </td>
-	  </tr>
-	  <tr> 
-	    <td align="right" valign="top" class='normal'> 
-	      </td>
-	    <td align="left" valign="top" class='normal'>&nbsp;
-	    </td>
-	    <td align="right" valign="top" class='normal'> Others : </td>
-	    <td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_others' maxlength=255 class='text180' value="<?php echo $owner[20];?>" onchange='javascript:flagchange(changeondin);'> 
-	    </td>
-	  </tr>
-	  <tr> 
-	  	    <td align="center" valign="top" class='normal' colspan=4> 
-	  	    	
-	  	    	&nbsp;&nbsp;
-	  	    	
-	  	    </td>
-	  </tr>
-	   <tr> 
+</tr>
+<tr>
+<td align="right" valign="top" class='normal'> Telephone No : </td>
+<td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_phone_no' maxlength=255 class='text180' value="<?php echo $owner[17];?>" onchange='javascript:flagchange(changeondin);'> 
+</td>
+</tr>
+<tr>
+<td align="right" valign="top" class='normal'> Mobile No : </td>
+<td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_gsm_no' maxlength=13 class='text180' value="<?php echo $owner[18];?>" onchange='javascript:flagchange(changeondin);'> 
+</td>
+</tr>
+<tr>
+<td align="right" valign="top" class='normal'> Email Address : </td>
+<td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_email_address' maxlength=255 class='text180' value="<?php echo $owner[19];?>" onchange='javascript:flagchange(changeondin);'> 
+</td>
+</tr>
+<tr> 
+<td align="right" valign="top" class='normal'> Others : </td>
+<td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='owner_others' maxlength=255 class='text180' value="<?php echo $owner[20];?>" onchange='javascript:flagchange(changeondin);'> 
+</td>
+</tr>
+<tr> 
+<td align="center" valign="top" class='normal' colspan=4> &nbsp;&nbsp;</td>
+</tr>
+<tr> 
 <input type=hidden name='pro' value=''>
-	  	  	    <td align="center" valign="top" class='normal' colspan=4> 
-	  	  	    	<input type='button' name='butun' value='    OK    ' onClick='javascript:checkValidOwner();'>
+<td align="center" valign="top" class='normal' colspan=4> 
+<input type='button' name='butun' value='    OK    ' onClick='javascript:checkValidOwner();'>
 <!-- onClick='javascript:checkValidOwner();'>-->
- 
+&nbsp;&nbsp;
+<input type='button' name='cancelOwner' value='CANCEL' onClick="history.go(-1);")
+</td>
+</tr><tr>
+<td align="center" valign="top" class='normal' colspan=4> 
 	  	  	    	&nbsp;&nbsp;
-				<input type='button' name='cancelOwner' value='CANCEL' onClick="history.go(-1);")
-	  	  	    </td>
-	  </tr>
-	   <tr> 
-	  	  	    <td align="center" valign="top" class='normal' colspan=4> 
-	  	  	    	 
-	  	  	    	&nbsp;&nbsp;
-	  	  	    	
-	  	  	    </td>
-	  </tr>
+</td>
+</tr>
 </table>
 </form>
 <script language='Javascript' src='javascripts/default.js'></script>

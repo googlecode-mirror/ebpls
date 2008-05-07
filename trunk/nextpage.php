@@ -1,4 +1,7 @@
 <?php
+/*Modification History:
+2008.05.06 RJC Handle undefined variables
+*/
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
@@ -9,8 +12,10 @@ require_once "includes/variables.php";
 require 'setup/setting.php';
 //$dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass);
 $max_resultsr = $thIntPageLimit;
- $pagemulti = $page;
-                         
+$pagemulti = $page;
+
+$ascdesc1 = isset($ascdesc1) ? $ascdesc1 : 'asc';      //2008.05.06
+$reftype = isset($reftype) ? $reftype : '';
 if ($pagemulti=='') {
         $pagemulti=1;
 }
@@ -60,7 +65,7 @@ $total_pages = ceil($total_results / $max_results);
                                                                                                  
 			// Build Previous Link
 			
-		if ($selMode==ebpls_nbusiness){
+		if ($selMode=='ebpls_nbusiness'){
 			if($page > 1){
     			$prev = ($page - 1);
     			echo "<a href=$PHP_SELF?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_nbusiness&action_=$action_&page=$prev&ascdesc1=$ascdesc1&reftype=$reftype&searcheenat=$searcheenat><< Prev</a>&nbsp;";
@@ -115,7 +120,7 @@ $total_pages = ceil($total_results / $max_results);
 			                                                                                     
 			// Build Next Link
 			
-		if ($selMode==ebpls_nbusiness){
+		if ($selMode=='ebpls_nbusiness'){
 			if($page < $total_pages){
     			$next = ($page + 1);
     			echo "<a href=$PHP_SELF?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_nbusiness&action_=$action_&page=$next&ascdesc1=$ascdesc1&searcheenat=$searcheenat&reftype=$reftype>Next>></a>";
@@ -141,7 +146,7 @@ $total_pages = ceil($total_results / $max_results);
 			echo "<left>&nbsp;<br />";
 
 			// Build Previous Link
-			if ($selMode==ebpls_nbusiness){
+			if ($selMode=='ebpls_nbusiness'){
                         if($page > 1){
                         $prev = ($page - 1);
                         echo "<a href=$PHP_SELF?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_nbusiness&action_=$action_&page=$prev&ascdesc1=$ascdesc1&searcheenat=$searcheenat&reftype=$reftype><< Prev</a>&nbsp;";
@@ -199,7 +204,7 @@ $total_pages = ceil($total_results / $max_results);
 		}
 			// Build Next Link
 			
-		if ($selMode==ebpls_nbusiness){
+		if ($selMode=='ebpls_nbusiness'){
 			if($page < $total_pages){
     			$next = ($page + 1);
     			echo "<a href=$PHP_SELF?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_nbusiness&action_=$action_&page=$next&ascdesc1=$ascdesc1&searcheenat=$searcheenat&reftype=$reftype>Next>></a>";

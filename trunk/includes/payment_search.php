@@ -6,7 +6,15 @@ if(!isset($_GET['page'])){
 } else {
     $page = $_GET['page'];
 }
-                                                                                                 
+ 
+//2008.05.06 Define undefined                                                                                                
+$search_lastname = isset($search_lastname) ? $search_lastname : '';
+$search_status = isset($search_status) ? $search_status : '';
+$search_firstname = isset($search_firstname) ? $search_firstname : '';
+$search_middlename = isset($search_middlename) ? $search_middlename : '';
+$orderby = isset($orderby) ? $orderby : '';
+$paypend = isset($paypend) ? $paypend : '';
+                                                                                                
 // Define the number of results per page
 $max_results = $thIntPageLimit;
 // Figure out the limit for the query based
@@ -24,7 +32,7 @@ require_once "includes/stripslash.php";
 
 $paywoap=mysql_query("select * from ebpls_buss_preference") or die ("error");
 $paywoap=mysql_fetch_array($paywoap);
-$paywoap = $paywoap[spaywoapprov];
+$paywoap = $paywoap['spaywoapprov'];
 
 	if ($paywoap=='') {
 		$extpay = 'and a.owner_id=ebpls_business_enterprise.owner_id and

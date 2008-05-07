@@ -4,12 +4,20 @@ require 'setup/setting.php';
 include'includes/variables.php';
 $gettag= SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
 $getre=FetchArray($dbtype,$gettag);
-$getre=$getre[srequire];
+$getre=$getre['srequire'];
 if(!isset($_GET['page'])){
     $page = 1;
 } else {
     $page = $_GET['page'];
 }
+
+ //2008.05.06 Define undefined                                                                                                
+$search_lastname = isset($search_lastname) ? $search_lastname : '';
+$search_status = isset($search_status) ? $search_status : '';
+$search_firstname = isset($search_firstname) ? $search_firstname : '';
+$search_middlename = isset($search_middlename) ? $search_middlename : '';
+$orderby = isset($orderby) ? $orderby : '';
+$search_trans = isset($search_trans) ? $search_trans : ''; 
                                                                                                  
 // Define the number of results per page
 $max_results = $thIntPageLimit;

@@ -1,20 +1,24 @@
 <?php
+/*
+Modification History:
+2008.04.25: Conververted constants to strings for $daataRecord references Lines 5-20
+*/
 $dataRecord_ = mysql_query("SELECT * FROM ebpls_buss_preference",$dbLinkFunc);
 		
 if (mysql_affected_rows($dbLinkFunc)==1 ){
 $dataRecord__=mysql_fetch_array($dataRecord_);
-$niSPermit=$dataRecord__[spermit];
-$niSAssess=$dataRecord__[sassess];
-$niSOR=$dataRecord__[sor];
-$niSBackTaxes=$dataRecord__[sbacktaxes];
-$niUnggoy=$dataRecord__[sdecimal];
-$niSRequire=$dataRecord__[srequire];
-$iLGUName=$dataRecord__[lguname];
-$iLGUProvince=$dataRecord__[lguprovince];
-$iLGUMunicipality=$dataRecord__[lgumunicipality];
-$iLGUOffice=$dataRecord__[lguoffice];
-$iLGUImage=$dataRecord__[lguimage];
-$iBodyColorScheme=$dataRecord__[bodycolor];
+$niSPermit=$dataRecord__['spermit'];
+$niSAssess=$dataRecord__['sassess'];
+$niSOR=$dataRecord__['sor'];
+$niSBackTaxes=$dataRecord__['sbacktaxes'];
+$niUnggoy=$dataRecord__['sdecimal'];
+$niSRequire=$dataRecord__['srequire'];
+$iLGUName=$dataRecord__['lguname'];
+$iLGUProvince=$dataRecord__['lguprovince'];
+$iLGUMunicipality=$dataRecord__['lgumunicipality'];
+$iLGUOffice=$dataRecord__['lguoffice'];
+$iLGUImage=$dataRecord__['lguimage'];
+$iBodyColorScheme=$dataRecord__['bodycolor'];
 }
 
 ?>
