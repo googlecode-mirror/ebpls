@@ -965,14 +965,11 @@ require_once "includes/mtop.php";
        		  require_once "includes/genpin.php";
            }
 
-
+	$upit = isset($upit) ? $upit : ''; 
 	if ($addbiz=='Save') {
 
- if ($business_id=='') {
-                $business_id=0;
-        }
-
-
+ 		if ($business_id=='')  $business_id=0;
+ 
 		//search existing
 		$exist=SelectDataWhere($dbtype,$dbLink,"ebpls_business_enterprise", 
 					"where business_id='$business_id'");
@@ -1040,14 +1037,14 @@ require_once "includes/mtop.php";
                         }//end getfil
 
 	}
-
+$bizcom = isset($bizcom) ? $bizcom : ''; //2008.05.08
 if ($bizcom=='Delete') {
 
 	$filters=SelectDataWhere($dbtype,$dbLink,$tempbiz,"where tempid=$natcode order by tempid desc");
 	$gn = FetchArray($dbtype,$filters);
-	$bco = $gn[bus_code];
-	$ow = $gn[owner_id];
-	$bi = $gn[business_id];
+	$bco = $gn['bus_code'];
+	$ow = $gn['owner_id'];
+	$bi = $gn['business_id'];
 
 	$delit = DeleteQuery($dbtype,$dbLink,$tempbiz,"tempid=$natcode");
 
@@ -1059,7 +1056,7 @@ if ($bizcom=='Delete') {
 //	$de = DeleteQuery($dbtype,$dbLink,"tempassess","owner_id = $owner_id and
 //		business_id = $business_id");
 }
-
+$fd = isset($fd) ? $fd : 0; //2008.05.08
 if ($fd<>1) {
 	if ($permit_type=='Business') {
 		require_once "includes/form_bus_permit.php";

@@ -1,3 +1,12 @@
+<?php
+/*Modification History:
+2008.05.08 RJC Define undefined variables to reduces clutter in phperror.log
+*/
+$savethis = isset($savethis) ? $savethis : '';
+$tempid = isset($tempid) ? $tempid: '';
+$watdo = isset($watdo) ? $watdo : '';
+?>
+
 <input type=hidden name=savethis value=<?php echo $savethis; ?> >
 <input type=hidden name=tempid  value=<?php echo $tempid; ?>>
 <input type=hidden name=watdo value=<?php echo $watdo; ?>>
@@ -5,22 +14,21 @@
 /*
 para sa magbabasa nitong code "GOOD LUCK!!!!"
 */
-       $_idx    = $business_nature_code;
-       $_cap    = $business_capital_investment;
-       $lastyr = $gross_sale;
-                                if ($lastyr=='') {
-                                        $lastyr=0;
-                                }
-                                
-                                
+$business_nature_code = isset($business_nature_code) ? $business_nature_code : ''; 
+$business_capital_investment = isset($business_capital_investment) ? $business_capital_investment : 0;
+$gross_sale = isset($gross_sale) ? $gross_sale : 0;
+
+$_idx    = $business_nature_code;
+$_cap    = $business_capital_investment;
+$lastyr = $gross_sale;
+if ($lastyr=='') $lastyr=0;
+
+$addrenew = isset($addrenew) ? $addrenew : '';
 if ($addrenew=='on') {
 		$stat='ReNew';
 }
 
-
-
-
-
+$savethis = isset($savethis) ? $savethis : '';
 if ($savethis==23){
 	$check = SelectDataWhere($dbtype,$dbLink,$tempbiz,
                  "where bus_code='$_idx' and business_id=$business_id
@@ -137,16 +145,17 @@ if ($business_id<>'' and $owner_id<>'') {
 			}
 
 		} else {
+			$savenat = isset($savenat) ? $savenat : '';
 			if ($savenat<>'') {
 				$nat = SelectDataWhere($dbtype,$dbLink,
                                         "ebpls_buss_nature", "where natureid='$_idx'");
                                         $getnat = FetchArray($dbtype,$nat);
-                                        $getna=$getnat[naturedesc];
+                                        $getna=$getnat['naturedesc'];
 
 				$nat = SelectDataWhere($dbtype,$dbLink,"tempbusnature",
                                           "where tempid='$savenat'");
                                 $getnat = FetchArray($dbtype,$nat);
-                                $transme=$getnat[transaction];
+                                $transme=$getnat['transaction'];
 				if ($transme=='New') {
                                         $multi = $_cap;
 					$oldm = $getnat[cap_inv];
@@ -171,10 +180,9 @@ if ($business_id<>'' and $owner_id<>'') {
                                 $checkit = NumRows($dbtype,$check);
                                         if ($checkit==0) {
                                         //get nature_desc
-                                        $nat = SelectDataWhere($dbtype,$dbLink,
-                                        "ebpls_buss_nature", "where natureid='$_idx'");
+                                        $nat = SelectDataWhere($dbtype,$dbLink,"ebpls_buss_nature", "where natureid='$_idx'");
                                         $getnat = FetchArray($dbtype,$nat);
-                                        $getnat=$getnat[naturedesc];
+                                        $getnat=$getnat['naturedesc'];
                                         //save to temp table
                                         if ($stat=='New') {
                                                 if ($business_capital_investment<>0) {
@@ -217,25 +225,24 @@ if ($business_id=='') {
                                   " where owner_id=$owner_id and business_id=$business_id
                                   and active = 1");
                                 while ($getit = FetchArray($dbtype,$getnat)){
-				$getit[bus_nature]=stripslashes($getit[bus_nature]);
-				$bus_code = $getit[bus_code];
+				$getit['bus_nature']=stripslashes($getit['bus_nature']);
+				$bus_code = $getit['bus_code'];
                                 $getcapinv =SelectDataWhere($dbtype,$dbLink,"tempbusnature",
                                   " where owner_id=$owner_id and business_id=$business_id and bus_code='$bus_code'
                                   order by tempid asc limit 1");
-               $getcapi  = FetchArray($dbtype,$getcapinv);
+              			$getcapi  = FetchArray($dbtype,$getcapinv);
 				
-				
-				
-				$ifpaid=$getit[recpaid];
-				if ($editline=='y' and $natcode==$getit[tempid]) {
+				$ifpaid=$getit['recpaid'];
+				$editline = isset($editline) ? $editline : ''; //2008.05.08
+				if ($editline=='y' and $natcode==$getit['tempid']) {
 ?>
 				<tr>
 				<td align="left" valign="top" class='normal'>&nbsp;
 <?php
 		if ($stat=='New' || $stat=='ReNew' and $watdo=='') {
-                echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature ','natureid','naturedesc',$getit[bus_code], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id' and bus_code<>$getit[bus_code] and retire < 1) order by naturedesc");
+                echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature ','natureid','naturedesc',$getit['bus_code'], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id' and bus_code<>$getit[bus_code] and retire < 1) order by naturedesc");
 		} else {
-		echo $getit[bus_nature];
+		echo $getit['bus_nature'];
 		}
                 ?>
                 
@@ -259,13 +266,13 @@ if ($business_id=='') {
 		<?php	
 				if ($stat=='New') {
 		?>
-		<input type='hidden' name='gross_sale' maxlength=255 size=15 value="<?php echo $getit[last_yr]; ?>" <?php echo $disablelastyr; ?>>
+		<input type='hidden' name='gross_sale' maxlength=255 size=15 value="<?php echo $getit['last_yr']; ?>" <?php echo $disablelastyr; ?>>
 		<?php
-				$gross_sale=$getit[last_yr];
-				echo $getit[last_yr];
+				$gross_sale=$getit['last_yr'];
+				echo $getit['last_yr'];
 				} else {
 		?>
-<input type='text' name='gross_sale' maxlength=255 size=15 value="<?php echo $getit[last_yr]; ?>" >
+<input type='text' name='gross_sale' maxlength=255 size=15 value="<?php echo $getit['last_yr']; ?>" >
 		<?php
 				}
 		?>
@@ -274,12 +281,12 @@ if ($business_id=='') {
 <!--von-->
 <?php
 				} else {
-				 $ci = number_format($getcapi["cap_inv"], 2);
-                                $lyg = number_format($getit[last_yr], 2);
+				 $ci = number_format($getcapi['cap_inv'], 2);
+                                $lyg = number_format($getit['last_yr'], 2);
 ?>
                                 <tr>
                                 <td align='left' valign='top' class='normal'>
-				<?php echo $getit[bus_nature]; ?></td>
+				<?php echo $getit['bus_nature']; ?></td>
                                 <td align='right' valign='top' class='normal'>
 				<?php echo $ci; ?></td>
                                 <td align='right' valign='top' class='normal'>
@@ -293,16 +300,16 @@ $str = "toolbar=0,location=0,directories=0,menubar=0,resizable=0,scrollbars=1,st
 			if ($editline<>'y') {
                                 if ($ifpaid==0) {
 ?>
-				<a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit[tempid]; ?>");'>Delete</a> | 
+				<a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit['tempid']; ?>");'>Delete</a> | 
 <?php
 
                                 }
                         ?>
-				 <a class='subnavwhite' href='#' onclick='javascript:editline("<?php echo $getit[tempid]; ?>");'>Edit</a>
+				 <a class='subnavwhite' href='#' onclick='javascript:editline("<?php echo $getit['tempid']; ?>");'>Edit</a>
 <?php
 			} else {
 
-				if ($natcode==$getit[tempid]) {
+				if ($natcode==$getit['tempid']) {
 ?>
 <!--von-->
 <input type=hidden name=savenat  value=<?php echo $natcode; ?>>
@@ -311,11 +318,11 @@ $str = "toolbar=0,location=0,directories=0,menubar=0,resizable=0,scrollbars=1,st
 				} else {
 					if ($ifpaid==0) {
 				?>
-                                <a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit[tempid]; ?>");'>Delete</a> |
+                                <a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit['tempid']; ?>");'>Delete</a> |
 <?php
 					}
 ?>
-                                <a class='subnavwhite' href='#' onclick='javascript:editline("<?php echo $getit[tempid]; ?>");'>Edit</a>
+                                <a class='subnavwhite' href='#' onclick='javascript:editline("<?php echo $getit['tempid']; ?>");'>Edit</a>
 	                <?php
 				}
 			}
@@ -323,57 +330,57 @@ $str = "toolbar=0,location=0,directories=0,menubar=0,resizable=0,scrollbars=1,st
 			if ($editline<>'y') {
                                 if ($ifpaid==0) {
 ?>
-                                <a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit[tempid]; ?>");'>Delete</a>  | 
+                                <a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit['tempid']; ?>");'>Delete</a>  | 
 <?php
                                 }
 
-			if ($getit[transaction]=='New') {
+			if ($getit['transaction']=='New') {
   ?>
                             
-<!--	    <a class='subnavwhite' href='#' onclick='javascript:editline("<?php echo $getit[tempid]; ?>");'>Edit</a>-->
-            <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo $getit[tempid]; ?>");'>Add New Gross</a>
+<!--	    <a class='subnavwhite' href='#' onclick='javascript:editline("<?php echo $getit['tempid']; ?>");'>Edit</a>-->
+            <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo $getit['tempid']; ?>");'>Add New Gross</a>
 
                         <?php
 
 			} else {
-				if (date('Y',(strtotime($getit[date_create])))==date('Y')) {
+				if (date('Y',(strtotime($getit['date_create'])))==date('Y')) {
                         ?>
 
-					| <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit[tempid]; ?>");'>Edit Gross</a>  
+					| <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit['tempid']; ?>");'>Edit Gross</a>  
 			<?php
 				} else {
 			?>
 					| <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo
-$getit[tempid]; ?>");'>Add New Gross</a>
+$getit['tempid']; ?>");'>Add New Gross</a>
 <?php
 				}
 
 			}
 
 			} else {
-                                if ($natcode==$getit[tempid]) {
+                                if ($natcode==$getit['tempid']) {
 ?>
 <!--von-->
 <input type=hidden name=savenat  value=<?php echo $natcode; ?>>
-<a href='#' onClick='javascript:_FRM.tempid.value = <?php echo $getit[tempid]; ?>; _FRM.savethis.value=1; CLine("ReNew"); ' class='subnavwhite'>Save</a>
+<a href='#' onClick='javascript:_FRM.tempid.value = <?php echo $getit['tempid']; ?>; _FRM.savethis.value=1; CLine("ReNew"); ' class='subnavwhite'>Save</a>
 <?php
                                 } else {
 			
 					if ($ifpaid==1) {
                          ?>
-	                                <a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit[tempid]; ?>");'>Delete</a> | 
+	                                <a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $getit['tempid']; ?>");'>Delete</a> | 
 			<?php
 					}
 
 
-			if (date('Y',(strtotime($getit[date_create])))==date('Y')) {
+			if (date('Y',(strtotime($getit['date_create'])))==date('Y')) {
 //			if ($getit[last_yr]>0) {
 			?>
-                                <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit[tempid]; ?>");'>Edit Gross</a>  
+                                <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit['tempid']; ?>");'>Edit Gross</a>  
 			<?php
 			} else {
 			?>
-				| <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo $getit[tempid]; ?>");'>Add New Gross</a>
+				| <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo $getit['tempid']; ?>");'>Add New Gross</a>
                         <?php
 			}
                                 }
@@ -382,10 +389,10 @@ $getit[tempid]; ?>");'>Add New Gross</a>
 			}
          } elseif ($stat=='Retire') {
 			if ($editline<>'y') {
-			if (date('Y',(strtotime($getit[date_create])))==date('Y')) {
+			if (date('Y',(strtotime($getit['date_create'])))==date('Y')) {
 //			 if ($getit[last_yr]>0) {
                         ?>
-			 <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit[tempid]; ?>");'>Edit Gross</a> | 
+			 <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit['tempid']; ?>");'>Edit Gross</a> | 
 			<?php
 			}
 			?>
@@ -396,21 +403,21 @@ $getit[tempid]; ?>");'>Add Retire Gross</a>
 
                         <?php
                         } else {
-                                if ($natcode==$getit[tempid]) {
+                                if ($natcode==$getit['tempid']) {
 ?>
 <!--von-->
 <input type=hidden name=savenat  value=<?php echo $natcode; ?>>
-<a href='#' onClick='javascript:_FRM.tempid.value = <?php echo $getit[tempid]; ?>; _FRM.savethis.value=1;CLine("Retire");' class='subnavwhite'>Save</a>
+<a href='#' onClick='javascript:_FRM.tempid.value = <?php echo $getit['tempid']; ?>; _FRM.savethis.value=1;CLine("Retire");' class='subnavwhite'>Save</a>
 <?php
                                 } else {
-				if (date('Y',(strtotime($getit[date_create])))==date('Y')) {
+				if (date('Y',(strtotime($getit['date_create'])))==date('Y')) {
 //				if ($getit[last_yr]>0) {
 				?>
-				   <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit[tempid]; ?>");'>Edit Gross</a> | 
+				   <a class='subnavwhite' href='#' onclick='javascript:editgross("<?php echo $getit['tempid']; ?>");'>Edit Gross</a> | 
                                 <?php
 				}
 				?>                                                              
-                                <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo $getit[tempid]; ?>");'>Add Retire Gross</a>
+                                <a class='subnavwhite' href='#' onclick='javascript:addgross("<?php echo $getit['tempid']; ?>");'>Add Retire Gross</a>
                         <?php
                                } 
 
@@ -418,16 +425,17 @@ $getit[tempid]; ?>");'>Add Retire Gross</a>
 		}
 print "</td></tr>\n";
                                 }
+$kulit = isset($kulit) ? $kulit : ''; //2008.05.08
 if ($editline<>'y' || $kulit=='1' and $stat<>'Retire') {
 ?>
 <tr>
 <td align="left" valign="top" class='normal'>&nbsp;
 <?php
-    echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature','natureid','naturedesc',$datarow[naturedesc], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id') order by naturedesc");
+    echo get_select_data_where($dbLink,'business_nature_code','ebpls_buss_nature','natureid','naturedesc',$datarow['naturedesc'], "naturestatus='A' and natureid not in (select bus_code from tempbusnature where business_id='$business_id' and owner_id='$owner_id') order by naturedesc");
 ?>               
 </td>
 <td align="center" valign="top" class='normal'> 
-<input type='text'align=right name='business_capital_investment' maxlength=255 size=10 value=0.00></td>
+<input type='text'align=right name='business_capital_investment' maxlength=255 size=15 value=0.00></td>
 <td align="left" valign="top" class='normal'>&nbsp;</td> 
  <td align="center" valign="top" class='normal'>&nbsp;<br>
 
@@ -478,7 +486,7 @@ if ($editline<>'y' || $kulit=='1' and $stat<>'Retire') {
 	{
 		var _FRM = document._FRM;
                 parent.location ="index.php?part=4&editline=y&genpin=" + _FRM.genpin.value + "&class_type=Permits&itemID_=1221&natcode=" + cc + "&addbiz=Select&owner_id=<?php echo $owner_id;
-?>&business_id=<?php echo $business_id; ?>&permit_type=Business&willup=N&stat=<?php echo $stat; ?>&busItem=Business&pmode=<?php echo $datarow[business_payment_mode];?>&watdo=";
+?>&business_id=<?php echo $business_id; ?>&permit_type=Business&willup=N&stat=<?php echo $stat; ?>&busItem=Business&pmode=<?php echo $datarow['business_payment_mode'];?>&watdo=";
                 //_FRM.submit();
                 return true;
 	}
@@ -487,7 +495,7 @@ if ($editline<>'y' || $kulit=='1' and $stat<>'Retire') {
         {
                 var _FRM = document._FRM;
                 parent.location ="index.php?part=4&editline=y&genpin=" + _FRM.genpin.value + "&class_type=Permits&itemID_=1221&natcode=" + cc + "&addbiz=Select&owner_id=<?php echo $owner_id;
-?>&business_id=<?php echo $business_id; ?>&permit_type=Business&willup=N&stat=<?php echo $stat; ?>&busItem=Business&pmode=<?php echo $datarow[business_payment_mode];?>&watdo=editline";
+?>&business_id=<?php echo $business_id; ?>&permit_type=Business&willup=N&stat=<?php echo $stat; ?>&busItem=Business&pmode=<?php echo $datarow['business_payment_mode'];?>&watdo=editline";
                 //_FRM.submit();
                 return true;
         }
@@ -499,7 +507,7 @@ if ($editline<>'y' || $kulit=='1' and $stat<>'Retire') {
         {
                 var _FRM = document._FRM;
                 parent.location ="index.php?part=4&editline=y&genpin=" + _FRM.genpin.value + "&class_type=Permits&itemID_=1221&natcode=" + cc + "&addbiz=Select&owner_id=<?php echo $owner_id;
-?>&business_id=<?php echo $business_id; ?>&permit_type=Business&willup=N&stat=<?php echo $stat; ?>&busItem=Business&pmode=<?php echo $datarow[business_payment_mode];?>&watdo=addgros";
+?>&business_id=<?php echo $business_id; ?>&permit_type=Business&willup=N&stat=<?php echo $stat; ?>&busItem=Business&pmode=<?php echo $datarow['business_payment_mode'];?>&watdo=addgros";
                 //_FRM.submit();
                 return true;
         }

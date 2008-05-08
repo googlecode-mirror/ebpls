@@ -2,7 +2,7 @@
 /*	Purpose: 	utility functions
 
 Revision History:
-2008.04.25:	Add undefined checking to remove items in phperror.log
+2008.005.08:	Add undefined checking to remove items in phperror.log
 */
 
 //--- connect to DB
@@ -356,6 +356,7 @@ function get_select_data_where($dblink,$selectname,$table,$field_code,$field_des
 //echo $sql;
 	$resultset 	= @mysql_query($sql, $dblink);
 //	$select_str     .= "<select name='$selectname'  class='select200'>";
+	$select_str  = isset($select_str ) ? $select_str : ''; //2008.05.08
 	$select_str     .= "<select name='$selectname' class='select300'>";
 	while($datarow 	= @mysql_fetch_assoc($resultset))
 	{
@@ -366,8 +367,8 @@ function get_select_data_where($dblink,$selectname,$table,$field_code,$field_des
 	}
 	$select_str   .=  "</select>";
 	//--- free mem
-	if($result)
-		@mysql_free_result($result);
+	
+	if($result) 	@mysql_free_result($result);
 	return $select_str;	
 }
 function get_select_data_boat($dblink,$selectname,$table,$field_code,$field_desc,$selected='',$where)

@@ -1,4 +1,7 @@
 <?php
+/*Modification History: 
+2008.05.08 RJC Define undefined variables and set undefined constants to text to reduce phperror.log
+*/
 require_once "includes/variables.php";
 include_once "class/BusinessPermitClass.php";
 include_once "class/BusinessEstablishmentClass.php";
@@ -8,31 +11,28 @@ $prefset = FetchArray($dbtype,$staxfee);
 
 $predcomp = $prefset['predcomp'];
 
-if ($owner_id=='') {
-	$owner_id=0;
-}
+$owner_id = isset($owner_id) ? $owner_id : ''; //2008.05.08
+if ($owner_id=='') $owner_id=0;
 
-        $strValues = "edit_by='',edit_locked=0";
-           $strWhere="owner_id='$owner_id'";
-       $qu = mysql_query("update ebpls_owner set $strValues where $strWhere");
+$strValues = "edit_by='',edit_locked=0";
+$strWhere="owner_id='$owner_id'";
+$qu = mysql_query("update ebpls_owner set $strValues where $strWhere");
 
-
+$business_id = isset($business_id) ? $business_id : ''; //2008.05.08
 if ($business_id<>''){
-$ifpaid =SelectDataWhere($dbtype,$dbLink,$permittable,"where owner_id = $owner_id
+	$ifpaid =SelectDataWhere($dbtype,$dbLink,$permittable,"where owner_id = $owner_id
                 and business_id = $business_id and active = 1");
-
         $strValues = "edit_by='',edit_locked=0";
-           $strWhere="business_id='$business_id'";
-       $qu = mysql_query("update ebpls_business_enterprise set $strValues where $strWhere");
+        $strWhere="business_id='$business_id'";
+       	$qu = mysql_query("update ebpls_business_enterprise set $strValues where $strWhere");
 
 //$ifpaid = mysql_query("select paid from $permittable where owner_id = $owner_id 
 //		and business_id = $business_id and active = 1");
-$ifpaid = FetchRow($dbtype,$ifpaid);
-$ifpaid = $ifpaid[0];
-if ($ifpaid>0) {
-	$ifpaid=0;
-}
-
+	$ifpaid = FetchRow($dbtype,$ifpaid);
+	$ifpaid = $ifpaid[0];
+	if ($ifpaid>0) {
+		$ifpaid=0;
+	}
 }
 $link23="#";
 
@@ -40,8 +40,8 @@ $getlastapp = mysql_query("select * from ebpls_business_enterprise_permit
 					where owner_id='$owner_id' and business_id='$business_id'
 					and active=1 order by  business_permit_id desc");
 $lastapp = mysql_fetch_assoc($getlastapp);
-$nyap = $lastapp[for_year];
-$lastapp = $lastapp[for_year];
+$nyap = $lastapp['for_year'];
+$lastapp = $lastapp['for_year'];
 $lastapp = $lastapp + 1;
 
 if ($predcomp==1 and $stat!='New' and $nyap<>'') {
@@ -176,7 +176,8 @@ if ($lastapp<$yearnow and $stat!='New' and $nyap<>'') {
 }
 
 
-
+$predq = isset($predq) ? $predq : ''; //2008.05.08
+$genpin = isset($genpin) ? $genpin : '';
 ?>
 <form method=post action='index.php?part=4&class_type=Permits&itemID_=1221&permit_type=Business&busItem=Business&PROCESS=&mtopsearch=SEARCH&genpin=<?php echo $genpin; ?>' name="_FRM" >
 <link rel="stylesheet" href="stylesheets/default.css" type="text/css"/>
@@ -222,9 +223,7 @@ if ($lastapp<$yearnow and $stat!='New' and $nyap<>'') {
             </tr>
             <tr> 
 <?php require_once "includes/owner_info.php";?>
-  <?php
-
-  
+<?php
 	if ($genpin=='') {
                         if ($owner_id>0) {
                                         $getpin = new BusinessPermit;
@@ -232,26 +231,26 @@ if ($lastapp<$yearnow and $stat!='New' and $nyap<>'') {
                                         $getpin->FetchPermit($getpin->outselect);
                                         $getp = $getpin->outarray[pin];
                         }
-                                                                                                                             
+                        $getp = isset($getp) ? $getp : ''; //2008.05.08                                                                                                     
                         if ($getp=='') {
                                 $getp=$genpin;
                         }
                                                                                                                              
                         if ($getp=='' and $owner_id<>'') {
 //                       if ($atachit==1 and $haveat=='') {
-                        require "includes/genpin.php";
-                         $genpin=$pin;
+                        	require "includes/genpin.php";
+                         	$genpin=$pin;
                                                                                                                              
-                         $reds = SelectDataWhere($dbtype,$dbLink,"ebpls_business_enterprise",
-                                "where business_id = '$business_id'");
-                         $ret = FetchRow($dbtype,$reds);
+                         	$reds = SelectDataWhere($dbtype,$dbLink,"ebpls_business_enterprise",
+                                	"where business_id = '$business_id'");
+                         	$ret = FetchRow($dbtype,$reds);
                                                                                                                              
-                        $haveat=1;
+                        	$haveat=1;
                         }
                                                                                                                              
-if ($genpin=='') {
-        $genpin=$getp;
-}
+			if ($genpin=='') {
+        			$genpin=$getp;
+			}
 	}		                                                                                                                
                 ?>
 
@@ -274,20 +273,20 @@ if ($genpin=='') {
 print	"<a href='index.php?part=4&class_type=Permits&genpin=$genpin&itemID_=1223&addbus=addbus&owner_id=$owner_id&permit_type=$permit_type&stat=New&busItem=$busItem' class='subnavwhite'>Add New</a>";
 	} else {
 print   "<a href='index.php?part=4&class_type=Permits&itemID_=1224&genpin=$genpin&business_id=$business_id&owner_id=$owner_id&permit_type=$permit_type&stat=$stat&addbiz=update&busItem=$busItem' class='subnavwhite'>Edit</a>";
+$atachit = isset($atachit) ? $atachit : ''; //2008.05.08
 } ?>
 		
-              	<input type='hidden' name='business_id' maxlength=25 class='text180'  value="<?php echo $business_id; ?>"> 
+         <input type='hidden' name='business_id' maxlength=25 class='text180'  value="<?php echo $business_id; ?>"> 
                  </td>
               <td align="right" valign="top" class='normal'  > &nbsp;</td>
               <td align="left" valign="top" class='normal'>&nbsp; 
               </td>
             </tr>
             <tr>
-<input type=hidden name=atit value='<?php echo $atachit; ?>'> 
+	<input type=hidden name=atit value='<?php echo $atachit; ?>'> 
 	      <td align="right" valign="top" class='normal'> <font color="#FF0000"> 
                 </font>Business Name :  </td>
-	<?php
-
+<?php
 		if ($business_id<>'') {
 		$res = new BusinessEstablishment;
 		$res->GetBusinessByID($business_id);
@@ -296,7 +295,7 @@ print   "<a href='index.php?part=4&class_type=Permits&itemID_=1224&genpin=$genpi
 		}
 	?>
 
-              <td align="left" valign="top" class='normal'>&nbsp;&nbsp;<input type='hidden' name='business_name' maxlength=255 class='text180'  value="<?php echo $datarow[business_name]; ?>" readonly><?php echo stripslashes($datarow[business_name]); ?> </td>
+              <td align="left" valign="top" class='normal'>&nbsp;&nbsp;<input type='hidden' name='business_name' maxlength=255 class='text180'  value="<?php echo $datarow['business_name']; ?>" readonly><?php echo stripslashes($datarow['business_name']); ?> </td>
               <td align="right" valign="top" class='normal' width=20%> Access Pin : </td>
 
 <input type=hidden name=transfer_it value=<?php echo $atachit; ?>>
@@ -307,12 +306,12 @@ print   "<a href='index.php?part=4&class_type=Permits&itemID_=1224&genpin=$genpi
               <td align="right" valign="top" class='normal' > Business Scale : 
               </td>
               <td align="left" valign="top" class='normal'>&nbsp; 
-       		<input type='hidden' name='business_scale' maxlength=255 class='text180'  value="<?php echo $datarow[business_scale]; ?>"><?php echo $datarow[business_scale]; ?>   </td>
+       		<input type='hidden' name='business_scale' maxlength=255 class='text180'  value="<?php echo $datarow['business_scale']; ?>"><?php echo $datarow['business_scale']; ?>   </td>
               <td align="right" valign="top" class='normal'  > <font color="#FF0000"> 
                 </font>Payment Mode : </td>
               <td align="left" valign="top" class='normal'> 
-<input type='hidden' name='business_payment_mode' maxlength=255 class='text180'  value="<?php echo $datarow[business_payment_mode]; ?>">
-<?php echo $datarow[business_payment_mode]; ?> </td>
+<input type='hidden' name='business_payment_mode' maxlength=255 class='text180'  value="<?php echo $datarow['business_payment_mode']; ?>">
+<?php echo $datarow['business_payment_mode']; ?> </td>
 
             </tr>
 	    <tr> 
@@ -375,7 +374,8 @@ if (z=='New') {
                        echo get_line_of_business_header();
 		
 		include "includes/lineofbusiness.php";
-	
+		$listings_line_of_business = isset($listings_line_of_business) ? $listings_line_of_business : ''; //2008.05.08
+		$listings_line_of_business_ctr = isset($listings_line_of_business_ctr) ? $listings_line_of_business_ctr : '';
 		?>
 			
 		</table>
@@ -634,7 +634,7 @@ function get_line_of_business_header()
                                                                                                                
 <?php
 }
-
+$ngros = isset($ngros) ? $ngros : 0 ; //2008.05.08
 if ($ngros==1) {
 	 $delperm = mysql_query("delete from ebpls_business_enterprise_permit where
 	             					owner_id=$owner_id and business_id=$business_id and active =1

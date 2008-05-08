@@ -1,17 +1,20 @@
 <?php
 /*
-if ($owner_id=='') {
-   $owner_id=$id;
-}
+if ($owner_id=='')  $owner_id=$id;
 */
+$frmedit = isset($frmedit) ? $frmedit : ''; //2008.05.08
+$owner_first_name = isset($owner_first_name) ? $owner_first_name : '';
+$owner_middle_name = isset($owner_middle_name) ? $owner_middle_name : '';
+$owner_last_name = isset($owner_last_name) ? $owner_last_name : '';
+
 if ($owner_id<>'') {
- $getown = mysql_query("select owner_last_name, owner_first_name, owner_middle_name from $owner
+	$getown = mysql_query("select owner_last_name, owner_first_name, owner_middle_name from $owner
                         where owner_id=$owner_id") or die("d".mysql_error());
                                                                                                                
-                        $geto = mysql_fetch_row($getown);
-                        $owner_last_name =$geto[0];
-                        $owner_first_name =$geto[1];
-                        $owner_middle_name =$geto[2];
+        $geto = mysql_fetch_row($getown);
+        $owner_last_name =$geto[0];
+        $owner_first_name =$geto[1];
+        $owner_middle_name =$geto[2];
 }
 ?>
 <tr>
