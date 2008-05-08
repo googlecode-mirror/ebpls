@@ -246,11 +246,11 @@ if ($business_id=='') {
 		<?php
 				if ($stat=='New') {
 		?>
-				<input type='text' name='business_capital_investment' maxlength=255 size=10 value="<?php echo $getcapi["cap_inv"]; ?>" <?php echo $disablecapinv; ?> >
+				<input type='text' name='business_capital_investment' maxlength=255 size=15 value="<?php echo $getcapi["cap_inv"]; ?>" <?php echo $disablecapinv; ?> >
 		<?php
 				} else {
 		?>
-				<input type='hidden' name='business_capital_investment' maxlength=255 size=10 value="<?php echo $getcapi["cap_inv"]; ?>" <?php echo $disablecapinv; ?> >
+				<input type='hidden' name='business_capital_investment' maxlength=255 size=15 value="<?php echo $getcapi["cap_inv"]; ?>" <?php echo $disablecapinv; ?> >
 		<?php
 				echo $getcapi["cap_inv"];
 				}
@@ -259,13 +259,13 @@ if ($business_id=='') {
 		<?php	
 				if ($stat=='New') {
 		?>
-		<input type='hidden' name='gross_sale' maxlength=255 size=10 value="<?php echo $getit[last_yr]; ?>" <?php echo $disablelastyr; ?>>
+		<input type='hidden' name='gross_sale' maxlength=255 size=15 value="<?php echo $getit[last_yr]; ?>" <?php echo $disablelastyr; ?>>
 		<?php
 				$gross_sale=$getit[last_yr];
 				echo $getit[last_yr];
 				} else {
 		?>
-<input type='text' name='gross_sale' maxlength=255 size=10 value="<?php echo $getit[last_yr]; ?>" >
+<input type='text' name='gross_sale' maxlength=255 size=15 value="<?php echo $getit[last_yr]; ?>" >
 		<?php
 				}
 		?>
