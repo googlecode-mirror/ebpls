@@ -273,7 +273,7 @@ if ($chkpenalty==0) {
 
 <?php if ($pm==1 || $ulev==6 || $ulev==7) { ?>
 <tr>
-<td class='bold'><a href=?part=4&class_type=Permits>Permits</a></td>
+<td class='bold'><a href=?part=4&class_type=Permits&selMode=Permits>Permits</a></td>
 </tr>
 
 <?php
@@ -703,7 +703,7 @@ if ($reflevel==1 ||  $ulev==6 || $ulev==7) { ?>
 
 
 <tr>
-<td class='bold'><a href=?part=4&class_type=Preference>References</a></td>
+<td class='bold'><a href=?part=4&class_type=Preference&selMode=Reference>References</a></td>
 </tr>
 <?php
 }
@@ -762,7 +762,7 @@ if ($zll==1 ||  $ulev==6 || $ulev==7) { ?>
 if ($brpl==1 ||  $ulev==6 || $ulev==7) { ?>
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&pref_type=Business>Business Permit</a></td>
+<a href=index.php?part=4&class_type=Preference&pref_type=Business&selMode=Permits>Business Permit</a></td>
 </tr>
 
 <?php

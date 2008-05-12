@@ -98,22 +98,25 @@ else {
 ?>
 
 <?php
-
+$selMode = isset($selMode)?$selMode:"";
+$settings_type = isset($settings_type) ? $settings_type : '';
 if (isset($sMode) && $sMode=='bus_nature') {
 	include'bus_nature.php';
 //	include'ebpls5502.php';
 }
-$selMode = isset($selMode)?$selMode:"";
-if ($selMode=='FAQS') {
+elseif ($selMode=='FAQS') {
 	include 'faq/faq.php';
 	$permit_type='1';
 }
-if ($class_type=='Preference' and $selMode=="" and $permit_type=="") {
+elseif ($class_type=='Permits' and $selMode=="Permits") {
+	include 'html/Permits.html';
+	$permit_type='1';
+}
+elseif ($class_type=='Preference' and $selMode=="Reference") {
 	include 'html/Ref.html';
 	$permit_type='1';
 }
-$settings_type = isset($settings_type) ? $settings_type : '';
-if ($busItem=="Settings" and $item_id=="Settings" and $settings_type=="") {
+elseif ($busItem=="Settings" and $item_id=="Settings" and $settings_type=="") {
 	include 'html/Sys.html';
 	$permit_type='1';
 }
