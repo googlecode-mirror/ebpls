@@ -1,55 +1,54 @@
 <?php
 
 /*extract data from penalty table*/
-//$seleRecord = mysql_query("SELECT * FROM $tbl_current",$dbLink);
-//$SeleRecord=th_query($seleRecord);
 
+$com = isset($com) ? $com : '';
 if ($com=='edit'){
-$seleRecord = mysql_query("SELECT * FROM $tbl_current where id = '$valueof_id'",$dbLink);
-$seleRecord_=mysql_fetch_array($seleRecord);
-$valueof_id=$seleRecord_[id];
-$iLGUPenalty=$seleRecord_[rateofpenalty];
-$iRenewalDate=$seleRecord_[renewaldate];
-$iLGUInterest=$seleRecord_[rateofinterest];
-$iRemarks=$seleRecord_[remarks];
-$iIndicator=$seleRecord_[indicator];
-$SurType=$seleRecord_[surtype];
-$IntType=$seleRecord_[inttype];
-$FeeOnly=$seleRecord_[feeonly];
-if ($iIndicator == '1') {
-	$is_check1 = "CHECKED";
-} elseif ($iIndicator == '2') {
-	$is_check2 = "CHECKED";
-}
-if ($SurType == '1') {
-	$surtypecheck1 = "CHECKED";
-} elseif ($SurType == '2') {
-	$surtypecheck2 = "CHECKED";
-}
-if ($IntType == '1') {
-	$intypecheck1 = "CHECKED";
-} elseif ($IntType == '2') {
-	$intypecheck2 = "CHECKED";
-}
-if ($FeeOnly == '1') {
-	$feecheck1 = "CHECKED";
-} elseif ($FeeOnly == '2') {
-	$feecheck2 = "CHECKED";
-} elseif ($FeeOnly == '3') {
-	$feecheck3 = "CHECKED";
-}
-$iActivate=$seleRecord_[status];
-$iSurchargePay=$seleRecord_[optsurcharge];
-$iDuePay=$seleRecord_[optduedates];
-if ($iActivate == "A") {
-	$scheck = "CHECKED";
-} else {
-	$scheck = "";
-}
-$iLGURenewalDate=explode('-',$iLGURenewal);
-$iLGURenYear=$iLGURenewalDate[0];
-$iLGURenMonth=$iLGURenewalDate[1];
-$iLGURenDay=$iLGURenewalDate[2];
+	$seleRecord = mysql_query("SELECT * FROM $tbl_current where id = '$valueof_id'",$dbLink);
+	$seleRecord_=mysql_fetch_array($seleRecord);
+	$valueof_id=$seleRecord_[id];
+	$iLGUPenalty=$seleRecord_[rateofpenalty];
+	$iRenewalDate=$seleRecord_[renewaldate];
+	$iLGUInterest=$seleRecord_[rateofinterest];
+	$iRemarks=$seleRecord_[remarks];
+	$iIndicator=$seleRecord_[indicator];
+	$SurType=$seleRecord_[surtype];
+	$IntType=$seleRecord_[inttype];
+	$FeeOnly=$seleRecord_[feeonly];
+	if ($iIndicator == '1') {
+		$is_check1 = "CHECKED";
+	} elseif ($iIndicator == '2') {
+		$is_check2 = "CHECKED";
+	}
+	if ($SurType == '1') {
+		$surtypecheck1 = "CHECKED";
+	} elseif ($SurType == '2') {
+		$surtypecheck2 = "CHECKED";
+	}
+	if ($IntType == '1') {
+		$intypecheck1 = "CHECKED";
+	 elseif ($IntType == '2') {
+		$intypecheck2 = "CHECKED";
+	}	
+	if ($FeeOnly == '1') {
+		$feecheck1 = "CHECKED";
+	} elseif ($FeeOnly == '2') {
+		$feecheck2 = "CHECKED";
+	} elseif ($FeeOnly == '3') {
+		$feecheck3 = "CHECKED";
+	}
+	$iActivate=$seleRecord_[status];
+	$iSurchargePay=$seleRecord_[optsurcharge];
+	$iDuePay=$seleRecord_[optduedates];
+	if ($iActivate == "A") {
+		$scheck = "CHECKED";
+	} else {
+		$scheck = "";
+	}
+	$iLGURenewalDate=explode('-',$iLGURenewal);
+	$iLGURenYear=$iLGURenewalDate[0];
+	$iLGURenMonth=$iLGURenewalDate[1];
+	$iLGURenDay=$iLGURenewalDate[2];
 
 /*extraction of month*/
 //	$DatadB = mysql_query("SELECT * FROM ebpls_buss_monthlyref WHERE moid = '$iLGURenMonth' ",$dbLink) or die ('Invalid query');
@@ -67,24 +66,22 @@ $iLGURenDay=$iLGURenewalDate[2];
 
 }
 else {
-$valueof_id='';
-$iLGUPenalty='';
-$iLGURenewal='';
-$iLGUInterest='';
-$iRemarks='';
-$iIndicator='';
+	$valueof_id='';
+	$iLGUPenalty='';
+	$iLGURenewal='';
+	$iLGUInterest='';
+	$iRemarks='';
+	$iIndicator='';
 //$iActivate=$seleRecord_[status];
 //$iLGURenewalDate=explode('-',$iLGURenewal);
-$iLGURenYear=date(Y);;
-$iLGURenMonth='';
-$iLGURenDay='';
-	
+	$iLGURenYear=date('Y');;
+	$iLGURenMonth='';
+	$iLGURenDay='';
 }
 
 ?>
 
 <table>
-
 <tr>
 <td>Date of Renewal</td>
 <td>

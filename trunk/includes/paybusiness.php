@@ -6,10 +6,10 @@ require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
 require_once "includes/variables.php";
                                                                                                                
-define(CMD_PAYMENT_NEW_CASH,"NEW_CASH");
-define(CMD_PAYMENT_NEW_CHECK,"NEW_CHECK");
-define(CMD_PAYMENT_SCHEDULES,"SCHEDULES");
-define(CMD_PAYMENT_RECEIPT,"RECEIPT");
+define('CMD_PAYMENT_NEW_CASH',"NEW_CASH");
+define('CMD_PAYMENT_NEW_CHECK',"NEW_CHECK");
+define('CMD_PAYMENT_SCHEDULES',"SCHEDULES");
+define('CMD_PAYMENT_RECEIPT',"RECEIPT");
 
 
 

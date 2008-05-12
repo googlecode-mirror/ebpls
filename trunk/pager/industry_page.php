@@ -47,7 +47,7 @@ $fetchrecord = $nresult->out;
 // Figure out the total number of pages. Always round up using ceil()
 $total_pagesr = ceil($total_resultsr / $max_resultsr);
 //echo $total_resultsr."VooDoo";
-echo "<table border=0 width=100%><tr><td align=left><br />";
+echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
 		$prevr = ($pager - 1);
 		echo "<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=1&orderkey=$orderkey&ascdesc1=$ascdesc1'>&lt;&lt;</a>&nbsp;";

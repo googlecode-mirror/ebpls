@@ -4,6 +4,12 @@ include'class/eBPLS.LGU.class.php';
 include'class/eBPLS.Province.class.php';
 include'lib/phpFunctions-inc.php';
 
+$iProvince = isset($iProvince) ? $iProvince : ''; //2008.05.12 Define undefined variables
+$sb = isset($sb) ? $sb : '';
+$bbo = isset($bbo) ? $bbo : '';
+$confx = isset($confx) ? $confx : '';
+$com = isset($com) ? $com : '';		
+
 if ($sb=='Submit') {
 	if ($bbo=='') {
 		$nLGU = new EBPLSLGU($dbLink,'false');
@@ -83,18 +89,19 @@ if ($sb=='Submit') {
 		<?
 	}
 }
+$dblink = isset($dblink) ? $dblink : ''; //2008.05.12
 if ($com == "edit") {
-$nLGU = new EBPLSLGU($dbLink,'false');
-$nLGU->search($bbo,NULL);
-$nResult = $nLGU->out;
-$iLGUCode = $nResult[city_municipality_code];
-$iLGUDescription = $nResult[city_municipality_desc];
-$iUpper = $nResult[upper];
-$iBLGFCode = $nResult[blgf_code];
-$nProvince = new EBPLSProvince($dbLink,'false');
-$nProvince->search($nResult[upper],NULL);
-$iResult = $nProvince->out;
-$iProvince = $iResult[province_code];
+	$nLGU = new EBPLSLGU($dbLink,'false');
+	$nLGU->search($bbo,NULL);
+	$nResult = $nLGU->out;
+	$iLGUCode = $nResult[city_municipality_code];
+	$iLGUDescription = $nResult[city_municipality_desc];
+	$iUpper = $nResult[upper];
+	$iBLGFCode = $nResult[blgf_code];
+	$nProvince = new EBPLSProvince($dbLink,'false');
+	$nProvince->search($nResult[upper],NULL);
+	$iResult = $nProvince->out;
+	$iProvince = $iResult[province_code];
 }
 include'html/eBPLS_lgu.html';
 

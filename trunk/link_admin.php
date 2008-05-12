@@ -94,11 +94,6 @@ $desc=$gf[2];
 </td>
 </tr>
 <tr><td colspan=2 class=header2 align=center width=100%>Link Admin</td></tr>
-<tr><td colspan=2 ><br></td></tr>
-
-		<tr width=90%>
-			<td> &nbsp </td>
-		</tr>
 		<tr width=90%>
 			<td> &nbsp </td>
 		</tr>
@@ -124,14 +119,14 @@ $desc=$gf[2];
                         <input type=button value=Save name=sib onclick='VerifyLink();'>
                         <input type=Button value=Cancel onClick='CancelCat();'>
                         <input type=reset value=Reset>
-			&nbsp<br><br></td>
+		</td>
 		</tr>
 	</table>
 </form>
 	
-		<?php
-		$result=mysql_query("select * from links") or die("SELECT Error: ".mysql_error());
-		$totalcnt = mysql_num_rows($result);
+<?php
+$result=mysql_query("select * from links") or die("SELECT Error: ".mysql_error());
+$totalcnt = mysql_num_rows($result);
 		
 if(!isset($_GET['page'])){
     $pager = 1;
@@ -167,7 +162,7 @@ $total_resultsr = mysql_result(mysql_query($cntsqlr),0);
 // Figure out the total number of pages. Always round up using ceil()
 $total_pagesr = ceil($total_resultsr / $max_resultsr);
                                                                                                               
-echo "<table border=0 width=100%><tr><td><div align=left><br />";
+echo "<table border=0 width=100%><tr><td><div align=left>";
  if($pager > 1){
                         $prevr = ($pager - 1);
                         echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
@@ -206,24 +201,24 @@ print "<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
 			<td bgcolor='#E6FFE6'> &nbsp;<a href=index.php?part=4&class_type=Preference&selMode=ebpls_link&action_=8&itemEvent=1&data_item=0&orderbyasde=$orderbyasde&ordervalue=desc>Description</a></td>";
 
 //			<td bgcolor='#E6FFE6'> &nbsp;<a href=index.php?part=4&class_type=Preference&selMode=ebpls_link&action_=8&itemEvent=1&data_item=0&orderbyasde=$orderbyasde&ordervalue=date>Last Updated</a></td>
-print "			<td bgcolor='#E6FFE6'> &nbsp;Action</td>
-		</tr><br>
-		<tr>";
-                $norow=0;
-                while ($get_info = mysql_fetch_row($resultr)){
-	                $norow++;
-                include'tablecolor-inc.php';
-				print "<tr bgcolor='$varcolor'>\n";
+print "	<td bgcolor='#E6FFE6'> &nbsp;Action</td>
+	</tr><br>
+	<tr>";
+$norow=0;
+while ($get_info = mysql_fetch_row($resultr)){
+	$norow++;
+	include'tablecolor-inc.php';
+	print "<tr bgcolor='$varcolor'>\n";
                 //foreach ($get_info as $field )
-print "<td>&nbsp;$norow&nbsp</td>\n";                                                                                                                                                                                                                                                                     
-$getm = "http://".$get_info[1];
+	print "<td>&nbsp;$norow&nbsp</td>\n";                                                                                                                                                                                                                                                                     
+	$getm = "http://".$get_info[1];
 
 ?>
 <td>&nbsp;<a href='#' 'subnavwhite' onclick='window.open("<?php echo $getm; ?>");'><?php echo $get_info[1]; ?> </a>&nbsp</td>
 <?php
-print "<td>&nbsp;$get_info[2]&nbsp</td>\n";
+	print "<td>&nbsp;$get_info[2]&nbsp</td>\n";
 //print "<td>&nbsp;$get_info[3]&nbsp</td>\n";
-print "<td align=center>&nbsp;<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&com=edit&bbo=$get_info[0]' class='subnavwhite'>Edit</a>
+	print "<td align=center>&nbsp;<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&com=edit&bbo=$get_info[0]' class='subnavwhite'>Edit</a>
  |";
 ?>
 <a href='#' class='subnavwhite' onclick='confdel(<?php echo $get_info[0]; ?>);'>Delete</a>
@@ -240,33 +235,27 @@ print "<td align=center>&nbsp;<a href='index.php?part=4&class_type=Preference&se
 
 </td>
 </tr>
-
 </table>-->
 <?php 
 echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
-                        $prevr = ($pager - 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
-                        }
+	$prevr = ($pager - 1);
+	echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
+}
+                                                                                                                                                           
+for($i = 1; $i <= $total_pagesr; $i++){
+	if(($pager) == $i){
+		echo "Page $i&nbsp;";
+	} else {
+		echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&ascdesc1=$ascdesc1>$i</a>&nbsp;";
+	}
+}
+              // Build Next Link
                                                                                                                                                             
-                                                                                                                                                            
-                        for($i = 1; $i <= $total_pagesr; $i++){
-                        if(($pager) == $i){
-                                echo "Page $i&nbsp;";
-                        } else {
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&ascdesc1=$ascdesc1>$i</a>&nbsp;";
-                        }
-                        }
-                                                                                                                                                            
-                                                                                                                                                            
-                                                                                                                                                            
-               // Build Next Link
-                                                                                                                                                            
-                        if($pager < $total_pagesr){
-                        $nextr = ($pager + 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$nextr&ascdesc1=$ascdesc1>Next>></a>";
-                        }
-                                                                                                                                                            
+if($pager < $total_pagesr){
+	$nextr = ($pager + 1);
+	echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$nextr&ascdesc1=$ascdesc1>Next>></a>";
+}
                                                                                                                                                             
 echo "</td></tr></table>";
 

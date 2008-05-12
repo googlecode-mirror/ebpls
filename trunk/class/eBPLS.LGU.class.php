@@ -15,7 +15,8 @@ Email : rmv71279@yahoo.com, verzosar@dap.edu.ph
 Date Created : 12/12/2005
 
 Modification History: 
-2008.04.04 About line 278, allow municipalities with same names in different provinces.
+2008.04.04 RJC About line 278, allow municipalities with same names in different provinces.
+2008.05.11 RJC Change undefined constants to strings and undefined variables.
 	
 ************************************************************************************/
 
@@ -23,16 +24,16 @@ require_once("class/eBPLS.dataencapsulator.class.php");
 require_once("lib/eBPLS.dbfuncs.php");
 
 // keys for getData method
-define(EBPLS_LGU_TABLE,"ebpls_city_municipality");
+define('EBPLS_LGU_TABLE',"ebpls_city_municipality");
 
 // Industry Sector Data Elements Constants
-define(CITY_MUNICIPALITY_CODE,"city_municipality_code");
-define(CITY_MUNICIPALITY_DESC,"city_municipality_desc");
-define(CITY_MUNICIPALITY_DATE_REGISTERED,"city_municipality_date_registered");
-define(CITY_MUNICIPALITY_DATE_UPDATED,"city_municipality_date_updated");
-define(UPDATED_BY,"updated_by");
-define(UPPER,"upper");
-define(BLGF_CODE,"blgf_code");
+define('CITY_MUNICIPALITY_CODE',"city_municipality_code");
+define('CITY_MUNICIPALITY_DESC',"city_municipality_desc");
+define('CITY_MUNICIPALITY_DATE_REGISTERED',"city_municipality_date_registered");
+define('CITY_MUNICIPALITY_DATE_UPDATED',"city_municipality_date_updated");
+define('UPDATED_BY',"updated_by");
+define('UPPER',"upper");
+define('BLGF_CODE',"blgf_code");
 
 class EBPLSLGU extends DataEncapsulator {
 	
@@ -253,15 +254,11 @@ class EBPLSLGU extends DataEncapsulator {
 		// select all columns
 		$strValues1[] = "*";
 		$strValues2[] = "count(*)";
-		
+		$strWhere = isset($strWhere) ? $strWhere : '' ;
 		if ( $orderkey != NULL ) {
-				
 			$strOrder[$orderkey] = $orderkey;
-			
 		} else {
-			
 			$strOrder = $orderkey;
-			
 		}
 		//echo $is_desc."Robert";
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_LGU_TABLE, $strValues1, $strWhere, NULL, $strOrder, $is_desc, $maxrec, $page  );	

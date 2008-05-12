@@ -89,9 +89,6 @@ function confdel(cc)
 	<td> &nbsp </td>
 </tr>
 <tr width=100%>
-	<td> &nbsp </td>
-</tr>
-<tr width=100%>
 	<td align=right valign=top> District Name </td>
 	<td align=left valign=top> &nbsp 
 	<? echo get_select_district('iDistrict',$iDistrict);?>
@@ -116,14 +113,11 @@ function confdel(cc)
 </table>
 <table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
 <tr width=100%>
-	<td align=center valign=top>&nbsp</td>
-</tr>
-<tr width=100%>
 	<td align=center valign=top>
 		<input type=button value=Save name='SubmitButton' onClick="javascript: CheckValues();">
 		<input type=Button value=Cancel onClick='javascript: ClearValues();'>
 		<input type=Reset value=Reset onClick="javascript: _FRM.iDistrict.focus();">
-		&nbsp<br><br></td>
+	</td>
 </tr>
 </table>
 <?php 

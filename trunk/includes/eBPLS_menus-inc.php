@@ -712,7 +712,7 @@ if ($pcl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nProvince&is_desc=ASC&page=1>Province </a></td>
+<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nProvince&is_desc=&page=1>Province </a></td>
 </tr>
 <?php
 }
@@ -720,7 +720,7 @@ if ($lll==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&is_desc=ASC&page=1>LGU </a></td>
+<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&is_desc=&page=1>LGU </a></td>
 </tr>
 <?php
 }
@@ -736,7 +736,7 @@ if ($dcl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&is_desc=ASC&page=1>District </a></td>
+<a href=index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&is_desc=&page=1>District </a></td>
 </tr>
 
 <?php
@@ -745,7 +745,7 @@ if ($bll==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nbarangay&is_desc=ASC&page=1>Barangay </a></td>
+<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nbarangay&is_desc=&page=1>Barangay </a></td>
 </tr>
 <?php
 }
@@ -753,7 +753,7 @@ if ($zll==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nzone&is_desc=ASC&page=1>Zone </a></td>
+<a href=index.php?part=4&class_type=Preference&selMode=ebpls_nzone&is_desc=&page=1>Zone </a></td>
 </tr>
 
 <?php
@@ -1114,11 +1114,11 @@ if ($acl==1 ||  $ulev==6 || $ulev==7) { ?>
 ?>
 
 <tr>
-<td align=left><br><br></td>
+<td align=left><hr></td>
 </tr>
 
 <tr>
-<td align=left><b><i>Announcement Board</b></i></td>
+<td align=center><b><i>Announcement Board</b></i></td>
 </tr>
 <?php
 if(!isset($_GET['pagean'])){
@@ -1147,30 +1147,27 @@ $total_resultsan = Result($dbtype,Query1($dbtype,$dbLink,$cntsqlan),0);
 $total_pagesan = ceil($total_resultsan / $max_resultsan);
 
 
-echo "<tr><td><div align=left><br />";
+echo "<tr><td><div align=left>";
                                                                                                  
-                        if($pagean > 1){
-                        $prevan = ($pagean - 1);
-                        echo "<a href=$PHP_SELF?part=4&pagean=$prevan>< Prev</a>&nbsp;";
-                        }
+if($pagean > 1){
+	$prevan = ($pagean - 1);
+	echo "<a href=$PHP_SELF?part=4&pagean=$prevan>< Prev</a>&nbsp;";
+}
                                                                                                  
-                                                                                                 
-                        for($i = 1; $i <= $total_pagesan; $i++){
-                        if(($pagean) == $i){
-                                echo "No. $i&nbsp;";
-                        } else {
+for($i = 1; $i <= $total_pagesan; $i++){
+	if(($pagean) == $i){
+		echo "No. $i&nbsp;:";
+	} else {
                         //echo "<a href=$PHP_SELF?part=4&page=$i>$i</a>&nbsp;";
-                        }
-                        }
-                                                                                                 
-                                                                                                 
-                                                                 
+	}
+}
+                                                                
                // Build Next Link
                                                                                                                
-                        if($pagean < $total_pagesan){
-                        $nextan = ($pagean + 1);
-                        echo "<a href=$PHP_SELF?part=4&pagean=$nextan>Next ></a>";
-                        }
+if($pagean < $total_pagesan){
+                        	$nextan = ($pagean + 1);
+                        	echo "<a href=$PHP_SELF?part=4&pagean=$nextan>Next ></a>";
+}
                                 
                                                                                                  
 echo "</td></tr>";
@@ -1179,19 +1176,13 @@ while($get_infoan = FetchRow($dbtype,$resultan))
 
 ?>
 <tr>
-<td align=center valign=top ><br>
+<td align=left valign=top >
 <!--<textarea name=ab rows=5 cols=23 readonly>-->
 <?php echo $get_infoan[0];?>
 </td>
 </tr>
 <tr>
-<td align=center valign=top>&nbsp;</td>
-</tr>
-<tr>
-<td align=center valign=top><?php echo $get_infoan[1];?></td>
-</tr>
-<tr>
-<td align=center valign=top><?php echo $get_infoan[2];?></td>
+<td align=right valign=top><?php echo $get_infoan[1].' ('.$get_infoan[2].') <br><br>';?></td>
 </tr>
 <?php
 }

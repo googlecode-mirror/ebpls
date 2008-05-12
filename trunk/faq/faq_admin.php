@@ -92,45 +92,40 @@ $faq_answer=$gf[2];
 </td>
 </tr>
 <tr><td colspan=2 class=header2 align=center width=100%>FAQ Admin</td></tr>
-<tr><td colspan=2 ><br></td></tr>
-
-		<tr width=90%>
-			<td> &nbsp </td>
-		</tr>
-		<tr width=90%>
-			<td> &nbsp </td>
-		</tr>
-		<tr width=90%>
-			<td align=right valign=top> Question : </td>
-			<td align=left valign=top> &nbsp <input type=text name=faq_question class=text180 value='<?php echo $faq_question; ?>' maxlength="30">&nbsp;<font class="def_label"> (Max 30 chars)</font></td>
-			<td> &nbsp </td>
-		</tr>
-		<tr width=90%>
-			<td align=right valign=top> Answer : </td>
-			<td align=left valign=top> &nbsp <input type=text name=faq_answer class=text180 value='<?php echo $faq_answer; ?>' maxlength="30">&nbsp;<font class="def_label"> (Max 30 chars)</font></td>
-			<td> &nbsp </td>
-		</tr>
-	</table>
-	<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
-		<tr width=90%>
-			<td align=center valign=top>
+<tr width=90%>
+	<td> &nbsp </td>
+</tr>
+<tr width=90%>
+	<td align=right valign=top> Question : </td>
+	<td align=left valign=top> &nbsp <input type=text name=faq_question class=text180 value='<?php echo $faq_question; ?>' maxlength="30">&nbsp;<font class="def_label"> (Max 30 chars)</font></td>
+	<td> &nbsp </td>
+</tr>
+<tr width=90%>
+	<td align=right valign=top> Answer : </td>
+	<td align=left valign=top> &nbsp <input type=text name=faq_answer class=text180 value='<?php echo $faq_answer; ?>' maxlength="30">&nbsp;<font class="def_label"> (Max 30 chars)</font></td>
+	<td> &nbsp </td>
+</tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
+	<tr width=90%>
+		<td align=center valign=top>
 			&nbsp</td>
-		</tr>
-		<tr width=90%>
-			<td align=center valign=top>
+	</tr>
+	<tr width=90%>
+		<td align=center valign=top>
 			<input type=hidden name=sb>
                         <input type=button value=Save name=sib onclick='VerifyFAQ();'>
                         <input type=Button value=Cancel onClick='CancelCat();'>
 			<input type=reset value=Reset>
-			&nbsp<br><br></td>
-		</tr>
-	</table>
+		</td>
+	</tr>
+</table>
 </form>
 	
-		<?php
-		$result=mysql_query("select * from faq") or die("SELECT Error: ".mysql_error());
-		$totalcnt = mysql_num_rows($result);
-		
+<?php
+	$result=mysql_query("select * from faq") or die("SELECT Error: ".mysql_error());
+	$totalcnt = mysql_num_rows($result);
+	
 if(!isset($_GET['page'])){
     $pager = 1;
 } else {
@@ -154,7 +149,7 @@ $max_resultsr = $thIntPageLimit;
 $fromr = abs((($pager * $max_resultsr) - $max_resultsr));
                                                                                                                
 if ($ordervalue=='faq_question') {                                                                                                               
-$searchsqlr="select * from faq order by faq_question $is_desc limit $fromr, $max_resultsr";
+	$searchsqlr="select * from faq order by faq_question $is_desc limit $fromr, $max_resultsr";
 } elseif ($ordervalue=='faq_answer') {
 	$searchsqlr="select * from faq order by faq_answer $is_desc limit $fromr, $max_resultsr";
 } elseif ($ordervalue=='date') {
@@ -165,7 +160,7 @@ $searchsqlr="select * from faq order by faq_question $is_desc limit $fromr, $max
 $cntsqlr = "select count(*) from faq";
 
 //		
-$resultr = mysql_query($searchsqlr)or die (mysql_error());
+$resultr = mysql_query($searchsqlr) or die (mysql_error());
                                                                                                                
                                                                                                                
  // Figure out the total number of results in DB:
@@ -173,36 +168,31 @@ $total_resultsr = mysql_result(mysql_query($cntsqlr),0);
 // Figure out the total number of pages. Always round up using ceil()
 $total_pagesr = ceil($total_resultsr / $max_resultsr);
                                                                                                               
-echo "<table border=0 width=100%><tr><td><div align=left><br />";
- if($pager > 1){
-                        $prevr = ($pager - 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
-                        }
+echo "<table border=0 width=100%><tr><td><div align=left>";
+if($pager > 1){
+	$prevr = ($pager - 1);
+	echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
+}
                                                                                                                
                                                                                                                
-                        for($i = 1; $i <= $total_pagesr; $i++){
-                        if(($pager) == $i){
-                                echo "Page $i&nbsp;";
-                        } else {
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&ascdesc1=$ascdesc1>$i</a>&nbsp;";
-                        }
-                        }
-                                                                                                               
-                                                                                                               
+for($i = 1; $i <= $total_pagesr; $i++){
+	if(($pager) == $i){
+		echo "Page $i&nbsp;";
+	} else {
+		echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&ascdesc1=$ascdesc1>$i</a>&nbsp;";
+	}
+}
                                                                                                                
                // Build Next Link
-                                                                                                               
-                        if($pager < $total_pagesr){
-                        $nextr = ($pager + 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$nextr&ascdesc1=$ascdesc1>Next>></a>";
-                        }
-                                                                                                               
+if($pager < $total_pagesr){
+	$nextr = ($pager + 1);
+	echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$nextr&ascdesc1=$ascdesc1>Next>></a>";
+}
                                                                                                                
 //echo "</td></tr></table>";
-
 //
 
-		if ($totalcnt==0) {
+if ($totalcnt==0) {
                        // print "<br><font color=red><div align= center>&nbsp No record found&nbsp</div></font>\n";
                 }
 print "<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
@@ -214,17 +204,17 @@ print "<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
 			<td class='hdr'> &nbsp;Action</td>
 		</tr><br>
 		<tr width=90%>";
-                $norow=0;
-                while ($get_info = mysql_fetch_row($resultr)){
-	                $norow++;
-                include'tablecolor-inc.php';
-				print "<tr bgcolor='$varcolor'>\n";
+$norow=0;
+while ($get_info = mysql_fetch_row($resultr)){
+	$norow++;
+	include'tablecolor-inc.php';
+	print "<tr bgcolor='$varcolor'>\n";
                 //foreach ($get_info as $field )
-print "<td>&nbsp;$norow&nbsp</td>\n";                                                                                                                                                                                                                                                                     
-print "<td>&nbsp;$get_info[1]&nbsp</td>\n";
-print "<td>&nbsp;$get_info[2]&nbsp</td>\n";
-print "<td>&nbsp;$get_info[3]&nbsp</td>\n";
-print "<td align=center>&nbsp;<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&com=edit&bbo=$get_info[0]' class='subnavwhite'>Edit</a>
+	print "<td>&nbsp;$norow&nbsp</td>\n";                                                                                                                                                                                                                                                                     
+	print "<td>&nbsp;$get_info[1]&nbsp</td>\n";
+	print "<td>&nbsp;$get_info[2]&nbsp</td>\n";
+	print "<td>&nbsp;$get_info[3]&nbsp</td>\n";
+	print "<td align=center>&nbsp;<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&com=edit&bbo=$get_info[0]' class='subnavwhite'>Edit</a>
  |";
 ?>
 <a href='#' class='subnavwhite' onclick='confdel(<?php echo $get_info[0]; ?>);'>Delete</a>
@@ -245,28 +235,24 @@ print "<td align=center>&nbsp;<a href='index.php?part=4&class_type=Preference&se
 <?php 
 echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
-                        $prevr = ($pager - 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
-                        }
-                                                                                                                                                            
-                                                                                                                                                            
-                        for($i = 1; $i <= $total_pagesr; $i++){
-                        if(($pager) == $i){
-                                echo "Page $i&nbsp;";
-                        } else {
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&ascdesc1=$ascdesc1>$i</a>&nbsp;";
-                        }
-                        }
-                                                                                                                                                            
-                                                                                                                                                            
+	$prevr = ($pager - 1);
+	echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$prevr&ascdesc1=$ascdesc1><< Prev&nbsp;";
+}
+                                                                                                                                                          
+for($i = 1; $i <= $total_pagesr; $i++){
+	if(($pager) == $i){
+		 echo "Page $i&nbsp;";
+	} else {
+		echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&ascdesc1=$ascdesc1>$i</a>&nbsp;";
+	}
+}
                                                                                                                                                             
                // Build Next Link
                                                                                                                                                             
-                        if($pager < $total_pagesr){
-                        $nextr = ($pager + 1);
-                        echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$nextr&ascdesc1=$ascdesc1>Next>></a>";
-                        }
-                                                                                                                                                            
+if($pager < $total_pagesr){
+	$nextr = ($pager + 1);
+	echo "<a href=$PHP_SELF?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$nextr&ascdesc1=$ascdesc1>Next>></a>";
+}
                                                                                                                                                             
 echo "</td></tr></table>";
 

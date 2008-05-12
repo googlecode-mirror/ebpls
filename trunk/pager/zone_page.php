@@ -11,12 +11,11 @@ if(!isset($_GET['page'])){
 $fromr = abs((($pager * $max_resultsr) - $max_resultsr));
 if ($is_desc == "") {
         $is_desc = $is_asc;
+}
+if ($is_desc=='DESC') {
+	$is_desc='ASC';
 } else {
-        if ($is_desc=='DESC') {
-                $is_desc='ASC';
-        } else {
-                $is_desc='DESC';
-        }
+        $is_desc='DESC';
 }
 $is_asc = $is_desc;
 if ($pagemulti=='') {

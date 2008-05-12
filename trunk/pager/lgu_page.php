@@ -1,6 +1,8 @@
 <?php
 require 'setup/setting.php';
+//2008.05.12 RJC Set undefined constant to string and define undefined variables
 $max_resultsr = $thIntPageLimit;
+$page = isset($page) ? $page : 1;
 $pagemulti = $page;
 if(!isset($_GET['page'])){
     $pager = 1;
@@ -9,21 +11,21 @@ if(!isset($_GET['page'])){
 }
 // Define the number of results per page
 $fromr = abs((($pager * $max_resultsr) - $max_resultsr));
-if ($is_desc == "") {
-        $is_desc = $is_asc;
+if (!isset($is_desc) or $is_desc == "") {  
+        $is_desc = 'DESC';
+} 
+if ($is_desc=='DESC') {  // Flip direction
+	$is_desc='ASC';
 } else {
-        if ($is_desc=='DESC') {
-                $is_desc='ASC';
-        } else {
-                $is_desc='DESC';
-        }
+        $is_desc='DESC';
 }
-$is_asc = $is_desc;
+$is_asc = $is_desc;  // set ascending or descending sequence
+// echo "Sequence is ".$is_asc."\n";
 if ($pagemulti=='') {
 	$pagemulti=1;
 }
 //echo $is_desc."VooDoo";
-if ($orderkey=="") {
+if (!isset($orderkey) or $orderkey=="") {
 	$orderkey = "city_municipality_code";
 }
 $nresult = new EBPLSLGU($dbLink,'false');
@@ -35,7 +37,7 @@ $fetchrecord = $nresult->out;
 // Figure out the total number of pages. Always round up using ceil()
 $total_pagesr = ceil($total_resultsr / $max_resultsr);
 //echo $total_resultsr."VooDoo";
-echo "<table border=0 width=100%><tr><td align=left><br />";
+echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
                         $prevr = ($pager - 1);
 			echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&page=1&orderkey=$orderkey&is_asc=$is_asc'>&lt;&lt;&nbsp;";
@@ -55,7 +57,7 @@ echo "<table border=0 width=100%><tr><td align=left><br />";
 					echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&page=$i&orderkey=$orderkey&is_asc=$is_asc'>$i</a>&nbsp;";
                                 }
                         } else {
-                                if ($total_pages > 11) {
+                                if ($total_pagesr > 11) {
                                         $tot_page = 11;
                                 } else {
                                         $tot_page = $total_pagesr;
@@ -129,7 +131,7 @@ print "<td width=35%>&nbsp;$get_province[province_desc]&nbsp</td>\n";
 print "<td align=center width=15%>&nbsp;<a href='index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&com=edit&bbo=$get_infor[city_municipality_code]&orderkey=$orderkey&is_asc=$is_asc&page=$pager' class='subnavwhite'>Edit</a> | ";
                                                                                                                                                             
 ?>
-<a class='subnavwhite' href='#' onClick="javascript: confdel('<?php echo $get_infor[city_municipality_code]; ?>');">Delete</a>
+<a class='subnavwhite' href='#' onClick="javascript: confdel('<?php echo $get_infor['city_municipality_code']; ?>');">Delete</a>
 
 </td>
 <?php
@@ -156,7 +158,7 @@ echo "<table border=0 width=100%><tr><td align=left><br />";
                                         echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&page=$i&orderkey=$orderkey&is_asc=$is_asc'>$i</a>&nbsp;";
                                 }
                         } else {
-                                if ($total_pages > 11) {
+                                if ($total_pagesr > 11) {
                                         $tot_page = 11;
                                 } else {
                                         $tot_page = $total_pagesr;

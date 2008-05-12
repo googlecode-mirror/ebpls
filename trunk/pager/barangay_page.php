@@ -11,12 +11,11 @@ if(!isset($_GET['page'])){
 $fromr = abs((($pager * $max_resultsr) - $max_resultsr));
 if ($is_desc == "") {
         $is_desc = $is_asc;
+} 
+if ($is_desc=='DESC') {
+       $is_desc='ASC';
 } else {
-        if ($is_desc=='DESC') {
-                $is_desc='ASC';
-        } else {
-                $is_desc='DESC';
-        }
+       $is_desc='DESC';
 }
 $is_asc = $is_desc;
 if ($pagemulti=='') {
@@ -35,7 +34,7 @@ $fetchrecord = $nresult->out;
 // Figure out the total number of pages. Always round up using ceil()
 $total_pagesr = ceil($total_resultsr / $max_resultsr);
 //echo $total_resultsr."VooDoo";
-echo "<table border=0 width=100%><tr><td align=left><br />";
+echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
                         $prevr = ($pager - 1);
 						echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_nbarangay&page=1&orderkey=$orderkey&is_asc=$isasc'>&lt;&lt;&nbsp;";
@@ -132,7 +131,7 @@ print "<td align=center width=20%>&nbsp;<a href='index.php?part=4&class_type=Pre
                                                                                                                                                                                                                                                                            
 }
 
-echo "<table border=0 width=100%><tr><td align=left><br />";
+echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
                         $prevr = ($pager - 1);
 						echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_nbarangay&page=1&orderkey=$orderkey&is_asc=$isasc'>&lt;&lt;&nbsp;";

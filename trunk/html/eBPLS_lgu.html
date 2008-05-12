@@ -99,15 +99,17 @@ function confdel(cc)
 	<td> &nbsp </td>
 </tr>
 <tr width=100%>
-	<td> &nbsp </td>
-</tr>
-<tr width=100%>
 	<td align=right valign=top> Province </td>
 	<td align=left valign=top> &nbsp 
-	<? echo get_select_province($dblink,'iProvince','ebpls_province','province_code','province_desc',$iProvince,'');?>
+	<?php echo get_select_province($dblink,'iProvince','ebpls_province','province_code','province_desc',$iProvince,'');?>
 	</td>
 	<td> &nbsp </td>
 </tr>
+<?php
+$iLGUCode = isset($iLGUCode) ? $iLGUCode : '';  //2008.05.12 define undefined variables
+$iLGUDescription = isset($iLGUDescription) ? $iLGUDescription : '';
+$iBLGFCode = isset($iBLGFCode) ? $iBLGFCode : '';
+?>
 <tr width=100%>
 	<td align=right valign=top> LGU Code </td>
 	<td align=left valign=top> &nbsp <input type=text maxlength=15 name=iLGUCode class=text180 value='<?php echo $iLGUCode; ?>'>&nbsp;<font class="def_label"> (Max 15 chars)</font></td>
@@ -126,14 +128,11 @@ function confdel(cc)
 </table>
 <table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
 <tr width=100%>
-	<td align=center valign=top>&nbsp</td>
-</tr>
-<tr width=100%>
 	<td align=center valign=top>
 		<input type=button value=Save name='SubmitButton' onClick="javascript: CheckValues();">
 		<input type=Button value=Cancel onClick='javascript: ClearValues();'>
 		<input type=Reset value=Reset onClick="javascript: _FRM.iProvince.focus();">
-		&nbsp<br><br></td>
+	</td>
 </tr>
 </table>
 <?php 

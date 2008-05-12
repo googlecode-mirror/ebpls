@@ -10,13 +10,12 @@ if(!isset($_GET['page'])){
 // Define the number of results per page
 $fromr = abs((($pager * $max_resultsr) - $max_resultsr));
 if ($is_desc == "") {
-        $is_desc = $is_asc;
+        $is_desc = 'DESC';
+}
+if ($is_desc=='DESC') {
+	$is_desc='ASC';
 } else {
-        if ($is_desc=='DESC') {
-                $is_desc='ASC';
-        } else {
-                $is_desc='DESC';
-        }
+        $is_desc='DESC';
 }
 $is_asc = $is_desc;
 if ($pagemulti=='') {
@@ -35,7 +34,7 @@ $fetchrecord = $nresult->out;
 // Figure out the total number of pages. Always round up using ceil()
 $total_pagesr = ceil($total_resultsr / $max_resultsr);
 //echo $total_resultsr."VooDoo";
-echo "<table border=0 width=100%><tr><td align=left><br />";
+echo "<table border=0 width=100%><tr><td align=left>";
  if($pager > 1){
                         $prevr = ($pager - 1);
 			echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&page=1&orderkey=$orderkey&is_asc=$is_asc'>&lt;&lt;&nbsp;";
@@ -82,14 +81,12 @@ echo "<table border=0 width=100%><tr><td align=left><br />";
                                                                                                                
                                                                                                                
 echo "</td></tr></table>";
-
-
 ?>
 <table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
 	<tr>
 		<td class='hdr' width="5%"> &nbsp;No.</td>
 		<td align=center class='hdr' width="35%"> 
-			<a href='index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&is_desc=<?php echo $is_desc;?>&orderkey=district_code'>&nbsp;District Name</a>
+			<a href='index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&is_desc=<?php echo $is_desc;?>&orderkey=district_desc'>&nbsp;District Name</a>
 		</td>
 		<td align=center class='hdr' width="35%"> 
 			<a href='index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&is_desc=<?php echo $is_desc;?>&orderkey=upper'>&nbsp;LGU Name</a>
@@ -137,7 +134,7 @@ print "<td align=center width=20%>&nbsp;<a href='index.php?part=4&class_type=Pre
 }
 
 echo "<table border=0 width=100%><tr><td align=left><br />";
- if($pager > 1){
+if($pager > 1){
                         $prevr = ($pager - 1);
                         echo "<a href='index.php?part=4&class_type=Preference&selMode=ebpls_ndistrict&page=1&orderkey=$orde
 rkey&is_asc=$is_asc'>&lt;&lt;&nbsp;";

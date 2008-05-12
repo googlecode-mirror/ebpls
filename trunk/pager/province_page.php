@@ -9,16 +9,17 @@ if(!isset($_GET['page'])){
 }
 // Define the number of results per page
 $fromr = abs((($pager * $max_resultsr) - $max_resultsr));
+
 if ($is_desc == "") {
-	$is_desc = $is_asc;
+	$is_desc = 'DESC';
+} 
+if ($is_desc=='DESC') {
+        $is_desc='ASC';
 } else {
-	if ($is_desc=='DESC') {
-	        $is_desc='ASC';
-	} else {
-	        $is_desc='DESC';
-	}
+        $is_desc='DESC';
 }
 $is_asc = $is_desc;
+
 if ($pagemulti=='') {
 	$pagemulti=1;
 }

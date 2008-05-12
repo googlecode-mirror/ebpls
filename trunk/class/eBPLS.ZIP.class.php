@@ -21,17 +21,17 @@ require_once("class/eBPLS.dataencapsulator.class.php");
 require_once("lib/eBPLS.dbfuncs.php");
 
 // keys for getData method
-define(EBPLS_ZIP_TABLE,"ebpls_zip");
+define('EBPLS_ZIP_TABLE',"ebpls_zip");
 
 // Industry Sector Data Elements Constants
-define(ZIP_CODE,"zip_code");
-define(ZIP_DESC,"zip_desc");
-define(ZIP_DATE_REGISTERED,"zip_date_registered");
-define(ZIP_DATE_UPDATED,"zip_date_updated");
-define(UPDATED_BY,"updated_by");
-define(G_ZONE,"g_zone");
-define(UPPER,"upper");
-define(BLGF_CODE,"blgf_code");
+define('ZIP_CODE',"zip_code");
+define('ZIP_DESC',"zip_desc");
+define('ZIP_DATE_REGISTERED',"zip_date_registered");
+define('ZIP_DATE_UPDATED',"zip_date_updated");
+define('UPDATED_BY',"updated_by");
+define('G_ZONE',"g_zone");
+define('UPPER',"upper");
+define('BLGF_CODE',"blgf_code");
 
 class EBPLSZIP extends DataEncapsulator {
 	

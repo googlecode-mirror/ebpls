@@ -30,8 +30,8 @@ define('PROVINCE_CODE',"province_code");
 define('PROVINCE_DESC',"province_desc");
 define('PROVINCE_DATE_REGISTERED',"province_date_registered");
 define('PROVINCE_DATE_UPDATED',"province_date_updated");
-define('UPDATED_BY',"updated_by");
-define('BLGF_CODE',"blgf_code");
+if (!defined('UPDATED_BY')) define('UPDATED_BY',"updated_by");
+if (!defined('BLGF_CODE')) define('BLGF_CODE',"blgf_code");
 
 class EBPLSProvince extends DataEncapsulator {
 	
