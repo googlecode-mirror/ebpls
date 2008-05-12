@@ -3,17 +3,19 @@ include'includes/variables.php';
 include'class/eBPLS.Province.class.php';
 include'lib/phpFunctions-inc.php';
 
-	while (strpos(trim($iProvince),"  ")>0)
-		{
-		$iProvince=str_replace("  "," ",trim($iProvince));
-		}
-		
-		
+$iProvince = isset($iProvince) ? $iProvince : ''; //2008.05.11
+$iBLGFCode = isset($iBLGFCode) ? $iBLGFCode : '' ;
+$sb = isset($sb) ? $sb : '';
+$bbo = isset($bbo) ? $bbo : '';
+$confx = isset($confx) ? $confx : '';
+$com = isset($com) ? $com : '';		
+
+while (strpos(trim($iProvince),"  ")>0) {
+	$iProvince=str_replace("  "," ",trim($iProvince));
+}
+
 if ($sb=='Submit') {
 	if ($bbo=='') {
-		
-	
-		
 		$nProvinceIssued = new EBPLSProvince($dbLink,'false');
 		$nProvinceIssued->search(NULL,$iProvince);
 		$rResult = $nProvinceIssued->out;
