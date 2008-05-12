@@ -112,31 +112,28 @@ if ($class_type=='Preference' and $selMode=="" and $permit_type=="") {
 	include 'html/Ref.html';
 	$permit_type='1';
 }
+$settings_type = isset($settings_type) ? $settings_type : '';
 if ($busItem=="Settings" and $item_id=="Settings" and $settings_type=="") {
 	include 'html/Sys.html';
 	$permit_type='1';
 }
-if ($selMode=='ebpls_faq'){
+elseif ($selMode=='ebpls_faq'){
         include'faq/faq_admin.php';
 	$permit_type=1;
 }
-
-if ($selMode=='links'){
+elseif ($selMode=='links'){
         include'links.php';
         $permit_type=1;
-}
-
-if ($selMode=='ebpls_afiss'){
+} 
+elseif ($selMode=='ebpls_afiss'){
         include'af_iss.php';
         $permit_type=1;
 }
-if ($selMode=='ebpls_link'){
+elseif ($selMode=='ebpls_link'){
         include'link_admin.php';
         $permit_type=1;
 }
-
-
-if ($selMode=='ebpls_nbusiness'){
+elseif ($selMode=='ebpls_nbusiness'){
 	include'ebpls5502.php';
 }
 elseif ($selMode=='ebpls_nRequirements'){
@@ -301,9 +298,8 @@ if ($permit_type=='') {
 
 ?>
 <?php
-
+$itemID_ = isset($itemID_)?$itemID_:0;
 if ($permit_type=='Business'){
-		$itemID_ = isset($itemID_)?$itemID_:0;
 		if ($itemID_== 1221){
 				include'ebpls1221.php';		
 		//	include'includes/form_bus_permit.php';
@@ -312,38 +308,27 @@ if ($permit_type=='Business'){
 		} elseif ($itemID_== 5679) {
 				include 'delayed_qtr.php';		
 		} elseif ($itemID_ == '0104') {
-			
 				include 'predcomp.php';
-		}
-		elseif ($itemID_== 4212){
+		} elseif ($itemID_== 4212){
 				include'ebpls4212.php';		
-		}
-		elseif ($itemID_== 5212){
+		} elseif ($itemID_== 5212){
 				include'ebpls5212.php';		
-		}
-		elseif ($itemID_== 2212){
+		} elseif ($itemID_== 2212){
 				include'ebpls2212.php';		
-		}
-		elseif ($itemID_== 3212){
+		} elseif ($itemID_== 3212){
 				include'ebpls3212.php';		
-                } 
-		elseif ($itemID_== 1222){
+                } elseif ($itemID_== 1222){
 //                                include'ebpls1222.php';
 				include "includes/form_mtop_owner.php";
-                }
-		elseif ($itemID_== 1223){
-			                    include'ebpls1223.php';
-                }
-		elseif ($itemID_== 1224){
+                } elseif ($itemID_== 1223){
+				include'ebpls1223.php';
+                } elseif ($itemID_== 1224){
                                 include'ebpls1224.php';
-                }
-
-		else {
-		include'ebpls1221.php';					
-
+                } else {
+				include'ebpls1221.php';					
 		}
 		
-} elseif ($permit_type<>Business) {
+} elseif ($permit_type<>'Business') {
 
 		if ($itemID_== 1221){
                                 include'ebpls1221.php';
@@ -358,24 +343,24 @@ if ($permit_type=='Business'){
                 elseif ($itemID_== 1222){
                                include "includes/form_mtop_owner.php";
 				}
-				elseif ($itemID_== 921){
+		elseif ($itemID_== 921){
                                 include'ebpls921.php';
                 }
                 elseif ($itemID_==101){
                                 include'ebpls101.php';
                 }
-				elseif ($itemID_==1001) {
-					$owner='ebpls_owner';
+		elseif ($itemID_==1001) {
+				$owner='ebpls_owner';
 				include'ebpls1001.php';
-				}
-				elseif ($itemID_==1002 || $itemID_==ctcinsearch1) {
+		}
+		elseif ($itemID_==1002 || $itemID_=='ctcinsearch1') {
 				include'ebpls1002.php';
-				}
+		}
                 elseif ($itemID_==1217){
                                 include'ebpls1217.php';
                 }
                 elseif ($itemID_== 1223){
-			                    include'ebpls1223.php';
+			        include'ebpls1223.php';
                 }
 		elseif ($itemID_==1218) {
 				include'ebpls1218.php';
@@ -383,49 +368,40 @@ if ($permit_type=='Business'){
                 elseif ($itemID_==4221){
                                 include'ebpls4221.php';
                 }
-                elseif ($itemID_==ctc){
-                				include'form_ctc_individual_application.php';
+                elseif ($itemID_=='ctc'){
+				include'form_ctc_individual_application.php';
             	}
-		elseif ($itemID_==ctcinsearch){
-                                                include'ebpls1001.php';
+		elseif ($itemID_=='ctcinsearch') {
+				include'ebpls1001.php';
                 }
-
-		
-
-            	elseif ($itemID_==6){
-						if ($v==1) {
+           	elseif ($itemID_==6){
+				if (isset($v) and $v==1) {
 	      ?>
 		        <body onload='alert("Record updated successfully");'></body>
 	      <?php
-						}
-
-                				include'ebpls006.php';
+				}
+                		include'ebpls006.php';
             	}
             	elseif ($itemID_==7){
-	            	
-                				include'ebpls007.php';
+                		include'ebpls007.php';
             	}
             	elseif ($itemID_==11){
-                				include'ebpls011.php';
+                		include'ebpls011.php';
             	}
             	elseif ($itemID_==21){
-                				include'ebpls021.php';
+                		include'ebpls021.php';
             	}
             	elseif ($itemID_==23){
-                				include'ebpls023.php';
+                		include'ebpls023.php';
             	}
             	elseif ($itemID_<> 1221 and $itemID_<> 2212 and $itemID_<> 3212 and $itemID_<> 1222
-            			and $itemID_<> 921 and $itemID_<>101 and $itemID_<>1217 and $itemID_<>4221
-            			and $itemID_<>CTC) {
-            					include'ebpls1221.php';
-        		}
-
-
-
+            		and $itemID_<> 921 and $itemID_<>101 and $itemID_<>1217 and $itemID_<>4221
+            		and $itemID_<>'ctc') {
+            			include'ebpls1221.php';
+        	}
 
 } else {
 ?>
-
 
 <table width=100%>
 <tr>

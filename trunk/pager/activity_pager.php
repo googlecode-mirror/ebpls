@@ -1,9 +1,11 @@
 <?php
 require 'setup/setting.php';
-$max_resultsr = $thIntPageLimit;
-$pagemulti = $page;
+$page = isset($page) ? $page : 1;
+$is_asc = isset($is_asc) ? $is_asc : '';
+$is_desc = isset($is_desc) ? $is_desc : '';
 
-		
+$max_resultsr = $thIntPageLimit;
+$pagemulti = $page;		
 if(!isset($_GET['page'])){
     $pager = 1;
 } else {
@@ -51,7 +53,7 @@ echo "<table border=0 width=100%><tr><td align=left><br />";
 					echo "<a href='index.php?part=4&itemID_=11&busItem=Settings&permit_type=Settings&settings_type=ActivityLog&item_id=Settings&page=$i&orderkey=$orderkey&is_asc=$is_asc'>$i</a>&nbsp;";
                                 }
                         } else {
-                                if ($total_pages > 11) {
+                                if ($total_pagesr > 11) {
                                         $tot_page = 11;
                                 } else {
                                         $tot_page = $total_pagesr;
@@ -111,7 +113,7 @@ print "<td >&nbsp;$logged&nbsp</td>\n";
 print "<td>&nbsp;$get_infor[date_input]&nbsp</td>\n";
 ?>
 <td align=center width=15%>&nbsp;
-<a href='#' class='subnavwhite' onClick="javascript: ViewLog(<? echo $get_infor[act_id];?>);">View Details</a> 
+<a href='#' class='subnavwhite' onClick="javascript: ViewLog(<? echo $get_infor['act_id'];?>);">View Details</a> 
 </td>
 </tr>
 <?php                                                                                                                                                                                                                                                                   
@@ -142,7 +144,7 @@ $orderkey&is_asc=$is_asc'>Prev&nbsp;";
                                         echo "<a href='index.php?part=4&itemID_=11&busItem=Settings&permit_type=Settings&settings_type=ActivityLog&item_id=Settings&page=$i&orderkey=$orderkey&is_asc=$is_asc'>$i</a>&nbsp;";
                                 }
 								} else {
-                                if ($total_pages > 11) {
+                                if ($total_pagesr > 11) {
 									$tot_page = 11;
                                 } else {
 									$tot_page = $total_pagesr;

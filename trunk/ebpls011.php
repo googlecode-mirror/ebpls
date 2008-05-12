@@ -17,9 +17,9 @@ $search_cat=$_POST["search_cat"];
 <table width=100% align=center cellspacing=0 cellpadding=0 border=0>
 <tr >
 <body onfocus="ClearAct();"></body>
-<td colspan=2 align=center class=header><font size=+1><b><i><font color=white>SETTINGS</font></i></b></font></td>
+<td colspan=2 align=center class=header><b><font color=white>SETTINGS</font></b></td>
 </tr>
-<tr><td colspan=2 class=header2 align=center width=100%>ACTIVITY LOG</td></tr>
+<tr><td colspan=2 class=header2 align=center width=100%>Activity Log</td></tr>
 <tr><td colspan=2 ><br></td></tr>
 <tr width=100%>
 <td >Enter String: &nbsp; <input type=text name="search_user" value="<?php echo $search_user; ?>">

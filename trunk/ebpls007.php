@@ -20,7 +20,7 @@ if($frmBtnKick == "Kick User") {
         <body onload='javascript:alert ("Cannot kick offline user!"); return false;'></body>
         <?
 	} else {
-	if ($ThUserData[username] == $checkiff[username]) {
+	if ($ThUserData['username'] == $checkiff['username']) {
 		?>
         <body onload='javascript:alert ("Cannot kicked own account!"); return false;'></body>
         <?
@@ -81,7 +81,7 @@ if (empty($frmCorpNames)) {
                 echo "<div align=\"CENTER\"><font size=2 color=red>Successfully Unlock User!</font></div><br>";
 		$com = "";
         }
-	$strCurDomain = $ThUserData[domain];
+	$strCurDomain = isset($ThUserData['domain']) ? $ThUserData['domain'] : '';
 	$strLabelToShow = ($strCurDomain) ? "$strCurDomain : " : "";
 	echo "<table border=0 width=100% align=center cellspacing=0 cellpadding=0>\n
 		<tr><td colspan=2 class=header align=center width=100%>SETTINGS</td></tr>\n

@@ -3,7 +3,7 @@ require_once'lib/ebpls.lib.php';
 require_once("lib/ebpls.utils.php");                                                                                                                        
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 require_once "includes/variables.php";                                                                                                                                                                                                                                     
-
+$itemID_ = isset($itemID_) ? $itemID_ : '';
 //--- get connection from DB
 //$dbLink = get_db_connection();
 
@@ -18,6 +18,7 @@ require_once "includes/variables.php";
 <table border=0 cellspacing=0 cellpadding=0  width='100%'>
 	<?php
 		$class_type = isset($class_type)?$class_type:"Permits"; //2008.04.25
+		$Search = isset($Search) ? $Search : ''; //2008.05.12
 		if ($class_type=='Permits' and $permit_type=='' and $itemID_=='') {
 	?>
 			<tr>

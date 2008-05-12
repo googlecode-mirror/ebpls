@@ -1,7 +1,10 @@
 <?php
+/* Modification History:
+2008.05.12 RJC Changed $GUname to $niLGUname at line 253
+*/
 
-include'lib/phpFunctions-inc.php';
-include'includes/config.php';
+include 'lib/phpFunctions-inc.php';
+include_once'includes/config.php';
 
 dbConnect();
 ///*
@@ -42,18 +45,10 @@ if (isset($iSubmitUpload)){
 	//print "<hr>Upload Status: &nbsp &nbsp &nbsp Unable to upload file.<br>";
 	//print "File too large. Allowable maximum file size is 50kb.<hr>";
 	}
-	
-	//}
-	//else {
-	//$validateID=2;
-	//include'validate-inc.php';			
-	//}
 }
-//*/
-/*********/
-/*********/
-/*********/
 
+
+$iSubmitApply = isset($iSubmitApply) ? $iSubmitApply : '';
 if ($iSubmitApply == 'Apply'){
 	if ($ipredcomp == 'ON') {
 		$ipredval = "1";
@@ -137,33 +132,33 @@ $dataRecord_ = mysql_query("SELECT * FROM $tbl_current",$dbLink);
 		
 if (mysql_affected_rows($dbLink)==1 ){
 $dataRecord__=mysql_fetch_array($dataRecord_);
-$niSPermit=$dataRecord__[spermit];
-$niSAssess=$dataRecord__[sassess];
-$niSOR=$dataRecord__[sor];
-$niSBackTaxes=$dataRecord__[sbacktaxes];
-$niSRequire=$dataRecord__[srequire];
-$niSeparateTaxesFees=$dataRecord__[staxesfees];
-$niPayment=$dataRecord__[spayment];
-$niUnggoy=$dataRecord__[sdecimal];
-$niPaywoApprov=$dataRecord__[spaywoapprov];
-$niWaivetax=$dataRecord__[swaivetax];
-$niWaivefee=$dataRecord__[swaivefee];
-$iLGUName=$dataRecord__[lguname];
-$iLGUProvince=$dataRecord__[lguprovince];
-$iLGUMunicipality=$dataRecord__[lgumunicipality];
-$iLGUOffice=$dataRecord__[lguoffice];
-$iLGUImage=$dataRecord__[lguimage];
-$iMP=$dataRecord__[mp];
-$iBT=$dataRecord__[bt];
-$iMinHigh=$dataRecord__[minhigh];
-$iOR_Print=$dataRecord__[or_print];
-$iLGUPenalty=$dataRecord__[rateofpenalty];
-$iLGURenewal=$dataRecord__[renewaldate];
-$iLGUInterest=$dataRecord__[rateofinterest];
-$lgu_add=$dataRecord__[lgu_add];
-$lgu_tel=$dataRecord__[lgu_tel];
-$ipredcomp=$dataRecord__[predcomp];
-$niReset=$dataRecord__[iReset];
+$niSPermit=$dataRecord__['spermit'];
+$niSAssess=$dataRecord__['sassess'];
+$niSOR=$dataRecord__['sor'];
+$niSBackTaxes=$dataRecord__['sbacktaxes'];
+$niSRequire=$dataRecord__['srequire'];
+$niSeparateTaxesFees=$dataRecord__['staxesfees'];
+$niPayment=$dataRecord__['spayment'];
+$niUnggoy=$dataRecord__['sdecimal'];
+$niPaywoApprov=$dataRecord__['spaywoapprov'];
+$niWaivetax=$dataRecord__['swaivetax'];
+$niWaivefee=$dataRecord__['swaivefee'];
+$iLGUName=$dataRecord__['lguname'];
+$iLGUProvince=$dataRecord__['lguprovince'];
+$iLGUMunicipality=$dataRecord__['lgumunicipality'];
+$iLGUOffice=$dataRecord__['lguoffice'];
+$iLGUImage=$dataRecord__['lguimage'];
+$iMP=$dataRecord__['mp'];
+$iBT=$dataRecord__['bt'];
+$iMinHigh=$dataRecord__['minhigh'];
+$iOR_Print=$dataRecord__['or_print'];
+$iLGUPenalty=$dataRecord__['rateofpenalty'];
+$iLGURenewal=$dataRecord__['renewaldate'];
+$iLGUInterest=$dataRecord__['rateofinterest'];
+$lgu_add=$dataRecord__['lgu_add'];
+$lgu_tel=$dataRecord__['lgu_tel'];
+$ipredcomp=$dataRecord__['predcomp'];
+$niReset=$dataRecord__['iReset'];
 if ($ipredcomp == '1') {
 	$ipredcheck = "CHECKED";
 } else {
@@ -245,12 +240,10 @@ function SubmitRef2()
 
 
 </script>
-
-
 <input type=hidden name=part value="<?php echo $part;?>">
 <input type=hidden name=selMode value="<?php echo $selMode;?>">
 <input type=hidden name=action_ value="<?php echo $action_;?>">
-<input type=hidden name=GUName value="<?php echo $GUName;?>">
+<input type=hidden name=GUName value="<?php echo $niLGUName;?>">
 <input type=hidden name='iSubmitApply'>
 <table width=100% align=center cellspacing=0 cellpadding=0>
 <tr><td colspan=3 class=header align=center width=100%>REFERENCES</td></tr>

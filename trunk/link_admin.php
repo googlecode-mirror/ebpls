@@ -1,6 +1,16 @@
 <?php
 require'includes/variables.php';
 include'lib/phpFunctions-inc.php';
+
+$bbo = isset($bbo) ? $bbo : ''; //2008.05.12  Define undefined variables
+$orderbyasde = isset($orderbyasde) ? $orderbyasde : '';
+$link = isset($link) ? $link : '';
+$desc = isset($desc) ? $desc : '';
+$sb = isset($sb) ? $sb : '';
+$confx = isset($confx) ? $confx : '';
+$itemEvent = isset($itemEvent) ? $itemEvent : '';
+$ordervalue = isset($ordervalue) ? $ordervalue : '';
+
 $bcode = $bbo;
 if ($orderbyasde==1) {
 	$orderbyasde=0;

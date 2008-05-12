@@ -348,7 +348,7 @@ include'includes/variables.php';
         $res		= th_query($sql);
         
         //echo "SQL : $sql";
-        
+        $GLOBALS['thIntCorporateStatus'] = isset($GLOBALS['thIntCorporateStatus'] ) ? $GLOBALS['thIntCorporateStatus'] : 0; //2008.05.12
         while($datarow 	= @mysql_fetch_array($res))
 	{
 		$arrdata[] = $datarow['sublevel_id'];	
@@ -363,6 +363,7 @@ include'includes/variables.php';
             if (@mysql_num_rows($result) > 0) {
             	
                 $row = mysql_fetch_assoc($result);
+		$GLOBALS['thIntCorporateStatus'] = isset($GLOBALS['thIntCorporateStatus'] ) ? $GLOBALS['thIntCorporateStatus'] : 0; //2008.05.12
                 if (!empty($row['lockout']) || $GLOBALS['thIntCorporateStatus'] > 2) return -1;     // return -1 : meaning locked out
                 if ($row['login'] > $row['logout']) return 2;   // return 2 : meaning still logged-in
                 
@@ -568,6 +569,7 @@ include'includes/variables.php';
         $strDisplay = "";
         $strWhereStmt = (empty($strWhereStmt)) ? "" : "WHERE $strWhereStmt";
         $strQuery = "SELECT $strFieldValue, $strFieldLabel FROM $strTable $strWhereStmt";
+echo "Query string is ".$strQuery."***\n";
         $result = th_query($strQuery);
         $strAllowMultiple = (is_null($intSize)) ? "" : "size=\"$intSize\" multiple=\"multiple\"";
         $strDisplay .= "<select name=\"$strObjName\" $strAllowMultiple>\n";
