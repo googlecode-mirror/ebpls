@@ -13,6 +13,8 @@ Description :
 Created By : Robert M. Verzosa
 Email : rmv71279@yahoo.com, verzosar@dap.edu.ph
 Date Created : 12/12/2005
+Modifications:
+2008.05.11: Change undefined constants to strings
 
 	
 ************************************************************************************/
@@ -21,15 +23,15 @@ require_once("class/eBPLS.dataencapsulator.class.php");
 require_once("lib/eBPLS.dbfuncs.php");
 
 // keys for getData method
-define(EBPLS_PROVINCE_TABLE,"ebpls_province");
+define('EBPLS_PROVINCE_TABLE',"ebpls_province");
 
 // Industry Sector Data Elements Constants
-define(PROVINCE_CODE,"province_code");
-define(PROVINCE_DESC,"province_desc");
-define(PROVINCE_DATE_REGISTERED,"province_date_registered");
-define(PROVINCE_DATE_UPDATED,"province_date_updated");
-define(UPDATED_BY,"updated_by");
-define(BLGF_CODE,"blgf_code");
+define('PROVINCE_CODE',"province_code");
+define('PROVINCE_DESC',"province_desc");
+define('PROVINCE_DATE_REGISTERED',"province_date_registered");
+define('PROVINCE_DATE_UPDATED',"province_date_updated");
+define('UPDATED_BY',"updated_by");
+define('BLGF_CODE',"blgf_code");
 
 class EBPLSProvince extends DataEncapsulator {
 	
@@ -247,6 +249,7 @@ class EBPLSProvince extends DataEncapsulator {
 			
 		}
 		//echo $is_desc."Robert";
+		$strWhere = isset($strWhere) ? $strWhere : ''; //2008.05.11
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_PROVINCE_TABLE, $strValues1, $strWhere, NULL, $strOrder, $is_desc, $maxrec, $page  );	
 		
 		$rowcount = ebpls_select_data( $this->m_dbLink, EBPLS_PROVINCE_TABLE, $strValues2, $strWhere, NULL, $strOrder, $is_desc, NULL, NULL );	

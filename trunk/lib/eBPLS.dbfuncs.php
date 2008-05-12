@@ -195,6 +195,10 @@
 
 	}
 	//echo $strSqlColumns."VooDoo<br>";
+	$strSqlWhereClause = isset($strSqlWhereClause) ? $strSqlWhereClause : ''; //2008.05.11
+	$strSqlOrder = isset($strSqlOrder) ? $strSqlOrder : '';
+	$strSqlLimit = isset($strSqlLimit) ? $strSqlLimit : '';
+	$strSqlGroup = isset($strSqlGroup) ? $strSqlGroup : '';
 	$sqlSelect = "SELECT $strSqlColumns FROM $strTable $strSqlWhereClause $strSqlGroup $strSqlOrder $strSqlLimit";
 	//echo $sqlSelect;
 	$res = @mysql_query($sqlSelect, $dbLink );

@@ -1,4 +1,8 @@
 <?php
+$orderbyasdes = isset($orderbyasdes) ? $orderbyasdes : 0; //2008.05.11
+$ascdesc1 = isset($ascdesc1) ? $ascdesc1 : '';
+$action_ = isset($action_) ? $action_ : '';
+
 switch ($orderbyasdes) {
 	case 1:
 		$orderbyasdes=0;

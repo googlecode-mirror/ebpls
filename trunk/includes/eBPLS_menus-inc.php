@@ -2,6 +2,7 @@
 /*
 Modification History:
 2008.04.25: Change invalid constants to strings to reduce PHP errors in log
+2008.05.11: Changed BusItem to busItem in 'busItem=ebpls_ninterestsur' strings after line 968
 */
 include("includes/variables.php");
 include_once("lib/multidbconnection.php");                                                                                                
@@ -13,7 +14,7 @@ if ($GLOBALS['watbrowser']=='msie' and $ThUserData['id']<>'') {
 setcookie("ThUserData['id']",$ThUserData['id'], $intCookieExp, '/', false, 0); 
 $ieuser=$_COOKIE['ieuser'];
 }
-
+$busItem = isset($busItem) ? $busItem : '' ; //2008.05.11
 $user_id = isset($ThUserData['id'])?$ThUserData['id']:""; //2008.04.25
 $ses = $_COOKIE['PHPSESSID'];
 
@@ -279,6 +280,7 @@ if ($chkpenalty==0) {
 } // end pm = 1
 if ($part<>""){
 	//include 'includes/imagesrc.php';
+	$class_type = isset($class_type) ? $class_type : ''; //2008.05.111
 	if ($class_type=='Permits') {
 ?>
 
@@ -290,7 +292,7 @@ if ($part<>""){
 
 <?php
 }
-	if (isset($busItem) && $busItem=='Business'){
+	if ($busItem=='Business'){
 ?>
 
 <?php if ($bpap==1 ||  $ulev==6 || $ulev==7) { ?>
@@ -764,8 +766,8 @@ if ($brpl==1 ||  $ulev==6 || $ulev==7) { ?>
 </tr>
 
 <?php
-
-	if ($pref_type==Business) {
+	$pref_type = isset($pref_type) ? $pref_type : '' ; //2008.05.11
+	if ($pref_type=='Business') {
 ?>
 <?php
 if ($tfol==1 ||  $ulev==6 || $ulev==7) { ?>
@@ -789,8 +791,8 @@ if ($bnl==1 ||  $ulev==6 || $ulev==7) { ?>
 </tr>-->
 
 <?php
-}
-}
+			}
+		}
 	}
 ?>
 
@@ -960,46 +962,46 @@ if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&BusItem=ebpls_ninterestsur&action_=7&itemEvent=1&data_item=0>Interest/Surcharge</a></td>
+<a href=index.php?part=4&class_type=Preference&busItem=ebpls_ninterestsur&action_=7&itemEvent=1&data_item=0>Interest/Surcharge</a></td>
 </tr>
 <?php
 }
-if ($BusItem == 'ebpls_ninterestsur') {
+if ($busItem == 'ebpls_ninterestsur') {
 if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&BusItem=ebpls_ninterestsur&selMode=ebpls_npenalty&action_=7&itemEvent=1&data_item=0>Business</a></td>
+<a href=index.php?part=4&class_type=Preference&busItem=ebpls_ninterestsur&selMode=ebpls_npenalty&action_=7&itemEvent=1&data_item=0>Business</a></td>
 </tr>
 <?php
 }
 }
-/*if ($BusItem == 'ebpls_ninterestsur') {
+/*if ($busItem == 'ebpls_ninterestsur') {
 if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&BusItem=ebpls_ninterestsur&selMode=ebpls_nmotorpenalty&action_=7&itemEvent=1&data_item=0>Motorized</a></td>
+<a href=index.php?part=4&class_type=Preference&busItem=ebpls_ninterestsur&selMode=ebpls_nmotorpenalty&action_=7&itemEvent=1&data_item=0>Motorized</a></td>
 </tr>
 <?php
 }
 }
-if ($BusItem == 'ebpls_ninterestsur') {
+if ($busItem == 'ebpls_ninterestsur') {
 if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&BusItem=ebpls_ninterestsur&selMode=ebpls_nfishpenalty&action_=7&itemEvent=1&data_item=0>Fishery</a></td>
+<a href=index.php?part=4&class_type=Preference&busItem=ebpls_ninterestsur&selMode=ebpls_nfishpenalty&action_=7&itemEvent=1&data_item=0>Fishery</a></td>
 </tr>
 <?php
 }
 }
-if ($BusItem == 'ebpls_ninterestsur') {
+if ($busItem == 'ebpls_ninterestsur') {
 if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&BusItem=ebpls_ninterestsur&selMode=ebpls_noccpenalty&action_=7&itemEvent=1&data_item=0>Occupational</a></td>
+<a href=index.php?part=4&class_type=Preference&busItem=ebpls_ninterestsur&selMode=ebpls_noccpenalty&action_=7&itemEvent=1&data_item=0>Occupational</a></td>
 </tr>
 <?php
 }
