@@ -224,7 +224,7 @@ class DbHtmlTable extends HtmlExt
                 $arrColumnTitles = (is_array($arrColumnTitles)) ? $arrColumnTitles : $arrSelectFieldNames;
                 foreach($arrSelectFieldNames as $key => $val) {
                     $strDisplay .= "\t\t<td align=\"CENTER\" valign=\"MIDDLE\">$strEol";
-                    $GLOBALS["dhtorder_{$intInstanceId}"] = isset($GLOBALS["dhtorder_{$intInstanceId}"]) ? $GLOBALS["dhtorder_{$intInstanceId}"] ; ''; //2008.05.13
+                    $GLOBALS["dhtorder_{$intInstanceId}"] = isset($GLOBALS["dhtorder_{$intInstanceId}"]) ? $GLOBALS["dhtorder_{$intInstanceId}"] : ''; //2008.05.13
                     $strSort = (strstr($GLOBALS["dhtorder_{$intInstanceId}"], $val) &&
                         strstr($GLOBALS["dhtorder_{$intInstanceId}"], ' ASC')) ? "DESC" : "ASC";
                     $strCurrColumnTitle = (empty($arrColumnTitles[$key])) ? $val : $arrColumnTitles[$key];
@@ -577,13 +577,13 @@ popwin('" . getFilename(eBPLS_PAGE_USER_ADD) . "?frmDomain=$strCurDomain', 'addu
      */
     function _getSqlClauseArgument($strQueryStmt, $strKeyword)
     {
-        if(!strpos($strQueryStmt, $strKeyword) {
+        if(!strpos($strQueryStmt, $strKeyword)) {
         	trigger_error("No ".$strKeyword." in ".$strQueryStmt."\n",E_WARNING);
         	return '';
         }	
         list($str1, $str2) = explode($strKeyword, $strQueryStmt, 2);
         foreach($this->_arrSqlQueryKeywords as $val) {
-            list($str2, $str1) = explode(' '.$val.' ', $str2, 2);
+        	if (strpos($str2,$val)) list($str2, $str1) = explode(' '.$val.' ', $str2, 2);
         }
         return trim($str2);
     }
