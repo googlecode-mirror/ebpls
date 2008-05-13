@@ -1,6 +1,11 @@
 <?php
 include'includes/variables.php';
 include'class/eBPLS.citizenship.class.php';
+
+$sb = isset($sb) ? $sb : ''; //2008.05.13
+$bbo = isset($bbo) ? $bbo : '';
+$confx = isset($confx) ? $confx : '';
+
 if ($sb=='Submit') {
 	if ($bbo=='') {
 		$nCitizenship = new EBPLSCitizenship($dbLink,'false');
@@ -60,8 +65,8 @@ if ($sb=='Submit') {
 $nCitizenship = new EBPLSCitizenship($dbLink,'false');
 $nCitizenship->search($bbo,NULL);
 $nResult = $nCitizenship->out;
-$industry_id = $nResult[cit_id];
-$nCode = $nResult[cit_desc];
+$industry_id = $nResult[CIT_ID];
+$nCode = $nResult[CIT_DESC];
 include'html/citizenship.html';
 include'pager/citizenship_page.php';
 ?>

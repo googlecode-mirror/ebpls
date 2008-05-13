@@ -1,4 +1,8 @@
 <body onLoad="javascript: _FRM.nCode.focus();">
+<?php
+$nCode = isset($nCode) ? $nCode : '';
+$nType = isset($nType) ? $nType : '';
+?>
 <form action="index.php?part=4&class_type=Preference&selMode=<?php echo $selMode;?>&action_=8&itemEvent=1&data_item=0&orderbyasde=1" ENCTYPE="multipart/form-data" method="post" name="_FRM">
                                                                                                  
 <input type=hidden name=part value="<?php echo $part;?>">

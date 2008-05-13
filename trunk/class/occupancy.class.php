@@ -1,4 +1,6 @@
 <?php
+$strWhere = isset($strWhere) ? $strWhere : ''; //2008.05.13
+
 class OCCUPANCY {
 var 	$userID,
         $userName,

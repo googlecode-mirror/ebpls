@@ -3,45 +3,39 @@
 
 Module : eBPLS.occupancy.class.php
 
-Dependencies : 
-	eBPLS.dbfuncs.php
-	eBPLS.dataencapsulator.class.php
-	
-Description : 
-	- encapsulates fund
+Description : encapsulates fund
 
-Created By : Robert M. Verzosa
-Email : rmv71279@yahoo.com, verzosar@dap.edu.ph
+Created By : Robert M. Verzosa (rmv71279@yahoo.com, verzosar@dap.edu.ph)
 Date Created : 9/28/2005
 
-	
+2008.05.13 RJC Fix undefined constants as strings	
 ************************************************************************************/
 
 require_once("class/eBPLS.dataencapsulator.class.php");
 require_once("lib/eBPLS.dbfuncs.php");
 
 // keys for getData method
-define(EBPLS_OCCUPANCY_TYPE_TABLE,"ebpls_occupancy_type");
+define('EBPLS_OCCUPANCY_TYPE_TABLE',"ebpls_occupancy_type");
 
 // Occupancy Data Elements Constants
-define(OCCUPANCY_TYPE_CODE,"occupancy_type_code");
-define(OCCUPANCY_TYPE_DESC,"occupancy_type_desc");
-define(OCCUPANCY_TYPE_DATE_REGISTERED,"occupancy_type_date_registered");
-define(OCCUPANCY_TYPE_DATE_UPDATED,"occupancy_type_date_updated");
-define(UPDATED_BY,"updated_by");
+define('OCCUPANCY_TYPE_CODE',"occupancy_type_code");
+define('OCCUPANCY_TYPE_DESC',"occupancy_type_desc");
+define('OCCUPANCY_TYPE_DATE_REGISTERED',"occupancy_type_date_registered");
+define('OCCUPANCY_TYPE_DATE_UPDATED',"occupancy_type_date_updated");
+define('UPDATED_BY',"updated_by");
 
 class EBPLSOccupancy extends DataEncapsulator {
 	
 	var $m_dbLink,
 		$rcount,
 		$out;	
-	
+
 	/**
 	 * Instatiation method, set $bDebug to true to print debug messages otherwise set to false.
 	 * $dbLink is a valid database connection.
 	 *
 	 */
-	function EBPLSOccupancy( $dbLink, $bDebug = false ) {
+function EBPLSOccupancy( $dbLink, $bDebug = false ) {
 		$this->m_dbLink = $dbLink;
 		$this->setDebugMode( $bDebug );		
 		
@@ -53,145 +47,86 @@ class EBPLSOccupancy extends DataEncapsulator {
 		$this->addDataElement( OCCUPANCY_TYPE_DATE_UPDATED, "is_not_empty", "[VALUES]" );
 		$this->addDataElement( UPDATED_BY, "is_not_empty", "[VALUES]" );
 		
-	}
+}
 	
 	/**
 	 * Adds new occupancy to ebls_occupancy_type table
 	 *
 	 */
-	function add(){
-			
+function add(){
 		if ( $this->m_dbLink ) {
 			if ( ( $error_num = $this->validateData() ) > 0 ) {
-				
-		
 				$strValues = $this->data_elems;
-								
-				
 				$ret = ebpls_insert_data( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strValues );
-				
 				if ( $ret < 0 ) {
-				
 					//$this->debug( "CREATE OCCUPNACY TYPE FAILED" );
-					
 					//$this->setError( $ret, get_db_error() );
 					return $ret;
-					
 				} else {
-										
 					//$this->debug( "CREATE OCCUPNACY TYPE SUCCESSFULL" );
 					$this->data_elems[ OWNER_ID ] = $ret;
 					return $ret;
-					
 				}
-								
-				
 			} else {
-			
 				$this->debug( "CREATE OCCUPANCY FAILED" );
 				return $error_num;
-			
 			}
-			
 		} else {
-		
 			$this->debug( "CREATE OWNER FAILED INVALID DB LINK $this->m_dbLink" );
 			$this->setError( $ret, "Invalid Db link $this->m_dbLink" );
 			return -1;
-			
 		}
-	
 	}
-		
-	
 	/**
 	 * View owner data, loads data using owner id as param
-	 *
 	 */
-	function view( $owner_id ) {
-							
+function view( $owner_id ) {
 		$strValues[$key] = "*";
-		
 		$strWhere[OWNER_ID] = $owner_id;			
-		
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strValues, $strWhere, NULL, $strOrderBy, "DESC", NULL );
-
 		if ( is_array($result) ) {
-		
 			$this->data_elems = $result[0];
 			return $result[0][OWNER_ID];
-			
 		} else {
-		
 			$this->setError( $result, get_db_error() );
 			return -1;
-		
 		}
-	
 	}
 	
 	/**
 	 * Update owner data
-	 *
-	 *
 	 **/
-	function update( $occupancy_id ) {
+function update( $occupancy_id ) {
 
 		$arrData = $this->getData();
 		foreach( $arrData as $key=>$value){
-		
 			if ( $arrData[$key] != NULL ) {
-			  
 				$strValues[$key] = $value;
-				
 			}
-		
 		}
 		
 		if ( ( $error_num = $this->validateData(true) ) > 0 ) {
-		
-			
 			$strWhere[OCCUPANCY_TYPE_CODE] = $occupancy_id;
-	
 			$ret = ebpls_update_data( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strValues, $strWhere );
-			
-			
 			if ( $ret < 0 ) {
-			
-				
-				
 				return $ret;
-				
 			} else {
-									
 				return $ret;
-				
 			}					
-			
 		} else {
-			
 			return -1;
-			
 		}
-	
 	}
 	
-	function delete( $owner_id ) {
+function delete( $owner_id ) {
 		
 		$strWhere[OCCUPANCY_TYPE_CODE] = $owner_id;
 		//$strValues[] = "count(*) as cnt";
-
-			
 		$result = ebpls_delete_data ( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strWhere );
-		
 		if ( $result < 0 )  {
-			
 			$this->setError( $result, get_db_error() );
-			
 		}
-		
 		return $result;		
-	
 	}
 	
 	/*
@@ -243,7 +178,7 @@ class EBPLSOccupancy extends DataEncapsulator {
 	 *
 	 *
 	 */	 
-	function search( $occupancy_type_code = NULL, $occupancy_type_desc = NULL ) {
+function search( $occupancy_type_code = NULL, $occupancy_type_desc = NULL ) {
 		
 		if ( $occupancy_type_code != NULL ) {
 			$strWhere[OCCUPANCY_TYPE_CODE] = $occupancy_type_code;
@@ -255,76 +190,51 @@ class EBPLSOccupancy extends DataEncapsulator {
 	
 		// select all columns
 		$strValues[] = "*";
-		
 		if ( $orderkey != NULL ) {
-				
 			$strOrder[$orderkey] = $orderkey;
-			
 		} else {
-			
 			$strOrder = $orderkey;
-			
 		}
-		
 		if ( count($strWhere) <= 0 ) {
-			
 			$this->setError ( -1, "No search parameters." );
 			return -1;	
-			
 		}
 		
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strValues, $strWhere, NULL, NULL, NULL, NULL);	
-		
 		$fetchrecord = ebpls_fetch_data( $this->m_dbLink, $result) ;
-		
 		$this->out = $fetchrecord; 
-		
-			
 	}
-
-
-	function searchedit($new_code, $origid,$tble,$prim_key) 
+function searchedit($new_code, $origid,$tble,$prim_key) 
 	{
-
         	$rx=mysql_query("select * from $tble  where $prim_key = '$new_code' and $prim_key <> '$origid' ");
 		$this->outnumrow = mysql_num_rows($rx);
-                                                                                                                                               
         }
 	
-	function searchcomp($code, $desc) 
+function searchcomp($code, $desc) 
 	{
-
         	$rx=mysql_query("select * from ebpls_occupancy_type  where occupancy_type_code = '$code'");
 		$this->rcount = mysql_num_rows($rx);
-                                                                                                                                               
-        }
+       }
 
-
-
-
-	
-	function numrows($result)
+function numrows($result)
         {
                 $this->outnumrow = mysql_num_rows($result);
         }
 				
 
-	function pagesearch($page = 1, $maxrec = 1000000000, $orderkey = OCCUPANCY_TYPE_CODE, $is_desc = true ) {
+function pagesearch($page = 1, $maxrec = 1000000000, $orderkey = OCCUPANCY_TYPE_CODE, $is_desc = true ) {
 	
 		// select all columns
 		$strValues1[] = "*";
 		$strValues2[] = "count(*)";
 		
 		if ( $orderkey != NULL ) {
-				
 			$strOrder[$orderkey] = $orderkey;
-			
 		} else {
-			
 			$strOrder = $orderkey;
-			
 		}
 		//echo $is_desc."Robert";
+		$strWhere = isset($strWhere) ? $strWhere : ''; //2008.05.13
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strValues1, $strWhere, NULL, $strOrder, $is_desc, $maxrec, $page  );	
 		
 		$rowcount = ebpls_select_data( $this->m_dbLink, EBPLS_OCCUPANCY_TYPE_TABLE, $strValues2, $strWhere, NULL, $strOrder, $is_desc, NULL, NULL );	
@@ -332,15 +242,6 @@ class EBPLSOccupancy extends DataEncapsulator {
 		$this->out = $result;
 		$this->rcount = $rowcount;
 		//echo $rowcount."VooDoo";
-		
-		
 	}
-
-        
 }
-
-
-
-
-
 ?>

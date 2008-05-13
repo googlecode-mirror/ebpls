@@ -150,6 +150,14 @@ function ClearValues()
 	<tr width=100%>
 		<td colspan=4> &nbsp </td>
 	</tr>
+	<?php //2008.05.13
+	$pendateseli1 = isset($pendateseli1) ? $pendateseli1 : '';
+	$pendateseli2 = isset($pendateseli2) ? $pendateseli2 : '';
+	$pendateseli3 = isset($pendateseli3) ? $pendateseli3 : '';
+	$pendateseli4 = isset($pendateseli4) ? $pendateseli4 : '';
+	$pendateseli5 = isset($pendateseli5) ? $pendateseli5 : '';
+	$pendateseli6 = isset($pendateseli6) ? $pendateseli6 : '';
+	?>
 	<tr width=100%>
 		<td align=right valign=top> Individual &nbsp;</td>
 		<td align=center valign=top> &nbsp <input type=text maxlength=3 name=individual_interest_rate class=text100 value='<?php echo $individual_interest_rate; ?>'> <font class="def_label"> (0 - 99)</font></td>
@@ -164,6 +172,15 @@ function ClearValues()
 			</select>
 		</td>
 	</tr>
+	</tr>
+	<?php //2008.05.13
+	$pendateselc1 = isset($pendateselc1) ? $pendateselc1 : '';
+	$pendateselc2 = isset($pendateselc2) ? $pendateselc2 : '';
+	$pendateselc3 = isset($pendateselc3) ? $pendateselc3 : '';
+	$pendateselc4 = isset($pendateselc4) ? $pendateselc4 : '';
+	$pendateselc5 = isset($pendateselc5) ? $pendateselc5 : '';
+	$pendateselc6 = isset($pendateselc6) ? $pendateselc6 : '';
+	?>
 	<tr width=100%>
 		<td align=right valign=top> Corporate &nbsp;</td>
 		<td align=center valign=top> &nbsp <input type=text maxlength=3 name=corporate_interest_rate class=text100 value='<?php echo $corporate_interest_rate; ?>'> <font class="def_label"> (0 - 99)</font></td>

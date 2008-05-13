@@ -4,6 +4,14 @@ require_once("lib/ebpls.utils.php");
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 require_once("includes/eBPLS_header.php");
 require_once "includes/variables.php";                                                                                                                                                                                                                                     
+
+$rpt = isset($rpt) ? $rpt : ''; //2008.5.13 RJC define undefined variables 
+$sys_report = isset($sys_report) ? $sys_report : '';
+$com = isset($com) ? $com : '';
+$buss_select = isset($buss_select) ? $buss_select : '';
+$buss_report = isset($buss_report) ? $buss_report : '';
+$search = isset($search) ? $search : '';
+
 $daytoday = date('d');
 $monthtoday = date('m');
 $yeartoday = date('Y');
@@ -11,11 +19,8 @@ $yeartoday = date('Y');
 //$dbLink = get_db_connection();
 
 ?>
-
 <?php
-
 if ($sys_report=='Add') {
-
 	$sdup = mysql_query("select * from rpt_temp_abs where tfoid=$rpt_temp");
 	$sdup = mysql_num_rows($sdup);
 	if ($sdup==0){

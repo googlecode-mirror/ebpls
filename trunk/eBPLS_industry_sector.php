@@ -1,6 +1,12 @@
 <?php
 include'includes/variables.php';
 include'class/eBPLS.industry.class.php';
+
+$sb = isset($sb) ? $sb : ''; //2008.05.13 
+$bbo = isset($bbo) ? $bbo : '';
+$confx = isset($confx) ? $confx : '';
+$com = isset($com) ? $com : '';	
+
 if ($sb=='Submit') {
 	if ($bbo=='' ) {
 

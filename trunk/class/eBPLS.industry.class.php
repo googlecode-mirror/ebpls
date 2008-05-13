@@ -21,14 +21,14 @@ require_once("class/eBPLS.dataencapsulator.class.php");
 require_once("lib/eBPLS.dbfuncs.php");
 
 // keys for getData method
-define(EBPLS_INDUSTRY_SECTOR_TABLE,"ebpls_industry_sector");
+define('EBPLS_INDUSTRY_SECTOR_TABLE',"ebpls_industry_sector");
 
 // Industry Sector Data Elements Constants
-define(INDUSTRY_SECTOR_CODE,"industry_sector_code");
-define(INDUSTRY_SECTOR_DESC,"industry_sector_desc");
-define(INDUSTRY_SECTOR_DATE_REGISTERED,"industry_sector_date_registered");
-define(INDUSTRY_SECTOR_DATE_UPDATED,"industry_sector_date_updated");
-define(UPDATED_BY,"updated_by");
+define('INDUSTRY_SECTOR_CODE',"industry_sector_code");
+define('INDUSTRY_SECTOR_DESC',"industry_sector_desc");
+define('INDUSTRY_SECTOR_DATE_REGISTERED',"industry_sector_date_registered");
+define('INDUSTRY_SECTOR_DATE_UPDATED',"industry_sector_date_updated");
+define('UPDATED_BY',"updated_by");
 
 class EBPLSIndustry extends DataEncapsulator {
 	
@@ -316,6 +316,8 @@ class EBPLSIndustry extends DataEncapsulator {
 			
 		}
 		//echo $is_desc."Robert";
+		$strWhere = isset($strWhere) ? $strWhere : ''; //2008.05.13
+
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_INDUSTRY_SECTOR_TABLE, $strValues1, $strWhere, NULL, $strOrder, $is_desc, $maxrec, $page  );	
 		
 		$rowcount = ebpls_select_data( $this->m_dbLink, EBPLS_INDUSTRY_SECTOR_TABLE, $strValues2, $strWhere, NULL, $strOrder, $is_desc, NULL, NULL );	

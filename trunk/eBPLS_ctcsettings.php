@@ -2,6 +2,7 @@
 include'includes/variables.php';
 include'class/eBPLS.CTC.Settings.class.php';
 include'lib/phpFunctions-inc.php';
+$sb = isset($sb) ? $sb : ''; //2008.05.13
 if ($sb=='Submit') {
 	$nCTCSett = new EBPLSCTCSettings($dbLink,'false');
 	$nCTCSett->search(NULL,'Individual');
@@ -60,15 +61,15 @@ if ($sb=='Submit') {
 $nCTCSett = new EBPLSCTCSettings($dbLink,'false');
 $nCTCSett->search(NULL,'Individual');
 $nResult = $nCTCSett->out;
-$individual_interest_rate = $nResult[interest_rate];
-$individual_ceiling_rate = $nResult[ceiling_rate];
-$individual_penalty_date = $nResult[penalty_date];
+$individual_interest_rate = $nResult['interest_rate'];
+$individual_ceiling_rate = $nResult['ceiling_rate'];
+$individual_penalty_date = $nResult['penalty_date'];
 $nCTCSett = new EBPLSCTCSettings($dbLink,'false');
 $nCTCSett->search(NULL,'Corporate');
 $nResult = $nCTCSett->out;
-$corporate_interest_rate = $nResult[interest_rate];
-$corporate_ceiling_rate = $nResult[ceiling_rate];
-$corporate_penalty_date = $nResult[penalty_date];
+$corporate_interest_rate = $nResult['interest_rate'];
+$corporate_ceiling_rate = $nResult['ceiling_rate'];
+$corporate_penalty_date = $nResult['penalty_date'];
 if ($individual_penalty_date == '1') {
 	$pendateseli1 = "Selected";
 } elseif ($individual_penalty_date == '2') {

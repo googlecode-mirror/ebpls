@@ -3,17 +3,11 @@
 
 Module : eBPLS.citizenship.class.php
 
-Dependencies : 
-	eBPLS.dbfuncs.php
-	eBPLS.dataencapsulator.class.php
-	
-Description : 
-	- encapsulates citizenship
+Description : encapsulates citizenship
 
 Created By : Robert M. Verzosa
 Email : rmv71279@yahoo.com, verzosar@dap.edu.ph
 Date Created : 9/29/2005
-
 	
 ************************************************************************************/
 
@@ -21,24 +15,21 @@ require_once("class/eBPLS.dataencapsulator.class.php");
 require_once("lib/eBPLS.dbfuncs.php");
 
 // keys for getData method
-define(EBPLS_CITIZENSHIP_TABLE,"ebpls_citizenship");
+define('EBPLS_CITIZENSHIP_TABLE',"ebpls_citizenship");
 
 // Industry Sector Data Elements Constants
-define(CIT_ID,"cit_id");
-define(CIT_DESC,"cit_desc");
+define('CIT_ID',"cit_id");
+define('CIT_DESC',"cit_desc");
 
 class EBPLSCitizenship extends DataEncapsulator {
 	
-	var $m_dbLink,
-		$rcount,
-		$out;	
+	var $m_dbLink, $rcount, $out;	
 	
 	/**
 	 * Instatiation method, set $bDebug to true to print debug messages otherwise set to false.
 	 * $dbLink is a valid database connection.
-	 *
 	 */
-	function EBPLSCitizenship( $dbLink, $bDebug = false ) {
+function EBPLSCitizenship( $dbLink, $bDebug = false ) {
 		$this->m_dbLink = $dbLink;
 		$this->setDebugMode( $bDebug );		
 		
@@ -51,56 +42,37 @@ class EBPLSCitizenship extends DataEncapsulator {
 	
 	/**
 	 * Adds new Industry Sector to ebls_INDUSTRY_SECTOR table
-	 *
 	 */
-	function add(){
+function add(){
 			
 		if ( $this->m_dbLink ) {
 			if ( ( $error_num = $this->validateData() ) > 0 ) {
-				
-		
 				$strValues = $this->data_elems;
-								
-				
 				$ret = ebpls_insert_data( $this->m_dbLink, EBPLS_CITIZENSHIP_TABLE, $strValues );
-				
 				if ( $ret < 0 ) {
-				
 					//$this->debug( "CREATE OCCUPNACY TYPE FAILED" );
-					
 					//$this->setError( $ret, get_db_error() );
 					return $ret;
-					
 				} else {
-										
 					//$this->debug( "CREATE OCCUPNACY TYPE SUCCESSFULL" );
 					$this->data_elems[ OWNER_ID ] = $ret;
 					return $ret;
-					
 				}
-								
-				
 			} else {
 			
 				//$this->debug( "CREATE INDUSTRY FAILED" );
 				return $error_num;
-			
 			}
-			
 		} else {
 		
 			//$this->debug( "CREATE OWNER FAILED INVALID DB LINK $this->m_dbLink" );
 			$this->setError( $ret, "Invalid Db link $this->m_dbLink" );
 			return -1;
-			
 		}
-	
 	}
-		
 	
 	/**
 	 * View owner data, loads data using owner id as param
-	 *
 	 */
 	function view( $owner_id ) {
 							
@@ -126,8 +98,6 @@ class EBPLSCitizenship extends DataEncapsulator {
 	
 	/**
 	 * Update owner data
-	 *
-	 *
 	 **/
 	function update( $cit_id ) {
 
@@ -135,39 +105,23 @@ class EBPLSCitizenship extends DataEncapsulator {
 		foreach( $arrData as $key=>$value){
 		
 			if ( $arrData[$key] != NULL ) {
-			  
 				$strValues[$key] = $value;
-				
 			}
-		
 		}
 		
 		if ( ( $error_num = $this->validateData(true) ) > 0 ) {
-		
-			
 			$strWhere[CIT_ID] = $cit_id;
-	
 			$ret = ebpls_update_data( $this->m_dbLink, EBPLS_CITIZENSHIP_TABLE, $strValues, $strWhere );
-			
-			
 			if ( $ret < 0 ) {
-			
-				
-				
 				return $ret;
-				
 			} else {
-									
 				return $ret;
-				
 			}					
 			
 		} else {
 			
 			return -1;
-			
 		}
-	
 	}
 	
 	function delete( $owner_id ) {
@@ -180,13 +134,9 @@ class EBPLSCitizenship extends DataEncapsulator {
 		$result = ebpls_delete_data ( $this->m_dbLink, EBPLS_CITIZENSHIP_TABLE, $strWhere );
 		
 		if ( $result < 0 )  {
-			
 			$this->setError( $result, get_db_error() );
-			
 		}
-		
 		return $result;		
-	
 	}
 	
 	/*
@@ -251,30 +201,21 @@ class EBPLSCitizenship extends DataEncapsulator {
 		// select all columns
 		$strValues[] = "*";
 		
-		if ( $orderkey != NULL ) {
-				
+		if ( isset($orderkey)) {
 			$strOrder[$orderkey] = $orderkey;
-			
 		} else {
-			
-			$strOrder = $orderkey;
-			
+			$strOrder = '';
 		}
 		
+		$strWhere = isset($strWhere) ? $strWhere : '';
 		if ( count($strWhere) <= 0 ) {
-			
 			$this->setError ( -1, "No search parameters." );
 			return -1;	
-			
 		}
 		
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_CITIZENSHIP_TABLE, $strValues, $strWhere, NULL, NULL, NULL, NULL);	
-		
 		$fetchrecord = ebpls_fetch_data( $this->m_dbLink, $result) ;
-		
 		$this->out = $fetchrecord; 
-		
-			
 	}
 	
 	function numrows($result)
@@ -290,15 +231,12 @@ class EBPLSCitizenship extends DataEncapsulator {
 		$strValues2[] = "count(*)";
 		
 		if ( $orderkey != NULL ) {
-				
 			$strOrder[$orderkey] = $orderkey;
-			
 		} else {
-			
 			$strOrder = $orderkey;
-			
 		}
 		//echo $is_desc."Robert";
+		$strWhere = isset($strWhere) ? $strWhere : ''; //2008.05.13
 		$result = ebpls_select_data( $this->m_dbLink, EBPLS_CITIZENSHIP_TABLE, $strValues1, $strWhere, NULL, $strOrder, $is_desc, $maxrec, $page  );	
 		
 		$rowcount = ebpls_select_data( $this->m_dbLink, EBPLS_CITIZENSHIP_TABLE, $strValues2, $strWhere, NULL, $strOrder, $is_desc, NULL, NULL );	
@@ -306,15 +244,7 @@ class EBPLSCitizenship extends DataEncapsulator {
 		$this->out = $result;
 		$this->rcount = $rowcount;
 		//echo $rowcount."VooDoo";
-		
-		
 	}
-
-        
 }
-
-
-
-
 
 ?>

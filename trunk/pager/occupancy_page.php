@@ -1,5 +1,9 @@
 <?php
-if ($ascdesc1=='') {
+$page = isset($page) ? $page : '';  //2008.05.13
+$orderkey = isset($orderkey) ? $orderkey : '';
+$varcolor  = isset($varcolor) ? $varcolor : '';
+
+if (!isset($ascdesc1) or $ascdesc1=='') {
         $ascdesc1=$is_desc;
 } else {
         $is_desc=$ascdesc1;
@@ -56,7 +60,7 @@ echo "<table border=0 width=100%><tr><td align=left><br />";
 					echo "<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&orderkey=$orderkey&ascdesc1=$ascdesc1'>$i</a>&nbsp;";
                                 }
                         } else {
-                                if ($total_pages > 11) {
+                                if ($total_pagesr > 11) {
                                         $tot_page = 11;
                                 } else {
                                         $tot_page = $total_pagesr;
@@ -126,7 +130,7 @@ print "<td width=6%>&nbsp;$get_infor[occupancy_type_desc]&nbsp</td>\n";
 print "<td align=center width=24%>&nbsp;<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&com=edit&bbo=$get_infor[occupancy_type_code]' class='subnavwhite'>Edit</a> | ";
                                                                                                                                                             
 ?>
-<a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $get_infor[occupancy_type_code]; ?>");'>Delete</a>
+<a class='subnavwhite' href='#' onclick='javascript:confdel("<?php echo $get_infor['occupancy_type_code']; ?>");'>Delete</a>
 
 </td>
 <?php
@@ -154,7 +158,7 @@ echo "<table border=0 width=100%><tr><td align=left><br />";
 					echo "<a href='index.php?part=4&class_type=Preference&selMode=$selMode&action_=8&itemEvent=1&data_item=0&page=$i&orderkey=$orderkey&ascdesc1=$ascdesc1'>$i</a>&nbsp;";
                                 }
                         } else {
-                                if ($total_pages > 11) {
+                                if ($total_pagesr > 11) {
                                         $tot_page = 11;
                                 } else {
                                         $tot_page = $total_pagesr;

@@ -566,24 +566,25 @@ include'includes/variables.php';
     }
     function getDbFormSelect($strTable, $strFieldValue, $strFieldLabel, $strObjName="frmMsgCateg", $strMatch="", $blnAllowNull=1, $intSize=null, $strWhereStmt=null)
     {
-        $strDisplay = "";
-        $strWhereStmt = (empty($strWhereStmt)) ? "" : "WHERE $strWhereStmt";
-        $strQuery = "SELECT $strFieldValue, $strFieldLabel FROM $strTable $strWhereStmt";
-echo "Query string is ".$strQuery."***\n";
-        $result = th_query($strQuery);
-        $strAllowMultiple = (is_null($intSize)) ? "" : "size=\"$intSize\" multiple=\"multiple\"";
+	$strAllowMultiple = (is_null($intSize)) ? "" : "size=\"$intSize\" multiple=\"multiple\"";
         $strDisplay .= "<select name=\"$strObjName\" $strAllowMultiple>\n";
         if ($blnAllowNull) $strDisplay .= "<option value=\"\">Select One</option>\n";
-        while ($row = mysql_fetch_assoc($result)) {
-            if (is_array($strMatch)) {
-                $strSelectedFlag = (in_array($row["$strFieldValue"], $strMatch)) ? " selected=\"selected\"" : "";
-            } else {
-                $strSelectedFlag = ($strMatch == $row["$strFieldValue"]) ? " selected=\"selected\"" : "";
-            }
-            $strDisplay .= "<option value=\"" . $row["$strFieldValue"] . "\"$strSelectedFlag>" . $row["$strFieldLabel"] . "</option>\n";
-        }
+        $strWhereStmt = (empty($strWhereStmt)) ? "" : "WHERE $strWhereStmt";
+        $strQuery = "SELECT $strFieldValue, $strFieldLabel FROM $strTable $strWhereStmt";
+// 2008.05.13 RJC Resequence steps to handle faulty database query
+        $result = th_query($strQuery);        
+	if($result) {
+		while ($row = mysql_fetch_assoc($result)) {
+           		if (is_array($strMatch)) {
+                		$strSelectedFlag = (in_array($row["$strFieldValue"], $strMatch)) ? " selected=\"selected\"" : "";
+            		} else {
+                		$strSelectedFlag = ($strMatch == $row["$strFieldValue"]) ? " selected=\"selected\"" : "";
+           		 }
+            		$strDisplay .= "<option value=\"" . $row["$strFieldValue"] . "\"$strSelectedFlag>" . $row["$strFieldLabel"] . "</option>\n";
+      		 }
+        	mysql_free_result($result);
+	}
         $strDisplay .= "</select>\n";
-        mysql_free_result($result);
         return $strDisplay;
     }
 
