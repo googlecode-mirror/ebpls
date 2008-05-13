@@ -184,13 +184,13 @@ function get_select_complex_reg($dblink,$selectname,$table,$field_code,$field_de
 function get_select_reports($dblink,$selectname,$table,$field_code,$field_desc,$selected='',$editable=true,$where = '',$javasc,$useid)
 {
 	
-	$sql    	= "SELECT $field_code,$field_desc FROM $table $orderby";
+	$sql    	= "SELECT $field_code,$field_desc FROM $table ";
 	
 	if ( $where )  $sql .= " WHERE $where	";
 	
  //echo "$sql=====$selected";	
 	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+	$select_str     = "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
 	//--- set the default
 	$select_str .=   "<option value='' >------</option>\n";
 	while($datarow 	= @mysql_fetch_assoc($resultset))
@@ -206,7 +206,7 @@ function get_select_reports($dblink,$selectname,$table,$field_code,$field_desc,$
 					
 		include "includes/reportlevel.php";
 					
-		if ($$getme[rptvars]==1) {
+		if ($$getme['rptvars']==1) {
 			$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
 		}
 	}

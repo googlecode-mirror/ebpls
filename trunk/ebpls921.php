@@ -11,6 +11,8 @@ $com = isset($com) ? $com : '';
 $buss_select = isset($buss_select) ? $buss_select : '';
 $buss_report = isset($buss_report) ? $buss_report : '';
 $search = isset($search) ? $search : '';
+$bus_selecty = isset($bus_selecty) ? $bus_selecty : '';
+$report_file = isset($report_file) ? $report_file :'';
 
 $daytoday = date('d');
 $monthtoday = date('m');
@@ -1284,7 +1286,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
+					if ($$getme['rptvars']==1) {
     									print"<option value=$reports[1] $isselect>$reports[0]</option>";
 					}
 									}
@@ -1452,7 +1454,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
+					if ($$getme['rptvars']==1) {
     									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
 					}
 									}
@@ -1612,7 +1614,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
+					if ($$getme['rptvars']==1) {
     									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
 					}
 									}
@@ -1766,7 +1768,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
+					if ($$getme['rptvars']==1) {
     									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
 					}
 									}
@@ -1881,7 +1883,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
+					if ($$getme['rptvars']==1) {
     									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
 					}
 									}
@@ -2048,6 +2050,11 @@ function ReqDelin()
     							print "<td width=60% align=left>&nbsp
     								<select name='ctc_select' onchange='javascript: _FRM.ctc1_select.value=_FRM.ctc_select.value; _FRM.submit();'>";
     								print"<option value=''>--------</option>";
+    								
+    								$ctc1_select = isset($ctc1_select) ? $ctc1_select : ''; //2008.05.13
+    								$K = isset($K) ? $K : '';
+    								$selected = isset($selected) ? $selected : '';
+    								
     								while ($reports=mysql_fetch_row($result)) {
 	    								if ($ctc1_select == $reports[1]) {
 		    								$iselecty = 'selected';
@@ -2059,7 +2066,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
+					if ($$getme['rptvars']==1) {
     									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
 					}
 									}
@@ -2149,19 +2156,20 @@ function ReqDelin()
 								$result = mysql_query("select report_desc from ebpls_reports where report_type='System' order by report_desc asc") or die(mysql_error()); 
     							//$reports=mysql_fetch_row($result);
   								print "<td width=40% align=right>";
-    							echo $reports;
+    							// echo $reports;
     							print "Reports&nbsp</td>";
     							print "<td width=60% align=left>&nbsp&nbsp;\n
 									<select name='buss_select'>";
     								while ($reports=mysql_fetch_row($result)) {
     									$getlevel = mysql_query("select * from ebpls_user_sublevel where
 										submenu = '$reports[0]'");
-					$getme = mysql_fetch_assoc($getlevel);
-					
-					if ($$getme[rptvars]==1) {
-    									print"<option value=$reports[1] $iselecty>$reports[0]</option>";
-					}
+									$getme = mysql_fetch_assoc($getlevel);
+									
+									$iselecty = isset($iselecty) ? $iselecty : '';
+									if ($$getme['rptvars']==1) {
+    										print"<option value=$reports[1] $iselecty>$reports[0]</option>";
 									}
+								}
     								print"</select></td>";
     							//echo get_select_data($dbLink,'report_list','ebpls_reports','report_file','report_desc',$owner_datarow[report_id]);
     							print "</td>";
@@ -2288,7 +2296,7 @@ function ReqDelin()
 						</tr>
 						
 						<tr>
-						<!--<input type=hidden name=col_sel value='<? echo $col_sel;?>'>-->
+						<!--<input type=hidden name=col_sel value='<? /*2008.05.13 echo $col_sel;*/?>'>-->
 							<?php
 								//where report_desc like '%business%' or report_desc like 'business%' 
 								$result = mysql_query("select report_desc, report_file from ebpls_reports 
@@ -2302,6 +2310,7 @@ function ReqDelin()
     								<select name='col_sel' onChange='javascript: submit();'>";
     								print"<option value='' >---------</option>";
     								while ($reports=mysql_fetch_row($result)) {
+    									$col_sel = isset($col_sel) ? $col_sel : ''; //2008.05.13
 	    								if ($col_sel==$reports[1]) {
 		    								$ifselect="selected";
 	    								} else {
@@ -2309,12 +2318,12 @@ function ReqDelin()
 	    								}
     									$getlevel = mysql_query("select * from ebpls_user_sublevel where
 										submenu = '$reports[0]'");
-					$getme = mysql_fetch_assoc($getlevel);
+									$getme = mysql_fetch_assoc($getlevel);
 					
-					if ($$getme[rptvars]==1) {
-    									print"<option value=$reports[1] $ifselect>$reports[0]</option>";
-					}
+									if ($$getme['rptvars']==1) {
+    										print"<option value=$reports[1] $ifselect>$reports[0]</option>";
 									}
+								}
     								print"</select></td>";
     							
     							//echo get_select_data($dbLink,'report_list','ebpls_reports','report_file','report_desc',$owner_datarow[report_id]);
@@ -2337,7 +2346,7 @@ function ReqDelin()
                                                                 Tax/Fee:
                                                         </td>
                                                         <td width=60% align=left>&nbsp;
-								<?php echo get_select_data_where($dbLink,'rpt_temp','ebpls_buss_tfo','tfoid','tfodesc',$owner_datarow[tfoid],'tfostatus ="A"');?>
+								<?php echo get_select_data_where($dbLink,'rpt_temp','ebpls_buss_tfo','tfoid','tfodesc',$owner_datarow['tfoid'],'tfostatus ="A"');?>
 
                                                         </td>
                                                 </tr>
@@ -2405,7 +2414,7 @@ function ReqDelin()
 										submenu = '$reports[0]'");
 					$getme = mysql_fetch_assoc($getlevel);*/
 					
-					//if ($$getme[rptvars]==1) {
+					//if ($$getme['rptvars']==1) {
 										$temption .= "<option value=$reports1[taxfeetype] $iselecty>$reports1[typedesc]</option>";
 					//}
 									}
