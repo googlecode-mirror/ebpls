@@ -1,8 +1,16 @@
 <?php
+/*Modification History:
+2008-05-14 RJC Set invalid constants to text & define undefined variables
+*/
 require_once "includes/variables.php";
 include_once "class/TaxpayerClass.php";
-?>
 
+$pro = isset($pro) ? $pro : ''; //2008-05-14 
+$comm = isset($comm) ? $comm : '';
+$cancelme = isset($cancelme) ? $cancelme : '';
+$search = isset($search) ? $search : '';
+$blak = isset($blak) ? $blak : '';
+?>
 <div align='center'>
 <?php
 
@@ -109,7 +117,7 @@ setUrlRedirect($redito);
 		if ($busItem=='CTC') {
 	$asap=SelectDataWhere($dbtype,$dbLink,"ebpls_owner","order by owner_id desc limit 1");
 	$asap=FetchArray($dbtype,$asap);
-	$owner_id=$asap[owner_id];
+	$owner_id=$asap['owner_id'];
 	$redito='index.php?part=4&itemID_=1001&owner_id='.$owner_id.'&ctc_type=INDIVIDUAL&busItem=CTC&comm='.$comm;
 	$search='';
 	$comm="";
@@ -150,9 +158,9 @@ $owner=FetchArray($dbtype,$reload);
 $reload = SelectDataWhere($dbtype,$dbLink,$owner,"where owner_id =$owner_id");
 $owner=FetchArray($dbtype,$reload);
 	}
-if ($owner[edit_locked]==1 and $owner[edit_by]<>substr($usern,0,50)) {
+if ($owner['edit_locked']==1 and $owner['edit_by']<>substr($usern,0,50)) {
 ?>
-        <body onload='alert("Cannot edit owner, currently used by <?php echo $owner[edit_by]; ?>"); parent.location="index.php?part=4&itemID_=1221&class_type=Permits&permit_type=<?php echo $permit_type; ?>&busItem=<?php echo $permit_type; ?>&mtopsearch=SEARCH";'></body>
+        <body onload='alert("Cannot edit owner, currently used by <?php echo $owner['edit_by']; ?>"); parent.location="index.php?part=4&itemID_=1221&class_type=Permits&permit_type=<?php echo $permit_type; ?>&busItem=<?php echo $permit_type; ?>&mtopsearch=SEARCH";'></body>
 <?php
 } else {
 	 $addown=new TaxPayer;
@@ -165,29 +173,28 @@ if ($owner[edit_locked]==1 and $owner[edit_by]<>substr($usern,0,50)) {
 
 }
 
-
-$owner_first_name=$owner[owner_first_name];
-$owner_middle_name=$owner[owner_middle_name];
-$owner_last_name=$owner[owner_last_name];
-$owner_legal_entity=$owner[owner_legal_entity];
-$owner_house_no =$owner[owner_house_no];
-$owner_street =$owner[owner_street];
-$owner_barangay_code=$owner[owner_barangay_code]; 
-$owner_zone_code=$owner[owner_zone_code]; 
-$owner_district_code =$owner[owner_district_code];
-$owner_city_code =$owner[owner_city_code];
-$owner_province_code=$owner[owner_province_code]; 
-$owner_zip_code =$owner[owner_zip_code];
-$owner_citizenship =$owner[owner_citizenship];
-$owner_civil_status =$owner[owner_civil_status];
-$owner_gender =$owner[owner_gender];
-$owner_tin_no =$owner[owner_tin_no];
-$owner_icr_no =$owner[owner_icr_no];
-$owner_phone_no =$owner[owner_phone_no];
-$owner_gsm_no =$owner[owner_gsm_no];
-$owner_email_address =$owner[owner_email_address];
-$owner_others =$owner[owner_others];
-$owner_birth_date =substr($owner[owner_birth_date],0,10);
+$owner_first_name=$owner['owner_first_name'];
+$owner_middle_name=$owner['owner_middle_name'];
+$owner_last_name=$owner['owner_last_name'];
+$owner_legal_entity=$owner['owner_legal_entity'];
+$owner_house_no =$owner['owner_house_no'];
+$owner_street =$owner['owner_street'];
+$owner_barangay_code=$owner['owner_barangay_code']; 
+$owner_zone_code=$owner['owner_zone_code']; 
+$owner_district_code =$owner['owner_district_code'];
+$owner_city_code =$owner['owner_city_code'];
+$owner_province_code=$owner['owner_province_code']; 
+$owner_zip_code =$owner['owner_zip_code'];
+$owner_citizenship =$owner['owner_citizenship'];
+$owner_civil_status =$owner['owner_civil_status'];
+$owner_gender =$owner['owner_gender'];
+$owner_tin_no =$owner['owner_tin_no'];
+$owner_icr_no =$owner['owner_icr_no'];
+$owner_phone_no =$owner['owner_phone_no'];
+$owner_gsm_no =$owner['owner_gsm_no'];
+$owner_email_address =$owner['owner_email_address'];
+$owner_others =$owner['owner_others'];
+$owner_birth_date =substr($owner['owner_birth_date'],0,10);
 
 }
 
@@ -488,7 +495,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 		$getz = SelectDataWhere($dbtype,$dbLink,"ebpls_city_municipality",
                         "where city_municipality_code  = '$owner_city_code'");
 	        $owner_city_desc = FetchArray($dbtype,$getz);
-        	$owner_city_desc = $owner_city_desc[city_municipality_desc];
+        	$owner_city_desc = $owner_city_desc['city_municipality_desc'];
 ?>
 		<select id="owner_city_code" name="owner_city_code" onchange='getDistrictList(this);' class=select200>
 		<option value="<?php echo $owner_city_code; ?>"><?php echo $owner_city_desc; ?></option>
@@ -500,7 +507,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 	$getzip = SelectDataWhere($dbtype,$dbLink,"ebpls_zip",
 			"where upper = '$owner_city_code'");
 	$owner_zip = FetchArray($dbtype,$getzip);
-	$owner_zip = $owner_zip[zip_desc];
+	$owner_zip = $owner_zip['zip_desc'];
 ?>
 
 	    <td align="right" valign="top" class='normal'> Zip : </td>
@@ -522,7 +529,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
  $getz = SelectDataWhere($dbtype,$dbLink,"ebpls_district",
                         "where district_code  = '$owner_district_code'");
                 $owner_district_desc = FetchArray($dbtype,$getz);
-                $owner_district_desc = $owner_district_desc[district_desc];
+                $owner_district_desc = $owner_district_desc['district_desc'];
 
 ?>
                                                                                                  
@@ -547,7 +554,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 		$getz = SelectDataWhere($dbtype,$dbLink,"ebpls_barangay",
                         "where barangay_code  = '$owner_barangay_code'");
                 $owner_barangay_desc = FetchArray($dbtype,$getz);
-                $owner_barangay_desc = $owner_barangay_desc[barangay_desc];
+                $owner_barangay_desc = $owner_barangay_desc['barangay_desc'];
 
 ?>
 		<select id="owner_barangay_code" name="owner_barangay_code" onchange='getZoneList(this);' class=select200>
@@ -568,7 +575,7 @@ echo get_select_prov($dbLink,'owner_province_code','ebpls_province','province_co
 		 $getz = SelectDataWhere($dbtype,$dbLink,"ebpls_zone",
                         "where zone_code  = '$owner_zone_code'");
                 $owner_zone_desc = FetchArray($dbtype,$getz);
-                $owner_zone_desc = $owner_zone_desc[zone_desc];
+                $owner_zone_desc = $owner_zone_desc['zone_desc'];
 ?>
 	    <select id="owner_zone_code" name="owner_zone_code" class=select200>
 		<option value="<?php echo $owner_zone_code; ?>"><?php echo $owner_zone_desc; ?></option>

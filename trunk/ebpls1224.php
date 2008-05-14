@@ -3,7 +3,55 @@
 
 Maintenance History::
 2008.04.14 Added comments and cleaned up display. RJC
+2008.05.14 Define undefined variables and set undefined constants to text
 */
+
+$business_name = isset($business_name) ? $business_name : ''; //2008.05.14
+$subs = isset($subs) ? $subs : '';
+$pro = isset($pro) ? $pro : '';
+$business_nso_assigned_no = isset($business_nso_assigned_no) ? $business_nso_assigned_no : '';
+$business_nso_estab_id = isset($business_nso_estab_id) ? $business_nso_estab_id : '';
+$business_dti_reg_no = isset($business_dti_reg_no) ? $business_dti_reg_no : '';
+$business_tin_reg_no = isset($business_tin_reg_no) ? $business_tin_reg_no : '';
+$business_sec_reg_no = isset($business_sec_reg_no) ? $business_sec_reg_no : '';
+$business_dot_acr_no = isset($business_dot_acr_no) ? $business_dot_acr_no : '';
+$redito = isset($redito) ? $redito : '';
+$cancelme = isset($cancelme) ? $cancelme : '';
+$changeondin = isset($changeondin) ? $changeondin : '';
+$owner_last_name = isset($owner_last_name) ? $owner_last_name : '';
+$owner_first_name = isset($owner_first_name) ? $owner_first_name : '';
+$owner_middle_name = isset($owner_middle_name) ? $owner_middle_name : '';
+$genpin = isset($genpin) ? $genpin : '';
+$blacklist = isset($blacklist) ? $blacklist : '';
+$business_branch = isset($business_branch) ? $business_branch : '';
+$addbus = isset($addbus) ? $addbus : '';
+$comment = isset($comment) ? $comment : '';
+$business_lot_no = isset($business_lot_no) ? $business_lot_no : '';
+$business_district_code = isset($business_district_code) ? $business_district_code : '';
+$business_contact_no = isset($business_contact_no) ? $business_contact_no : '';
+$business_fax_no = isset($business_fax_no) ? $business_fax_no : '';
+$business_location_desc = isset($business_location_desc) ? $business_location_desc : '';
+$business_remarks = isset($business_remarks) ? $business_remarks : '';
+$business_email_address = isset($business_email_address) ? $business_email_address : '';
+$business_tin_reg_no = isset($business_tin_reg_no) ? $business_tin_reg_no : '';
+$business_main_offc_name = isset($business_main_offc_name) ? $business_main_offc_name : '';
+$business_main_offc_lot_no = isset($business_main_offc_lot_no) ? $business_main_offc_lot_no : '';
+$business_main_offc_street_no = isset($business_main_offc_street_no) ? $business_main_offc_street_no : '';
+$business_main_offc_tin_no = isset($business_main_offc_tin_no) ? $business_main_offc_tin_no : '';
+$business_phone_no = isset($business_phone_no) ? $business_phone_no : '';
+$main_office_prov = isset($main_office_prov) ? $main_office_prov : '';
+$business_main_offc_city_code = isset($business_main_offc_city_code) ? $business_main_offc_city_code : '';
+$business_main_offc_district_code = isset($business_main_offc_district_code) ? $business_main_offc_district_code : '';
+$business_main_offc_barangay_code = isset($business_main_offc_barangay_code) ? $business_main_offc_barangay_code : '';
+$business_main_offc_barangay_name = isset($business_main_offc_barangay_name) ? $business_main_offc_barangay_name : '';
+$business_main_offc_zone_code = isset($business_main_offc_zone_code) ? $business_main_offc_zone_code : '';
+$regname = isset($regname) ? $regname : '';
+$paidemp = isset($paidemp) ? $paidemp : '';
+$ftag = isset($ftag) ? $ftag : '';
+$success_flag = isset($success_flag) ? $success_flag : '';
+$pcname = isset($pcname) ? $pcname : '';
+$pcaddress = isset($pcaddress) ? $pcaddress : '';
+
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
@@ -41,10 +89,10 @@ if ($business_id<>''){ //editing biz
 	$result->GetBusinessByID($business_id);
 	$result->FetchBusinessArray($result->outselect);
 	$datarow=$result->outarray;
-	if ($datarow[edit_locked]==1 and $datarow[edit_by]<>substr($usern,0,50)) {  //in use
+	if ($datarow['edit_locked']==1 and $datarow['edit_by']<>substr($usern,0,50)) {  //in use
 ?>
-//2008.04.16	<body onload='alert("Cannot edit business, currently used by <?php echo $owner[edit_by]; ?>"); parent.location="index.php?part=4&itemID_=1221&class_type=Permits&permit_type=Business&busItem=Business&mtopsearch=SEARCH";'></body>
-        <body onload='alert("Cannot edit business, currently used by <?php echo $datarow[edit_by]; ?>");
+//2008.04.16	<body onload='alert("Cannot edit business, currently used by <?php echo $owner['edit_by']; ?>"); parent.location="index.php?part=4&itemID_=1221&class_type=Permits&permit_type=Business&busItem=Business&mtopsearch=SEARCH";'></body>
+        <body onload='alert("Cannot edit business, currently used by <?php echo $datarow['edit_by']; ?>");
          parent.location="index.php?part=4&itemID_=1221&class_type=Permits&permit_type=Business&busItem=Business&mtopsearch=SEARCH";'></body>
         
 <?php
@@ -246,8 +294,7 @@ if ($pro==11) {
 	                business_main_offc_zip_code='$business_main_offc_zip_code',
         	        business_main_offc_tin_no ='$business_main_offc_tin_no',
 			main_offc_phone = '$business_phone_no',
-			main_office_prov ='$main_office_prov',
-			comment = 'addslashes($comment)'";			//2008.04.16
+			main_office_prov ='$main_office_prov'";
 			$strWhere = "branch_id='$branch_id'";
 	                $addmain->UpdateMainBranch($strValues,$strWhere);
 			} else {
@@ -498,8 +545,8 @@ if($cancelme==1) {
 <?php
 	}
 	if ($addbiz=='update') {
-		if ($blacklist==on) { $checkit = 'checked'; } 
-		elseif ($datarow[blacklist]==1) { $checkit = 'checked'; } 
+		if ($blacklist=='on') { $checkit = 'checked'; } 
+		elseif ($datarow['blacklist']==1) { $checkit = 'checked'; } 
 		else { $checkit =''; }
 ?>
 	<td colspan=4 align=left class=normalbold>Blacklisted:
@@ -508,7 +555,7 @@ if($cancelme==1) {
 		onchange='javascript:flagchange(changeondin);'>
         &nbsp;&nbsp;Reason for Blacklist:
 	<input type=text name=black_list_reason value=
-	"<?php echo $datarow[black_list_reason]; ?>" 
+	"<?php echo $datarow['black_list_reason']; ?>" 
 	onchange='javascript:flagchange(changeondin);'>
         </td></tr><tr>
 <?php
@@ -520,13 +567,13 @@ if($cancelme==1) {
     <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Business Name: </td>
     <td align="left" valign="top" class='normal' >&nbsp;
 <?php
-	if ($datarow[business_name]=='') {
-		$datarow[business_name]=$business_name;
+	if ($datarow['business_name']=='') {
+		$datarow['business_name']=$business_name;
 		
 	}
 ?>
  <input type='text' name='business_name' maxlength=255 class='text180'  value=
- "<?php echo stripslashes($datarow[business_name]); ?>" 
+ "<?php echo stripslashes($datarow['business_name']); ?>" 
  onchange='javascript:flagchange(changeondin);'>
       </td>
   </tr><tr> 
@@ -538,19 +585,19 @@ if($cancelme==1) {
 		$business_branch='None';
 	}
 
-        if ($datarow[business_branch]=='') {
-                $datarow[business_branch]=$business_branch;
+        if ($datarow['business_branch']=='') {
+                $datarow['business_branch']=$business_branch;
         }
 ?>
 <input type='text' name='business_branch' maxlength=255 class='text180' value=
-"<?php echo $datarow[business_branch]; ?>" onchange='javascript:flagchange(changeondin);'> 
+"<?php echo $datarow['business_branch']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr><tr> 
     <td align="right" valign="top" class='normal'> Business Scale: </td>
     <td align="left" valign="top" class='normal'>
 <?php
-        if ($datarow[business_scale]=='') {
-                $datarow[business_scale]=$business_scale;
+        if ($datarow['business_scale']=='') {
+                $datarow['business_scale']=$business_scale;
         }
 ?>
 
@@ -558,8 +605,8 @@ if($cancelme==1) {
 		<?php
 			if ($addbus<>'addbus' ||  $business_scale<>'' and $business_id<>'') {
 		?>
-    		    <option value='<?php echo $datarow[business_scale]; ?>'> 
-			<?php echo $datarow[business_scale]; ?>	
+    		    <option value='<?php echo $datarow['business_scale']; ?>'> 
+			<?php echo $datarow['business_scale']; ?>	
 		<?php
     		   	} //else {    	
 	    ?>
@@ -576,15 +623,15 @@ if($cancelme==1) {
     <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Payment Mode: </td>
     <td align="left" valign="top" class='normal'>&nbsp; <select name='business_payment_mode' class='select100' onchange='javascript:flagchange(changeondin);'>
 <?php
-        if ($datarow[business_payment_mode]=='') {
-                $datarow[business_payment_mode]=$business_payment_mode;
+        if ($datarow['business_payment_mode']=='') {
+                $datarow['business_payment_mode']=$business_payment_mode;
         }
 ?>
 <?php
 	if ($addbus<>'addbus' || $business_payment_mode<>'' and $business_id<>'') {
 ?>
-    			<option value='<?php echo $datarow[business_payment_mode]; ?>'> 
-    			<?php echo $datarow[business_payment_mode]; ?>
+    			<option value='<?php echo $datarow['business_payment_mode']; ?>'> 
+    			<?php echo $datarow['business_payment_mode']; ?>
 <?php
 	} //else {
 ?> 
@@ -600,13 +647,13 @@ if($cancelme==1) {
     <td align="right" valign="top" class='normal'>Comment: </td>
     <td align="left" valign="top" class='normal' >&nbsp;
 <?php
-	if ($datarow[comment]=='') {
-		$datarow[comment]=$comment;
+	if ($datarow['comment']=='') {
+		$datarow['comment']=$comment;
 	}
 ?>
  
  <input type='text' name='comment' maxlength=255 class='text180'  value=
- "<?php echo stripslashes($datarow[comment]); ?>" 
+ "<?php echo stripslashes($datarow['comment']); ?>" 
  onchange='javascript:flagchange(changeondin);'>
 </td>
 </tr>
@@ -621,30 +668,30 @@ if($cancelme==1) {
   	<td align="right" valign="top" class='normal'  > Building Name:</td>
 	<td align="left" valign="top" class='normal'>&nbsp;
 <?php
-        if ($datarow[business_building_name]=='') {
-                $datarow[business_building_name]=$business_building_name;
+        if ($datarow['business_building_name']=='') {
+                $datarow['business_building_name']=$business_building_name;
         }
 ?>
 	<input type='text' name='business_building_name' maxlength=255 class='text180'  value=
-	"<?php echo $datarow[business_building_name]; ?>"
+	"<?php echo $datarow['business_building_name']; ?>"
 	onchange='javascript:flagchange(changeondin);'>
 	</td>
     <td align="right" valign="top" class='normal'> <font color="#FF0000">* </font>Address: </td>
     <td align="left" valign="top" class='normal'>&nbsp;
 <?php
-        if ($datarow[business_lot_no]=='') {
-                $datarow[business_lot_no]=$business_lot_no;
+        if ($datarow['business_lot_no']=='') {
+                $datarow['business_lot_no']=$business_lot_no;
         }
-	if ($datarow[business_street]=='') {
-                $datarow[business_street]=$business_street;
+	if ($datarow['business_street']=='') {
+                $datarow['business_street']=$business_street;
         }
 ?>
 	<input type='text' name='business_street' maxlength=255 class='text180' value=
-	"<?php echo $datarow[business_street]; ?>" 
+	"<?php echo $datarow['business_street']; ?>" 
 	onchange='javascript:flagchange(changeondin);'>
 
 	<input type='hidden' name='business_lot_no' maxlength=255 class='text180' value=
-	"<?php echo $datarow[business_lot_no]; ?>"
+	"<?php echo $datarow['business_lot_no']; ?>"
 	onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal'  ><!-- <font color="#FF0000">* </font>Street 
@@ -652,12 +699,12 @@ if($cancelme==1) {
     <td align="left" valign="top" class='normal'>&nbsp;
 
 <?php
-        if ($datarow[business_street]=='') {
-                $datarow[business_street]=$business_street;
+        if ($datarow['business_street']=='') {
+                $datarow['business_street']=$business_street;
         }
 ?>
 	<input type='hidden' name='business_street1' maxlength=255 class='text180' value=
-	"<?php echo $datarow[business_street]; ?>"
+	"<?php echo $datarow['business_street']; ?>"
 	onchange='javascript:flagchange(changeondin);'> 
     </td>
 </tr>
@@ -802,13 +849,13 @@ function createMainZone()
 </script>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php 
-if ($business_district_code<>$datarow[business_district_code] and $business_district_code<>'') {
-	$datarow[business_district_code] = $business_district_code;
+if ($business_district_code<>$datarow['business_district_code'] and $business_district_code<>'') {
+	$datarow['business_district_code'] = $business_district_code;
 } else {
-	$business_district_code=$datarow[business_district_code];
+	$business_district_code=$datarow['business_district_code'];
 }
 
-echo get_select_dist_ajax($dbLink,'business_district_code','ebpls_district','district_code','district_desc',$datarow[business_district_code],$getcty[0]);
+echo get_select_dist_ajax($dbLink,'business_district_code','ebpls_district','district_code','district_desc',$datarow['business_district_code'],$getcty[0]);
 
 //echo get_select_data($dbLink,'business_district_code','ebpls_district','district_code','district_desc',$datarow[10]);?>
     </td>
@@ -821,11 +868,11 @@ if ($business_barangay_code<>$datarow[business_barangay_code] and $business_bara
 } else {
         $business_barangay_code=$datarow[business_barangay_code];
 }*/
-	if ($business_id>0) { $business_barangay_code=$datarow[business_barangay_code]; }
+	if ($business_id>0) { $business_barangay_code=$datarow['business_barangay_code']; }
 	$getz = SelectDataWhere($dbtype,$dbLink,"ebpls_barangay",
                         "where barangay_code  = '$business_barangay_code'");
 	$business_barangay_desc = FetchArray($dbtype,$getz);
-	$business_barangay_desc = $business_barangay_desc[barangay_desc];
+	$business_barangay_desc = $business_barangay_desc['barangay_desc'];
 
 //echo get_select_barg($dbLink,'business_barangay_code','ebpls_barangay','barangay_code','barangay_desc',$datarow[business_barangay_code],$business_district_code);
 //echo get_select_data($dbLink,'business_barangay_code','ebpls_barangay','barangay_code',	'barangay_desc',$datarow[7]);?>
@@ -845,7 +892,7 @@ if ($business_barangay_code<>$datarow[business_barangay_code] and $business_bara
 } else {*/
 
 if ($business_id>0) {
-        $business_zone_code=$datarow[business_zone_code];
+        $business_zone_code=$datarow['business_zone_code'];
 }
 
 
@@ -855,7 +902,7 @@ if ($business_id>0) {
 	$getz = SelectDataWhere($dbtype,$dbLink,"ebpls_zone",
                         "where zone_code  = '$business_zone_code'");
 	$business_zone_desc = FetchArray($dbtype,$getz);
-	$business_zone_desc = $business_zone_desc[zone_desc];
+	$business_zone_desc = $business_zone_desc['zone_desc'];
 ?> 
 <select id="business_zone_code" name="business_zone_code" class=select200 onclick='flagchange(changeondin); _FRM.pro.value=0;'>
                 <option value="<?php echo $business_zone_code; ?>"><?php echo $business_zone_desc; ?></option>
@@ -873,22 +920,22 @@ if ($business_id>0) {
     <td align="right" valign="top" class='normal'> Contact Number: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
-        if ($datarow[business_contact_no]=='') {
-                $datarow[business_contact_no]=$business_contact_no;
+        if ($datarow['business_contact_no']=='') {
+                $datarow['business_contact_no']=$business_contact_no;
         }
 ?>
 
 
-<input type='text' name='business_contact_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_contact_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_contact_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_contact_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal' > Fax Number: </td>
     <td align="left" valign="top" class='normal'>&nbsp;
 <?php
-        if ($datarow[business_fax_no]=='') {
-                $datarow[business_fax_no]=$business_fax_no;
+        if ($datarow['business_fax_no']=='') {
+                $datarow['business_fax_no']=$business_fax_no;
         }
 ?>
-<input type='text' name='business_fax_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_fax_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_fax_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_fax_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr> 
@@ -904,18 +951,18 @@ if ($business_id>0) {
 
 <?php
 
-        if ($datarow[business_date_established]=='') {
-                $datarow[business_date_established]=$tdate;
+        if ($datarow['business_date_established']=='') {
+                $datarow['business_date_established']=$tdate;
         } else {
-	        $datarow[business_date_established]=substr($datarow[business_date_established],0,10);
+	        $datarow['business_date_established']=substr($datarow['business_date_established'],0,10);
         }
 
 ?>
 
-<!--      <input type='hidden' name='business_date_established' maxlength=10 class='text180' value="<?php echo $datarow[27];?>"> -->
+<!--      <input type='hidden' name='business_date_established' maxlength=10 class='text180' value="<?php /* echo $datarow[27]; */?>"> -->
     </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
-<input type="text" class='text180' value="<?php echo $datarow[business_date_established] ?>" readonly name="business_date_established" onclick="displayCalendar(business_date_established,'yyyy/mm/dd',this);">
+<input type="text" class='text180' value="<?php echo $datarow['business_date_established'] ?>" readonly name="business_date_established" onclick="displayCalendar(business_date_established,'yyyy/mm/dd',this);">
 <img src="images/cal.gif" width="16" height="16" border="0" alt="Pick a date" onclick ="displayCalendar(_FRM.business_date_established,'yyyy/mm/dd',this);_FRM.changeondin.value=1;">
     </td>
     <td align="right" valign="top" class='normal' > <font color="#FF0000">* </font>No. 
@@ -936,7 +983,7 @@ if ($business_id>0) {
 	<?php
 	} elseif ($addbiz=='update' || $itemID_==1002) {
 	?>
-    	<td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='business_no_del_vehicles' maxlength=255 class='text180'  value="<?php echo $datarow[business_no_del_vehicles]; ?>" onchange='javascript:flagchange(changeondin);'> 
+    	<td align="left" valign="top" class='normal'>&nbsp; <input type='text' name='business_no_del_vehicles' maxlength=255 class='text180'  value="<?php echo $datarow['business_no_del_vehicles']; ?>" onchange='javascript:flagchange(changeondin);'> 
     	</td>
     <?php
 	}
@@ -946,16 +993,16 @@ if ($business_id>0) {
     <td align="right" valign="top" class='normal'  > <font color="#FF0000">* </font>Start 
       Date :
 <?php
-        if ($datarow[business_start_date]=='') {
-                $datarow[business_start_date]=$tdate;
+        if ($datarow['business_start_date']=='') {
+                $datarow['business_start_date']=$tdate;
         } else {
-	        $datarow[business_start_date]=substr($datarow[business_start_date],0,10);
+	        $datarow['business_start_date']=substr($datarow['business_start_date'],0,10);
         }
 ?>
     </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
-<input type="text" class='text180' value="<?php echo $datarow[business_start_date] ?>" readonly name="business_start_date" onclick="displayCalendar(business_start_date,'yyyy/mm/dd',this);">
+<input type="text" class='text180' value="<?php echo $datarow['business_start_date'] ?>" readonly name="business_start_date" onclick="displayCalendar(business_start_date,'yyyy/mm/dd',this);">
 <img src="images/cal.gif" width="16" height="16" border="0" alt="Pick a date" onclick ="displayCalendar(_FRM.business_start_date,'yyyy/mm/dd',this);_FRM.changeondin.value=1;">
   
         
@@ -964,12 +1011,12 @@ if ($business_id>0) {
     <td align="right" valign="top" class='normal'> Location Desc: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
-        if ($datarow[business_location_desc]=='') {
-                $datarow[business_location_desc]=$business_location_desc;
+        if ($datarow['business_location_desc']=='') {
+                $datarow['business_location_desc']=$business_location_desc;
         }
 ?>
 
-<input type='text' name='business_location_desc' maxlength=255 class='text180'  value="<?php echo $datarow[business_location_desc]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_location_desc' maxlength=255 class='text180'  value="<?php echo $datarow['business_location_desc']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr> 
@@ -977,24 +1024,24 @@ if ($business_id>0) {
 : </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
-        if ($datarow[business_occupancy_code]=='') {
-                $datarow[business_occupancy_code]=$business_occupancy_code;
+        if ($datarow['business_occupancy_code']=='') {
+                $datarow['business_occupancy_code']=$business_occupancy_code;
         }
 ?>
 
 
-<?php echo get_select_data_biz($dbLink,'business_occupancy_code','ebpls_occupancy_type','occupancy_type_code','occupancy_type_desc',$datarow[business_occupancy_code]);?> 
+<?php echo get_select_data_biz($dbLink,'business_occupancy_code','ebpls_occupancy_type','occupancy_type_code','occupancy_type_desc',$datarow['business_occupancy_code']);?> 
     </td>
     <td align="right" valign="top" class='normal'>Remarks: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($datarow[business_remarks]=='') {
-                $datarow[business_remarks]=$business_remarks;
+        if ($datarow['business_remarks']=='') {
+                $datarow['business_remarks']=$business_remarks;
         }
 ?>
 
-<input type='text' name='business_remarks' maxlength=255 class='text180' value="<?php echo $datarow[business_remarks]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_remarks' maxlength=255 class='text180' value="<?php echo $datarow['business_remarks']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr> 
@@ -1002,13 +1049,13 @@ if ($business_id>0) {
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($datarow[business_category_code]=='') {
-                $datarow[business_category_code]=$business_category_code;
+        if ($datarow['business_category_code']=='') {
+                $datarow['business_category_code']=$business_category_code;
         }
 ?>
 
 
-<?php echo get_select_data_biz($dbLink,'business_category_code','ebpls_business_category','business_category_code','business_category_desc',$datarow[business_category_code]);?> 
+<?php echo get_select_data_biz($dbLink,'business_category_code','ebpls_business_category','business_category_code','business_category_desc',$datarow['business_category_code']);?> 
     </td>
     <td align="right" valign="top" class='normal'  > &nbsp; </td>
     <td align="left" valign="top" class='normal'>&nbsp;  
@@ -1042,8 +1089,8 @@ if ($business_id>0) {
 	<?php
     } elseif ($addbiz=='update') {
 	?>
-    	<td align="left" valign="top" class='normal' >&nbsp; Male <input type='text' name='employees_M' maxlength=3 size=3 value="<?php echo $datarow[employee_male]; ?>" onchange='javascript:flagchange(changeondin);'> &nbsp; 
-Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php echo $datarow[employee_female]; ?>" onchange='javascript:flagchange(changeondin);'>    
+    	<td align="left" valign="top" class='normal' >&nbsp; Male <input type='text' name='employees_M' maxlength=3 size=3 value="<?php echo $datarow['employee_male']; ?>" onchange='javascript:flagchange(changeondin);'> &nbsp; 
+Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php echo $datarow['employee_female']; ?>" onchange='javascript:flagchange(changeondin);'>    
     	</td>
     <?php
 	}
@@ -1057,12 +1104,12 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($datarow[business_email_address]=='') {
-                $datarow[business_email_address]=$business_email_address;
+        if ($datarow['business_email_address']=='') {
+                $datarow['business_email_address']=$business_email_address;
         }
 ?>
 
-<input type='text' name='business_email_address' maxlength=255 class='text180'  value="<?php echo $datarow[business_email_address]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_email_address' maxlength=255 class='text180'  value="<?php echo $datarow['business_email_address']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal'  > &nbsp; </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
@@ -1078,22 +1125,22 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="right" valign="top" class='normal'  >DOT ACR No.: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
-        if ($datarow[business_dot_acr_no]=='') {
-                $datarow[business_dot_acr_no]=$business_dot_acr_no;
+        if ($datarow['business_dot_acr_no']=='') {
+                $datarow['business_dot_acr_no']=$business_dot_acr_no;
         }
 ?>
 
-<input type='text' name='business_dot_acr_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_dot_acr_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_dot_acr_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_dot_acr_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal'  >DTI Registration No.: </td>
     <td align="left" valign="top" class='normal'>&nbsp;
 <?php
-        if ($datarow[business_dti_reg_no]=='') {
-                $datarow[business_dti_reg_no]=$business_dti_reg_no;
+        if ($datarow['business_dti_reg_no']=='') {
+                $datarow['business_dti_reg_no']=$business_dti_reg_no;
         }
 ?>
 
- <input type='text' name='business_dti_reg_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_dti_reg_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+ <input type='text' name='business_dti_reg_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_dti_reg_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr> 
@@ -1101,26 +1148,26 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="left" valign="top" class='normal'>&nbsp;
 
 <?php
-        if ($datarow[business_sec_reg_no]=='') {
-                $datarow[business_sec_reg_no]=$business_sec_reg_no;
+        if ($datarow['business_sec_reg_no']=='') {
+                $datarow['business_sec_reg_no']=$business_sec_reg_no;
         }
 ?>
 
 
- <input type='text' name='business_sec_reg_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_sec_reg_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+ <input type='text' name='business_sec_reg_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_sec_reg_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal'  > DTI Registration Date:  
 <?php
-        if ($datarow[business_dti_reg_date]=='') {
-                $datarow[business_dti_reg_date]=$tdate;
+        if ($datarow['business_dti_reg_date']=='') {
+                $datarow['business_dti_reg_date']=$tdate;
         } else {
-	        $datarow[business_dti_reg_date]=substr($datarow[business_dti_reg_date],0,10);
+	        $datarow['business_dti_reg_date']=substr($datarow['business_dti_reg_date'],0,10);
         }
 ?>
     </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
-<input type="text" class='text180' value="<?php echo $datarow[business_dti_reg_date] ?>" readonly name="business_dti_reg_date" onclick="displayCalendar(business_dti_reg_date,'yyyy/mm/dd',this);">
+<input type="text" class='text180' value="<?php echo $datarow['business_dti_reg_date'] ?>" readonly name="business_dti_reg_date" onclick="displayCalendar(business_dti_reg_date,'yyyy/mm/dd',this);">
 <img src="images/cal.gif" width="16" height="16" border="0" alt="Pick a date" onclick ="displayCalendar(_FRM.business_dti_reg_date,'yyyy/mm/dd',this);_FRM.changeondin.value=1;">
     
         
@@ -1131,24 +1178,24 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="right" valign="top" class='normal'  >BIR Registration No.: </td>
     <td align="left" valign="top" class='normal'>&nbsp;
 <?php
-        if ($datarow[business_tin_reg_no]=='') {
-                $datarow[business_tin_reg_no]=$business_tin_reg_no;
+        if ($datarow['business_tin_reg_no']=='') {
+                $datarow['business_tin_reg_no']=$business_tin_reg_no;
         }
 ?>
 
 
- <input type='text' name='business_tin_reg_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_tin_reg_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+ <input type='text' name='business_tin_reg_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_tin_reg_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal'  >NSO Assigned No.: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
-        if ($datarow[business_nso_assigned_no]=='') {
-                $datarow[business_nso_assigned_no]=$business_nso_assigned_no;
+        if ($datarow['business_nso_assigned_no']=='') {
+                $datarow['business_nso_assigned_no']=$business_nso_assigned_no;
         }
 ?>
 
 
-<input type='text' name='business_nso_assigned_no' maxlength=255 class='text180'  value="<?php echo $datarow[business_nso_assigned_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_nso_assigned_no' maxlength=255 class='text180'  value="<?php echo $datarow['business_nso_assigned_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr> 
@@ -1156,25 +1203,25 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($datarow[business_industry_sector_code]=='') {
-                $datarow[business_industry_sector_code]=$business_industry_sector_code;
+        if ($datarow['business_industry_sector_code']=='') {
+                $datarow['business_industry_sector_code']=$business_industry_sector_code;
         }
 ?>
 
 
-<?php echo get_select_data_biz($dbLink,'business_industry_sector_code','ebpls_industry_sector','industry_sector_code','industry_sector_desc',$datarow[business_industry_sector_code]);?> 
+<?php echo get_select_data_biz($dbLink,'business_industry_sector_code','ebpls_industry_sector','industry_sector_code','industry_sector_desc',$datarow['business_industry_sector_code']);?> 
     </td>
     <td align="right" valign="top" class='normal' >NSO Established ID: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($datarow[business_nso_estab_id]=='') {
-                $datarow[business_nso_estab_id]=$business_nso_estab_id;
+        if ($datarow['business_nso_estab_id']=='') {
+                $datarow['business_nso_estab_id']=$business_nso_estab_id;
         }
 ?>
 
 
-<input type='text' name='business_nso_estab_id' maxlength=255 class='text180'  value="<?php echo $datarow[business_nso_estab_id]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_nso_estab_id' maxlength=255 class='text180'  value="<?php echo $datarow['business_nso_estab_id']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr> 
@@ -1184,23 +1231,23 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td colspan="4" align="left" valign="top" class='normalbold'  >Business Main Information </td>
   </tr>
   <tr>
-<input type=hidden name=branch_id value=<?php echo $datarow[branch_id]; ?>>
+<input type=hidden name=branch_id value=<?php echo $datarow['branch_id']; ?>>
     <td align="right" valign="top" class='normal'  > Office Name: </td>
     <td align="left" valign="top" class='normal' >&nbsp; 
 <?php
-	if ($datarow[branch_id]<>'') {
-	$gbranch = new MainBranch;
-	$gbranch->GetBranch($datarow[branch_id]);
-	$branch=$gbranch->outarray;
+	if ($datarow['branch_id']<>'') {
+		$gbranch = new MainBranch;
+		$gbranch->GetBranch($datarow['branch_id']);
+		$branch=$gbranch->outarray;
 	}
 
-        if ($branch[business_main_offc_name]=='') {
-                $branch[business_main_offc_name]=$business_main_offc_name;
+        if ($branch['business_main_offc_name']=='') {
+                $branch['business_main_offc_name']=$business_main_offc_name;
         }
 ?>
 
 
-<input type='text' name='business_main_offc_name' maxlength=255 class='text180'  value="<?php echo $branch[business_main_offc_name]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_main_offc_name' maxlength=255 class='text180'  value="<?php echo $branch['business_main_offc_name']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
 </tr>
 	<tr>
@@ -1208,86 +1255,86 @@ Female <input type='text' name='employees_F' maxlength=3 size=3 value="<?php ech
     <td align="right" valign="top" class='normal'  > Office Lot: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 <?php
-        if ($branch[business_main_offc_lot_no]=='') {
-                $branch[business_main_offc_lot_no]=$business_main_offc_lot_no;
+        if ($branch['business_main_offc_lot_no']=='') {
+                $branch['business_main_offc_lot_no']=$business_main_offc_lot_no;
         }
 ?>
 
 
-<input type='text' name='business_main_offc_lot_no' maxlength=255 class='text180'  value="<?php echo $branch[business_main_offc_lot_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_main_offc_lot_no' maxlength=255 class='text180'  value="<?php echo $branch['business_main_offc_lot_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal' > Office Street: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($branch[business_main_offc_street]=='') {
-                $branch[business_main_offc_street]=$business_main_offc_street_no;
+        if ($branch['business_main_offc_street']=='') {
+                $branch['business_main_offc_street']=$business_main_offc_street_no;
         }
 ?>
 
-<input type='text' name='business_main_offc_street_no' maxlength=255 class='text180'  value="<?php echo $branch[business_main_offc_street]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_main_offc_street_no' maxlength=255 class='text180'  value="<?php echo $branch['business_main_offc_street']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
 </tr><tr>
     <td align="right" valign="top" class='normal' > Office TIN No.: </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($branch[business_main_offc_tin_no]=='') {
-                $branch[business_main_offc_tin_no]=$business_main_offc_tin_no;
+        if ($branch['business_main_offc_tin_no']=='') {
+                $branch['business_main_offc_tin_no']=$business_main_offc_tin_no;
         }
 ?>
 
-<input type='text' name='business_main_offc_tin_no' maxlength=255 class='text180'  value="<?php echo $branch[business_main_offc_tin_no]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_main_offc_tin_no' maxlength=255 class='text180'  value="<?php echo $branch['business_main_offc_tin_no']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
     <td align="right" valign="top" class='normal'  > Office Phone Number 
 : </td>
     <td align="left" valign="top" class='normal'>&nbsp; 
 
 <?php
-        if ($branch[main_offc_phone]=='') {
-                $branch[main_offc_phone]=$business_phone_no;
+        if ($branch['main_offc_phone']=='') {
+                $branch['main_offc_phone']=$business_phone_no;
         }
 ?>
 
-<input type='text' name='business_phone_no' maxlength=255 class='text180'  value="<?php echo $branch[main_offc_phone]; ?>" onchange='javascript:flagchange(changeondin);'> 
+<input type='text' name='business_phone_no' maxlength=255 class='text180'  value="<?php echo $branch['main_offc_phone']; ?>" onchange='javascript:flagchange(changeondin);'> 
     </td>
   </tr>
   <tr>
 <td align="right" valign="top" class='normal'> Office Province: </td>
     <td align="left" valign="top" class='normal'>&nbsp; <?php 
 
-if ($main_office_prov<>$branch[main_office_prov] and 
-	$main_office_prov<>'' and $branch[main_office_prov]=='') {
-                $branch[main_office_prov]=$main_office_prov;
-                $branch[business_main_offc_city_code]='';
-                $branch[business_main_offc_district_code]='';
-                $branch[business_main_offc_barangay_code]='';
-                $branch[business_main_offc_zone_code]='';
+if ($main_office_prov<>$branch['main_office_prov'] and 
+	$main_office_prov<>'' and $branch['main_office_prov']=='') {
+                $branch['main_office_prov']=$main_office_prov;
+                $branch['business_main_offc_city_code']='';
+                $branch['business_main_offc_district_code']='';
+                $branch['business_main_offc_barangay_code']='';
+                $branch['business_main_offc_zone_code']='';
 } else {
-		$main_office_prov=$branch[main_office_prov];
+		$main_office_prov=$branch['main_office_prov'];
 }
                                                                                                  
-echo get_select_prov_ajax($dbLink,'main_office_prov','ebpls_province','province_code','province_desc',$branch[main_office_prov],$main_office_prov);
+echo get_select_prov_ajax($dbLink,'main_office_prov','ebpls_province','province_code','province_desc',$branch['main_office_prov'],$main_office_prov);
 
 //echo get_select_data($dbLink,'main_offc_prov','ebpls_province','province_code','province_desc',$datarow[74]);?>
     </td>
 
  <td align="right" valign="top" class='normal'> Office City: </td>
     <td align="left" valign="top" class='normal'>&nbsp; <?php 
- if ($business_main_offc_city_code<>$branch[business_main_offc_city_code] 
+ if ($business_main_offc_city_code<>$branch['business_main_offc_city_code'] 
 	and $business_main_offc_city_code<>'') {
-                $branch[business_main_offc_city_code]=$business_main_offc_city_code;
+                $branch['business_main_offc_city_code']=$business_main_offc_city_code;
         } else {
-                $business_main_offc_city_code = $branch[business_main_offc_city_code];
+                $business_main_offc_city_code = $branch['business_main_offc_city_code'];
         }
                                                
-//echo get_select_city($dbLink,'business_main_offc_city_code','ebpls_city_municipality','city_municipality_code','city_municipality_desc',$branch[business_main_offc_city_code],$main_office_prov);
+//echo get_select_city($dbLink,'business_main_offc_city_code','ebpls_city_municipality','city_municipality_code','city_municipality_desc',$branch['business_main_offc_city_code'],$main_office_prov);
 
 //echo get_select_data($dbLink,'business_main_offc_city_code','ebpls_city_municipality','city_municipality_code','city_municipality_desc',$datarow[38]);
   		$getz = SelectDataWhere($dbtype,$dbLink,"ebpls_city_municipality",
                         "where city_municipality_code  = '$business_main_offc_city_code'");
                 $business_main_offc_city_desc = FetchArray($dbtype,$getz);
-                $business_main_offc_city_desc = $business_main_offc_city_desc[city_municipality_desc];
+                $business_main_offc_city_desc = $business_main_offc_city_desc['city_municipality_desc'];
 ?>
                 <select id="business_main_offc_city_code" name="business_main_offc_city_code" onchange='getMainDistrictList(this); flagchange(changeondin); _FRM.pro.value=0;' class=select200>
                 <option value="<?php echo $business_main_offc_city_code; ?>"><?php echo $business_main_offc_city_desc; ?></option>
@@ -1299,19 +1346,19 @@ echo get_select_prov_ajax($dbLink,'main_office_prov','ebpls_province','province_
 <td align="right" valign="top" class='normal'> Office District: </td>
     <td align="left" valign="top" class='normal'>&nbsp; <?php 
 
-if($branch[business_main_offc_district_code]<>$business_main_offc_district_code 
+if($branch['business_main_offc_district_code']<>$business_main_offc_district_code 
    and $business_main_offc_district_code<>'') {
-	$branch[business_main_offc_district_code]=$business_main_offc_district_code;
+	$branch['business_main_offc_district_code']=$business_main_offc_district_code;
 } else {
-	$business_main_offc_district_code=$branch[business_main_offc_district_code];
+	$business_main_offc_district_code=$branch['business_main_offc_district_code'];
 }
                                                                                                  
-//echo get_select_dist($dbLink,'business_main_offc_district_code','ebpls_district','district_code','district_desc',$branch[business_main_offc_district_code],$business_main_offc_city_code);
+//echo get_select_dist($dbLink,'business_main_offc_district_code','ebpls_district','district_code','district_desc',$branch['business_main_offc_district_code'],$business_main_offc_city_code);
 //echo get_select_data($dbLink,'business_main_offc_district_code','ebpls_district','district_code','district_desc',$datarow[37]);
 	 $getz = SelectDataWhere($dbtype,$dbLink,"ebpls_district",
                         "where district_code  = '$business_main_offc_district_code'");
                 $business_main_offc_district_desc = FetchArray($dbtype,$getz);
-                $business_main_offc_district_desc = $business_main_offc_district_desc[district_desc];
+                $business_main_offc_district_desc = $business_main_offc_district_desc['district_desc'];
                                                                                                                              
 ?>
                                                                                                                              
@@ -1326,22 +1373,22 @@ if($branch[business_main_offc_district_code]<>$business_main_offc_district_code
     <td align="left" valign="top" class='normal'>&nbsp;
       <?php 
 
-if($branch[business_main_offc_barangay_code]<>$business_main_offc_barangay_code 
+if($branch['business_main_offc_barangay_code']<>$business_main_offc_barangay_code 
 	and $business_main_offc_barangay_code<>'') {
-$branch[business_main_offc_barangay_code]=$business_main_offc_barangay_code;
+$branch['business_main_offc_barangay_code']=$business_main_offc_barangay_code;
 } else {
-$business_main_offc_barangay_code=$branch[business_main_offc_barangay_code];
+$business_main_offc_barangay_code=$branch['business_main_offc_barangay_code'];
 }
                                                                                                  
                                                                                                  
-//echo get_select_barg($dbLink,'business_main_offc_barangay_code','ebpls_barangay','barangay_code','barangay_desc',$branch[business_main_offc_barangay_code],$business_main_offc_district_code);
+//echo get_select_barg($dbLink,'business_main_offc_barangay_code','ebpls_barangay','barangay_code','barangay_desc',$branch['business_main_offc_barangay_code'],$business_main_offc_district_code);
 
 
 // echo get_select_data($dbLink,'business_main_offc_barangay_code','ebpls_barangay','barangay_code','barangay_desc',$datarow[35]);
 		 $getz = SelectDataWhere($dbtype,$dbLink,"ebpls_barangay",
                         "where barangay_code  = '$business_main_offc_barangay_code'");
                 $business_main_offc_barangay_desc = FetchArray($dbtype,$getz);
-                $business_main_offc_barangay_desc = $business_main_offc_barangay_desc[barangay_desc];
+                $business_main_offc_barangay_desc = $business_main_offc_barangay_desc['barangay_desc'];
                                                                                                                              
 ?>
                 <select id="business_main_offc_barangay_code" name="business_main_offc_barangay_code" onchange='getMainZoneList(this); flagchange(changeondin); _FRM.pro.value=0;' class=select200>
@@ -1355,15 +1402,15 @@ $business_main_offc_barangay_code=$branch[business_main_offc_barangay_code];
  <td align="right" valign="top" class='normal'> Office Zone: </td>
     <td align="left" valign="top" class='normal'>&nbsp; <?php 
 
-if($branch[business_main_offc_zone_code]<>$business_main_offc_zone_code 
+if($branch['business_main_offc_zone_code']<>$business_main_offc_zone_code 
 	and $business_main_offc_zone_code<>'') {
-$branch[business_main_offc_zone_code]=$business_main_offc_zone_code;
+$branch['business_main_offc_zone_code']=$business_main_offc_zone_code;
 } else {
-$business_main_offc_zone_code=$branch[business_main_offc_zone_code];
+$business_main_offc_zone_code=$branch['business_main_offc_zone_code'];
 }
                                                                                                  
                                                                                                  
-//echo get_select_zone($dbLink,'business_main_offc_zone_code','ebpls_zone','zone_code','zone_desc',$branch[business_main_offc_zone_code],$business_main_offc_barangay_code);
+//echo get_select_zone($dbLink,'business_main_offc_zone_code','ebpls_zone','zone_code','zone_desc',$branch['business_main_offc_zone_code'],$business_main_offc_barangay_code);
 
 
 //echo get_select_data($dbLink,'business_main_offc_zone_code','ebpls_zone','zone_code','zone_desc',$datarow[36]);
@@ -1371,7 +1418,7 @@ $business_main_offc_zone_code=$branch[business_main_offc_zone_code];
   $getz = SelectDataWhere($dbtype,$dbLink,"ebpls_zone",
                         "where zone_code  = '$business_main_offc_zone_code'");
                 $business_main_offc_zone_desc = FetchArray($dbtype,$getz);
-                $business_main_offc_zone_desc = $business_main_offc_zone_desc[zone_desc];
+                $business_main_offc_zone_desc = $business_main_offc_zone_desc['zone_desc'];
 ?>
             <select id="business_main_offc_zone_code" name="business_main_offc_zone_code" class=select200 onchange='flagchange(changeondin); _FRM.pro.value=0;'>
                 <option value="<?php echo $business_main_offc_zone_code; ?>"><?php echo $business_main_offc_zone_desc; ?></option>
@@ -1384,7 +1431,7 @@ $business_main_offc_zone_code=$branch[business_main_offc_zone_code];
     $getzip = SelectDataWhere($dbtype,$dbLink,"ebpls_zip",
 			"where upper = '$branch[business_main_offc_city_code]'");
         $owner_zip = FetchArray($dbtype,$getzip);
-        $owner_zip = $owner_zip[zip_desc];
+        $owner_zip = $owner_zip['zip_desc'];
 ?>
                                                                                                  
             <td align="right" valign="top" class='normal'> Zip: </td>
@@ -1406,25 +1453,25 @@ $business_main_offc_zone_code=$branch[business_main_offc_zone_code];
   
 <?php
 
-	if ($datarow[biztype]=='') {
-		$datarow[biztype]=$biztype;
+	if ($datarow['biztype']=='') {
+		$datarow['biztype']=$biztype;
 	}
 if ($changeondin<>1) {
-	if($datarow[biztype]=='Main') {
+	if($datarow['biztype']=='Main') {
 		$mtag = 'selected';
 	} else {
 		$subsi=0;
 		$ftag = 'selected';
-		$datarow[biztype]='Franchise';
+		$datarow['biztype']='Franchise';
 	}
 } else {
-	$datarow[biztype]=$biztype;
-	 if($datarow[biztype]=='Main') {
+	$datarow['biztype']=$biztype;
+	 if($datarow['biztype']=='Main') {
                 $mtag = 'selected';
         } else {
 		$subsi=0;
                 $ftag = 'selected';
-                $datarow[biztype]='Franchise';
+                $datarow['biztype']='Franchise';
         }
 
 }
@@ -1437,40 +1484,40 @@ if ($changeondin<>1) {
 
 
 if($subs=='' and $changeondin<>1) {	
-	if ($datarow[subsi]=='') { //new record
-		$datarow[subsi]=$subsi;
+	if ($datarow['subsi']=='') { //new record
+		$datarow['subsi']=$subsi;
 	}
-	if ($datarow[subsi]==1) {
+	if ($datarow['subsi']==1) {
 		$ischeck='checked';
-	} elseif  ($datarow[subsi]<>1)  {
+	} elseif  ($datarow['subsi']<>1)  {
 		$ischeck='';
 	}
 }
 
-	if ($datarow[pcname]=='') {
-                $datarow[pcname]=$pcname;
+	if ($datarow['pcname']=='') {
+                $datarow['pcname']=$pcname;
         }
 
-	if ($datarow[pcaddress]=='') {
-                $datarow[pcaddress]=$pcaddress;
+	if ($datarow['pcaddress']=='') {
+                $datarow['pcaddress']=$pcaddress;
         }
 
 
-	if ($datarow[regname]=='') {
-		$datarow[regname]=$regname;
+	if ($datarow['regname']=='') {
+		$datarow['regname']=$regname;
 	}
 
-	if ($datarow[paidemp]==0) {
-                $datarow[paidemp]=$paidemp;
+	if ($datarow['paidemp']==0) {
+                $datarow['paidemp']=$paidemp;
         }
 
 	
-	if ($datarow[ecoorg]=='') {
-		$datarow[ecoorg]=$ecoorg;
+	if ($datarow['ecoorg']=='') {
+		$datarow['ecoorg']=$ecoorg;
 	}
 
-	if ($datarow[ecoarea]=='') {
-                $datarow[ecoarea]=$ecoarea;
+	if ($datarow['ecoarea']=='') {
+                $datarow['ecoarea']=$ecoarea;
         }
 
 
@@ -1478,23 +1525,23 @@ if($subs=='' and $changeondin<>1) {
 	<tr>
 	<td align=right size=10 class=normal>Registered Name :</td>
         <td align=left>
-	<input type=text name=regname value='<?php echo $datarow[regname]; ?>' onchange='javascript:flagchange(changeondin);'></td>
+	<input type=text name=regname value='<?php echo $datarow['regname']; ?>' onchange='javascript:flagchange(changeondin);'></td>
 	<td align=right size=5 class=normal>Paid Employees :</td>
         <td align=left>
-	<input type=text name=paidemp value='<?php echo $datarow[paidemp]; ?>' onchange='javascript:flagchange(changeondin);'></td>
+	<input type=text name=paidemp value='<?php echo $datarow['paidemp']; ?>' onchange='javascript:flagchange(changeondin);'></td>
 	</tr>
 	<tr>
         <td align=right size=10 class=normal>Economic Organization :</td>
         <td align=left>
 <?php
-	echo get_select_data($dbLink,'ecoorg','ebpls_economic_org','economic_org_id','economic_org_desc',$datarow[ecoorg],'true','',"onchange='javascript:flagchange(changeondin);'");
+	echo get_select_data($dbLink,'ecoorg','ebpls_economic_org','economic_org_id','economic_org_desc',$datarow['ecoorg'],'true','',"onchange='javascript:flagchange(changeondin);'");
 ?>
 
 	</td>
         <td align=right size=5 class=normal>Economic Area :</td>
         <td align=left>
 <?php
-        echo get_select_data($dbLink,'ecoarea','ebpls_economic_area','economic_area_id','economic_area_desc',$datarow[ecoarea],'true','',"onchange='javascript:flagchange(changeondin);'");
+        echo get_select_data($dbLink,'ecoarea','ebpls_economic_area','economic_area_id','economic_area_desc',$datarow['ecoarea'],'true','',"onchange='javascript:flagchange(changeondin);'");
 ?>
         </select>
 	</td>
@@ -1508,7 +1555,7 @@ if($subs=='' and $changeondin<>1) {
                 <option value='Franchise' <?php echo $ftag; ?>>Franchise</option>
         </select></td>
 <?php
-	if ($datarow[biztype]=='Main') {
+	if ($datarow['biztype']=='Main') {
 	$flagger=0;
 ?>
 	<input type=hidden name=subsi value=<?php echo $subsi; ?>>
@@ -1523,13 +1570,13 @@ if($subs=='' and $changeondin<>1) {
 ?>      
 	</tr>
 <?php
-	if ($datarow[biztype]=='Franchise' || $ischeck=='checked' ) {
+	if ($datarow['biztype']=='Franchise' || $ischeck=='checked' ) {
 ?>
 	<tr>
 	<td align=right size=10 class=normal>Name :</td>
-	<td align=left><input type=text name=pcname value=<?php echo $datarow[pcname]; ?>></td>
+	<td align=left><input type=text name=pcname value=<?php echo $datarow['pcname']; ?>></td>
 	<td align=right size=10 class=normal>Address :</td>
-        <td align=left><input type=text name=pcaddress value=<?php echo $datarow[pcaddress]; ?>></td>
+        <td align=left><input type=text name=pcaddress value=<?php echo $datarow['pcaddress']; ?>></td>
 <?php 
 	} else {	
 ?>

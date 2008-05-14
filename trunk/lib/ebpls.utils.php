@@ -2,9 +2,10 @@
 /*	Purpose: 	utility functions
 
 Revision History:
-2008.005.08 - 12:	Add undefined checking to remove items in phperror.log
+2008-05-08 - 14:	Add undefined checking to remove items in phperror.log
+2008-05-14 : Correct start of select string definition so its not concatenating to undefined select_str
 */
-
+	
 //--- connect to DB
 define('DB_HOST1','192.168.100.1');
 define('DB_NAME1','ebpls');
@@ -40,7 +41,7 @@ function get_select_data_biz($dblink,$selectname,$table,$field_code,$field_desc,
         if ( $where )  $sql .= " WHERE $where  ";
          
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname' onchange='javascript:flagchange(changeondin);' class='select200' " . (($editable)?"":"disabled readonly") . " >";
+        $select_str     = "<select name='$selectname' onchange='javascript:flagchange(changeondin);' class='select200' " . (($editable)?"":"disabled readonly") . " >";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
         //"<option value=' ' $str_selected> ----- </option>\n";
@@ -76,7 +77,7 @@ function get_select_data($dblink,$selectname,$table,$field_code,$field_desc,$sel
 	//log_err("SQL $sql");
  //echo "$sql=====$selected";	
 	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+	$select_str     = "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
 	//--- set the default
 	if($selectname=='employer_business' || $selectname=='fromnat' || $selectname == 'bus_selecty')
 	{
@@ -108,7 +109,7 @@ function get_select_user($dblink,$selectname,$table,$field_code,$field_desc,$sel
 
 	//echo $sql;
 	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+	$select_str     = "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
 	//--- set the default
 	if($selectname=='employer_business' || $selectname=='fromnat' || $selectname == 'bus_selecty')
 	{
@@ -148,7 +149,7 @@ function get_select_complex_reg($dblink,$selectname,$table,$field_code,$field_de
 	//log_err("SQL $sql");
  //echo "$sql=====$selected";	
 	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname'  $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+	$select_str     = "<select name='$selectname'  $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
 	//--- set the default
 	if($selectname=='employer_business' || $selectname=='fromnat' || $selectname == 'bus_selecty')
 	{
@@ -234,7 +235,7 @@ function get_select_data_ko($dblink,$selectname,$table,$field_code,$field_desc,$
 	//log_err("SQL $sql");
  //echo "$sql=====$selected";	
 	$resultset = @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+	$select_str     = "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
 	//--- set the default
 	if($selectname=='employer_business' || $selectname=='fromnat' || $selectname == 'bus_selecty')
 	{
@@ -296,7 +297,7 @@ function get_select_brgy($dblink,$selectname,$table,$field_code,$field_desc,$sel
 
 //echo $sql;
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname'  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+        $select_str     = "<select name='$selectname'  class='select200' " . (($editable)?"":"disabled readonly") . " >";
         //--- set the default
       //  $select_str .=   "<option value='$K' $str_selected>$V</option>\n";
         $select_str .="<option value='' $str_selected> ----- </option>\n";
@@ -319,8 +320,7 @@ function get_select_data_where($dblink,$selectname,$table,$field_code,$field_des
 //echo $sql;
 	$resultset = @mysql_query($sql, $dblink);
 //	$select_str     .= "<select name='$selectname'  class='select200'>";
-	$select_str  = isset($select_str ) ? $select_str : ''; //2008.05.08
-	$select_str     .= "<select name='$selectname' class='select300'>";
+	$select_str     = "<select name='$selectname' class='select300'>";
 	while($datarow 	= @mysql_fetch_assoc($resultset))
 	{
 		$K	= $datarow["$field_code"];
@@ -340,7 +340,7 @@ function get_select_data_boat($dblink,$selectname,$table,$field_code,$field_desc
 	$sql    	= "SELECT distinct($field_code),$field_desc FROM $table WHERE $where";
 //echo $sql;
 	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname'  class='select200'>";
+	$select_str     = "<select name='$selectname'  class='select200'>";
 	while($datarow 	= @mysql_fetch_assoc($resultset))
 	{
 		$getengine = @mysql_query("select * from ebpls_engine_type where engine_type_id = '$datarow[$field_code]'");
@@ -441,6 +441,9 @@ function setUrlRedirect($url)
 
 function get_select_prov($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
+$str_selected = isset($str_selected) ? $str_selected : '' ;
+
 	$sql= "SELECT $field_code,$field_desc FROM $table ";
 		//log_err("SQL $sql");
         $resultset      = @mysql_query($sql);
@@ -448,7 +451,7 @@ function get_select_prov($dblink,$selectname,$table,$field_code,$field_desc,$sel
 	onchange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit(); '>";
 
 */
-	$select_str     .= "<select name='$selectname'  $locksel  id=dhtmlgoodies_country
+	$select_str     = "<select name='$selectname'  $locksel  id=dhtmlgoodies_country
               onchange='getCityList(this); flagchange(changeondin); _FRM.pro.value=0;'>";
 
         //--- set the default
@@ -469,10 +472,13 @@ function get_select_prov($dblink,$selectname,$table,$field_code,$field_desc,$sel
 
 function get_select_prov1($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
+$str_selected = isset($str_selected) ? $str_selected : '' ;
+
         $sql= "SELECT $field_code,$field_desc FROM $table ";
                 //log_err("SQL $sql");
         $resultset      = @mysql_query($sql);
-	$select_str     .= "<select name='$selectname'  $locksel  class='select200'
+	$select_str     = "<select name='$selectname'  $locksel  class='select200'
         onchange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit(); '>";
 
         //--- set the default
@@ -498,6 +504,9 @@ function get_select_prov1($dblink,$selectname,$table,$field_code,$field_desc,$se
 
 function get_select_prov_ajax($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
+$str_selected = isset($str_selected) ? $str_selected : '' ;
+
         $sql= "SELECT $field_code,$field_desc FROM $table ";
                 //log_err("SQL $sql");
         $resultset      = @mysql_query($sql);
@@ -505,7 +514,7 @@ function get_select_prov_ajax($dblink,$selectname,$table,$field_code,$field_desc
         onchange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit(); '>";
                                                                                                                              
 */
-        $select_str     .= "<select name='$selectname'  $locksel  id=dhtmlgoodies_country
+        $select_str     = "<select name='$selectname'  $locksel  id=dhtmlgoodies_country
               onchange='getMainCityList(this); flagchange(changeondin); _FRM.pro.value=0;'>";
                                                                                                                              
         //--- set the default
@@ -528,11 +537,13 @@ function get_select_prov_ajax($dblink,$selectname,$table,$field_code,$field_desc
 
 function get_select_province($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
+$str_selected = isset($str_selected) ? $str_selected : '' ;
+
 	$sql= "SELECT $field_code,$field_desc FROM $table ";
 		//log_err("SQL $sql");
         $resultset      = @mysql_query($sql);
-//2008.05.12        $select_str     .= "<select name='$selectname'  $locksel  class='select200' 
-        $select_str     = "<select name='$selectname'  class='select200' 
+	$select_str     .= "<select name='$selectname'  $locksel  class='select200' 
 		onchange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit(); '>";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
@@ -553,12 +564,10 @@ function get_select_province($dblink,$selectname,$table,$field_code,$field_desc,
 
 function get_select_city($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
+$str_selected = isset($str_selected) ? $str_selected : '' ;
 
-	if ($where=='') {
-		$locksel='disabled';
-	} else {
-		$locksel ='';
-	}
+	if ($where=='') $locksel='disabled';
 	$sql            = "SELECT $field_code,$field_desc FROM $table ";
 //        if ( $where ) {
                 $sql .= " WHERE upper = '$where'  ";
@@ -566,7 +575,7 @@ function get_select_city($dblink,$selectname,$table,$field_code,$field_desc,$sel
 
         //log_err("SQL $sql");
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname'  $locksel  class='select200'
+        $select_str    = "<select name='$selectname'  $locksel  class='select200'
                 onChange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit();'>";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
@@ -586,16 +595,14 @@ function get_select_city($dblink,$selectname,$table,$field_code,$field_desc,$sel
 }
 function get_select_lgu($selectname,$selected)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
+$str_selected = isset($str_selected) ? $str_selected : '' ;
 
-	if ($where=='') {
-		$locksel='disabled';
-	} else {
-		$locksel ='';
-	}
+	if ($where=='') $locksel='disabled';
 	$sql = "SELECT * FROM ebpls_city_municipality ";
 
         $resultset      = @mysql_query($sql);
-        $select_str     .= "<select name='$selectname'  class='select200'
+        $select_str     = "<select name='$selectname'  class='select200'
                 onChange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit();'>";
 	$select_str     .= "<option value=''></option>";
 		while($datarow  = @mysql_fetch_assoc($resultset))
@@ -614,16 +621,13 @@ function get_select_lgu($selectname,$selected)
 }
 function get_select_district($selectname,$selected)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
 
-	if ($where=='') {
-		$locksel='disabled';
-	} else {
-		$locksel ='';
-	}
+	if ($where=='') $locksel='disabled';
 	$sql = "SELECT * FROM ebpls_district ";
 
         $resultset      = @mysql_query($sql);
-        $select_str     .= "<select name='$selectname'  class='select200'
+        $select_str    = "<select name='$selectname'  class='select200'
                 onChange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit();'>";
         $select_str .=   "<option value=''></option>\n";
 		while($datarow  = @mysql_fetch_assoc($resultset))
@@ -642,12 +646,9 @@ function get_select_district($selectname,$selected)
 }
 function get_select_barangay($selectname,$selected)
 {
+$locksel  = isset($locksel ) ? $locksel : ''; //2008.05.14
 
-	if ($where=='') {
-		$locksel='disabled';
-	} else {
-		$locksel ='';
-	}
+	if ($where=='') $locksel='disabled';
 	$sql = "SELECT * FROM ebpls_barangay ";
 
         $resultset      = @mysql_query($sql);
@@ -671,22 +672,20 @@ function get_select_barangay($selectname,$selected)
 
 function get_select_dist($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
-        if ($where=='') {
-                $locksel='disabled';
-        } else {
-                $locksel ='';
-        }
+
+        if ($where=='') $locksel='disabled';
+        else  $locksel='';
         $sql = "SELECT $field_code,$field_desc FROM $table ";
         if ( $where ) $sql .= " WHERE upper = '$where'  ";
 
         //log_err("SQL $sql");
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname'  $locksel  class='select200'
+        $select_str     = "<select name='$selectname'  $locksel  class='select200'
                 onChange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit();'>";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
         //"<option value=' ' $str_selected> ----- </option>\n";
-$select_str .= "<option value='' $str_selected> -Please Select District- </option>\n";
+	$select_str .= "<option value='' $str_selected> -Please Select District- </option>\n";
         while($datarow  = @mysql_fetch_assoc($resultset))
         {
                 $K      = $datarow["$field_code"];
@@ -702,17 +701,17 @@ $select_str .= "<option value='' $str_selected> -Please Select District- </optio
 
 function get_select_dist_ajax($dblink,$selectname,$table,$field_code,$field_desc,$selected,$where)
 {
-        if ($where=='') {
-                $locksel='disabled';
-        } else {
-                $locksel ='';
-        }
+$str_selected = isset($str_selected) ? $str_selected : '' ;
+
+        if ($where=='') $locksel='disabled';
+        else 			$locksel ='';
+
         $sql            = "SELECT $field_code,$field_desc FROM $table ";
         if ( $where ) $sql .= " WHERE upper = '$where'  ";
                                                                                                                                                                                                          
         //log_err("SQL $sql");
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname'  $locksel  class='select200'
+        $select_str     = "<select name='$selectname'  $locksel  class='select200'
                 onChange='getBrgyList(this); flagchange(changeondin); _FRM.pro.value=0;'>";// _FRM.pro.value=0; _FRM.submit();'>";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
@@ -746,7 +745,7 @@ function get_select_barg($dblink,$selectname,$table,$field_code,$field_desc,$sel
 
         //log_err("SQL $sql");
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname'  $locksel  class='select200'
+        $select_str     = "<select name='$selectname'  $locksel  class='select200'
                 onChange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit();'>";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
@@ -782,7 +781,7 @@ print "	<input type= hidden name=zonesel value=1>";
 
         //log_err("SQL $sql");
         $resultset      = @mysql_query($sql, $dblink);
-        $select_str     .= "<select name='$selectname'  $locksel  class='select200'
+        $select_str     = "<select name='$selectname'  $locksel  class='select200'
                 onChange='javascript: flagchange(changeondin); _FRM.pro.value=0; _FRM.submit();'>";
         //--- set the default
         //$select_str .=   "<option value='$K' $str_selected>$V</option>\n";
@@ -809,8 +808,8 @@ function get_select_coa($dblink,$selectname,$table,$field_code,$field_desc,$sele
 	
 	if ( $where )  $sql .= " WHERE $where	";
 
-	$resultset 	= @mysql_query($sql, $dblink);
-	$select_str     .= "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
+	$resultset = @mysql_query($sql, $dblink);
+	$select_str = "<select name='$selectname' $javasc  class='select200' " . (($editable)?"":"disabled readonly") . " >";
 	//--- set the default
 	
 	while($datarow 	= @mysql_fetch_assoc($resultset))
