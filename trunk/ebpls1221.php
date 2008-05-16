@@ -5,11 +5,11 @@
 Modification History:
 2006.02.02 DAP
 2008.05.06: RJC Resolving errors reported in phperror.log
+2008.05.14 RJC Define undefined variables reported in phperror.log
 */
 //	- start page for owner search
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
-
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 //--- get connection from DB
 //$dbLink = get_db_connection();
@@ -18,7 +18,12 @@ require_once "includes/variables.php";
 require_once "class/BusinessEstablishmentClass.php";
 include_once "class/PermitClass.php";
 include_once "class/TaxpayerClass.php";
+
 $ownerID = isset($owner_id) ? $owner_id : 0; //2008.05.06
+$addline = isset($addline) ? $addline : ''; //2008.05.14
+$business_name = isset($business_name) ? $business_name : '';
+$business_branch = isset($business_branch) ? $business_branch : '';
+
 if ($permit_type=='Motorized' || $permit_type=='Franchise') {
 $checkrentype = @mysql_query("select * from ebpls_motorized_penalty where permit_type = '$permit_type'");
 $checkrentype1 = @mysql_fetch_assoc($checkrentype);

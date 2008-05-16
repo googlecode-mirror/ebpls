@@ -1,17 +1,17 @@
 <?php
-		if ($totind<$getd[min_amt]) {
-			$totind=$getd[min_amt];
-			$compvalrange=$getd[min_amt];
+		if ($totind<$getd['defamt']) {
+			$totind=$getd['defamt'];
+			$compvalrange=$getd['defamt'];
 			$usemin = 'Replaced with Minimum Amount ';
-			$compval=$getd[min_amt];
+			$compval=$getd['defamt'];
 		}
-$getd[tfodesc] = addslashes($getd[tfodesc]);
+$getd['tfodesc'] = addslashes($getd['tfodesc']);
 $chkintfo = SelectDataWhere($dbtype,$dbLink,"ebpls_buss_tfo",
 			"where tfodesc='$getd[tfodesc]'");
 	$chkintfo = FetchArray($dbtype,$chkintfo);
-	if ($chkintfo[taxfeetype]==1) {
+	if ($chkintfo['taxfeetype']==1) {
 	$tottax=$tottax+$totind;
 	}
 
-$getd[tfodesc] = stripslashes($getd[tfodesc]);	
+$getd['tfodesc'] = stripslashes($getd['tfodesc']);	
 ?>

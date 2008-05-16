@@ -1,20 +1,20 @@
 <?php
+/* Modification History:
+2008.05.14 RJC Define undefined variables to redoce clutter in phperror.log
+*/
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 global $ThUserData;
-
 require_once "includes/variables.php";
 
-if ($ownsearch=='searchme') {
-	$ownsearch=' S E A R C H ';
-} 
-if ($addveh=='transfer') {
-	
-	include_once "includes/form_trans_search.html";
-}
+$ownsearch = isset($ownsearch) ? $ownsearch : ''; //2008.05.14
+$addveh = isset($addveh) ? $addveh : '';
+$addown = isset($addown) ? $addown : '';
+$addbus = isset($addbus) ? $addbus : '';
 
-
+if ($ownsearch=='searchme') $ownsearch=' S E A R C H ';
+if ($addveh=='transfer') include_once "includes/form_trans_search.html";
 if ($addown=='ADD NEW') {
 	$tag = $permit_type;
 	require "includes/form_mtop_owner.php";

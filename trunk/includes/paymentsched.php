@@ -9,7 +9,7 @@ Modification History:
 $getgross =SelectDataWhere($dbtype,$dbLink,"tempbusnature",
                                   " where owner_id=$owner_id and business_id=$business_id and active =1
                                    and date_create like '$yearnow%'");
-             $gross =mysql_num_rows($getgross);
+$gross =mysql_num_rows($getgross);
              
 if ($gross==0) {
 	             ?>
@@ -2516,8 +2516,8 @@ $havnew = mysql_num_rows($checknew);
 	if ($havnew>0) { 
 		$nat=0;
 		while ($newnew = mysql_fetch_assoc($checknew)) {
-			$nature[$nat] = $newnew[bus_code];
-			$ghetdate = $newnew[date_create];
+			$nature[$nat] = $newnew['bus_code'];
+			$ghetdate = $newnew['date_create'];
 			$nat++;
 		
 		}
@@ -2531,14 +2531,14 @@ $havnew = mysql_num_rows($checknew);
 						where owner_id='$owner_id' and business_id='$business_id' and
 						natureid='$nature[$bis]' and active=1 and date_create like '$yearnow%'");
 				while ($amtbis =mysql_fetch_assoc($biset)) {
-					$getfeeid = $amtbis[tfoid];
+					$getfeeid = $amtbis['tfoid'];
 					$gettotfee = @mysql_query("select * from ebpls_buss_tfo where
 												tfoid='$getfeeid'");
 					$gid = mysql_fetch_assoc($gettotfee);
 					if ($gid[taxfeetype]==1) {
-						$newtax1 = $newtax1 + $amtbis[compval];
+						$newtax1 = $newtax1 + $amtbis['compval'];
 					} else {
-						$newfee1 = $newfee1 + $amtbis[compval];
+						$newfee1 = $newfee1 + $amtbis['compval'];
 					}
 				}
 			

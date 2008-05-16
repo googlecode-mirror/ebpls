@@ -26,6 +26,7 @@ $blacklist = isset($blacklist) ? $blacklist : '';
 $business_branch = isset($business_branch) ? $business_branch : '';
 $addbus = isset($addbus) ? $addbus : '';
 $comment = isset($comment) ? $comment : '';
+$business_offc_code = isset($business_offc_code) ? $business_offc_code : '';
 $business_lot_no = isset($business_lot_no) ? $business_lot_no : '';
 $business_district_code = isset($business_district_code) ? $business_district_code : '';
 $business_contact_no = isset($business_contact_no) ? $business_contact_no : '';
@@ -51,6 +52,7 @@ $ftag = isset($ftag) ? $ftag : '';
 $success_flag = isset($success_flag) ? $success_flag : '';
 $pcname = isset($pcname) ? $pcname : '';
 $pcaddress = isset($pcaddress) ? $pcaddress : '';
+$ecoorg = isset($ecoorg) ? $ecoorg : '';
 
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
@@ -60,7 +62,6 @@ require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 //$dbLink = get_db_connection();
 global $ThUserData;
 $debug 		= false;
-
 require_once "includes/variables.php";
 include_once "class/BusinessEstablishmentClass.php";
 include_once "class/MainBranchClass.php";

@@ -1,6 +1,8 @@
 <?php
 /*  Purpose: display assessment
 */
+$total_sf_compute = isset($total_sf_compute) ? $total_sf_compute : 0; //2008.05.15 RJC Undefined variable
+
 $result = SelectMultiTable($dbtype,$dbLink,"$owner, ebpls_business_enterprise",
 		"concat($owner.owner_first_name,' ', $owner.owner_middle_name, ' ', 
 		$owner.owner_last_name) as full, ebpls_business_enterprise.business_name, 
@@ -46,69 +48,64 @@ if ($cnt<>0){ $PROCESS="COMPUTE"; }
 <br>
 <?php
 
-
-
 $chkbacktax = SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
 $chkbacktax = FetchArray($dbtype,$chkbacktax);
-if ($chkbacktax[sbacktaxes]=='1' and $stat=='Retire') {
- $tftnum=1;
+if ($chkbacktax['sbacktaxes']=='1' and $stat=='Retire') {
+	$tftnum=1;
         $htag = 'Assessment';
         $tft = '';
         require "includes/headerassess.php";
         require_once "includes/assessment.php";
-$total_tax_compute = $grandamt;
-$howmany = $df;
+	$total_tax_compute = $grandamt;
+	$howmany = $df;
 
 ?>
 <input type='hidden' name='wala_lang'>
 <?php
 } else {
-$gettag=SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
-$gettag=FetchArray($dbtype,$gettag);
-$pmode = $list[2];
-$lockit = '';
-if ($gettag[sassess]=='') {
-$tftnum = 1;
-	//$tft = ' and c.taxfeetype=1'; // or c.taxfeetype=4';
-	$htag = 'Assessment';
-	require "includes/headerassess.php";
-	$totexempt=0;
-	require "includes/assessment.php";
-$total_tax_compute = $grandamt;
-$howmany = $df;
-$tftnum=4;
-$grandamt=0;
+	$gettag=SelectDataWhere($dbtype,$dbLink,"ebpls_buss_preference","");
+	$gettag=FetchArray($dbtype,$gettag);
+	$pmode = $list[2];
+	$lockit = '';
+	if ($gettag['sassess']=='') {
+		$tftnum = 1;
+		//$tft = ' and c.taxfeetype=1'; // or c.taxfeetype=4';
+		$htag = 'Assessment';
+		require "includes/headerassess.php";
+		$totexempt=0;
+		require "includes/assessment.php";
+		$total_tax_compute = $grandamt;
+		$howmany = $df;
+		$tftnum=4;
+		$grandamt=0;
 
-// 	$tft = ' and c.taxfeetype=4';// and c.taxfeetype=4';
-//         $htag = 'Assessment of Special Fees';
-//         require "includes/headerassess.php";
-//         $totexempt=0;
-//         require "includes/assessment.php";
-// $total_sf_compute = $grandamt;
-// $howmany = $df+$howmany;
-if ($noregfee <>1) {
-	
-	$tft =' and c.taxfeetype<>1';// or c.taxfeetype<>4';
-	$htag = 'General Charges';
-	require "includes/headerassess.php";
-	
-	//if ($stat !='Retire') {
-	require "includes/feeassess.php";
-	//}
-}
+	// 	$tft = ' and c.taxfeetype=4';// and c.taxfeetype=4';
+	//         $htag = 'Assessment of Special Fees';
+	//         require "includes/headerassess.php";
+	//         $totexempt=0;
+	//         require "includes/assessment.php";
+	// $total_sf_compute = $grandamt;
+	// $howmany = $df+$howmany;
+		if ($noregfee <>1) {
+		
+			$tft =' and c.taxfeetype<>1';// or c.taxfeetype<>4';
+			$htag = 'General Charges';
+			require "includes/headerassess.php";
+			
+			//if ($stat !='Retire') {
+			require "includes/feeassess.php";
+			//}
+		}
 
-
-} else {
-	$tftnum=1;
-	$htag = 'Assessment';
-	$tft = '';
-	require "includes/headerassess.php";
-	require_once "includes/assessment.php";
-	
-$total_tax_compute = $grandamt;
-
-$howmany = $df;
-}
+	} else {
+		$tftnum=1;
+		$htag = 'Assessment';
+		$tft = '';
+		require "includes/headerassess.php";
+		require_once "includes/assessment.php";
+		$total_tax_compute = $grandamt;
+		$howmany = $df;
+	}
 }
 
 ?>
@@ -122,7 +119,7 @@ $howmany = $df;
 
 <?php 
 
-if ($gettag[sassess]=='1') {
+if ($gettag['sassess']=='1') {
 $te=0;
 //$totfee=0;
 } else {
@@ -144,7 +141,7 @@ $grand=$grandamt;
 </table>-->
 <input type='hidden' name='grand' value='<?php echo $grand;?>'>
 <?php
-if ($gettag[sassess]=='') {
+if ($gettag['sassess']=='') {
 
 $ota = $grandamt;
 }

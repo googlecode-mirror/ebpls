@@ -5,13 +5,19 @@
  	
 Modication History:
 2008.04.18 RJC Simple code cleanup
+2008.05.15 RJC Define undefine variables
 */
 require_once("lib/ebpls.lib.php");
 require_once("lib/ebpls.utils.php");
 require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
 global $ThUserData;
-
 require_once "includes/variables.php";
+
+$mtopsearch = isset($mtopsearch) ? $mtopsearch : ''; //2008.05.15
+$com = isset($com) ? $com : '';
+$minus_hm = isset($minus_hm) ? $minus_hm : '';
+$invest_up = isset($invest_up) ? $invest_up : '';
+
 if (isset($delass) && $delass==1) {
 	$ui = UpdateQuery($dbtype,$dbLink,"tempassess",
                 "active = 1","owner_id='$owner_id' and
