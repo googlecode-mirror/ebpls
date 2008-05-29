@@ -15,7 +15,7 @@ switch ($intUserLevel) {
 if($frmBtnKick == "Kick User") {
 	$checkif = @mysql_query("select username, login, logout from ebpls_user where id = '$frmId'");
 	$checkiff = @mysql_fetch_assoc($checkif);
-	if ($checkiff[login] <= $checkiff[logout]) {
+	if ($checkiff['login'] <= $checkiff['logout']) {
 		?>
         <body onload='javascript:alert ("Cannot kick offline user!"); return false;'></body>
         <?

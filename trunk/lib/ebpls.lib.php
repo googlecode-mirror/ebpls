@@ -402,19 +402,13 @@ include'includes/variables.php';
         }
     }
     
-    
-    
-    
-    
-    
-    
     /**********************************/
     
-    function setUserLogout($intID=0, $strLinkName="thDbLink")
-    {
+function setUserLogout($intID=0, $strLinkName="thDbLink")
+{
         global $ThUserData;
         if (isset($ThUserData)) {
-            $strIdToMatch = ($intID) ? $intID : $ThUserData['id'];
+            $strIdToMatch = ($intID) ? $intID : $ThUserData['id'];  
             $strQuery = "UPDATE ebpls_user SET login = NOW(), logout = NOW() WHERE id = $strIdToMatch";
             $result = th_query($strQuery, $strLinkName);
             if (is_array($ThUserData) && empty($intID)) {
@@ -428,9 +422,7 @@ include'includes/variables.php';
         } else {
             return 0;
         }
-    }
-    
-   
+}
 
     function isUserLogged()
     {

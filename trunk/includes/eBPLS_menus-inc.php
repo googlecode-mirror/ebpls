@@ -9,13 +9,13 @@ include_once("lib/multidbconnection.php");
 $dbLink =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 //$dbupen = Open();
 
+$busItem = isset($busItem) ? $busItem : '' ; //2008.05.11
+$user_id = isset($ThUserData['id'])?$ThUserData['id']:''; //2008.04.25
 
 if ($GLOBALS['watbrowser']=='msie' and $ThUserData['id']<>'') {
 setcookie("ThUserData['id']",$ThUserData['id'], $intCookieExp, '/', false, 0); 
 $ieuser=$_COOKIE['ieuser'];
 }
-$busItem = isset($busItem) ? $busItem : '' ; //2008.05.11
-$user_id = isset($ThUserData['id'])?$ThUserData['id']:""; //2008.04.25
 $ses = $_COOKIE['PHPSESSID'];
 
 //validates login session

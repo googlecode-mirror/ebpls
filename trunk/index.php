@@ -12,7 +12,7 @@ ob_start();
 session_start();
 require_once "includes/config.php";
 $strSetupDir = (empty($ThUserData['domain'])) ? "" : $ThUserData['domain'];
-//$strSetupDir = (isset($frmLoginDomain)) ? $frmLoginDomain : $strSetupDir;
+$frmLoginDomain = isset($frmLoginDomain) ? $frmLoginDomain : ''; //2008.05.16
 $strSetupDir = (is_dir("setup/{$strSetupDir}")) ? $strSetupDir . '/' : "";
 $strSettingScript = "setup" . $strSetupDir . "setting.php";
 include_once $strSettingScript;
@@ -22,7 +22,6 @@ include'includes/variables.php';
 include_once("lib/multidbconnection.php");                                                                                                
 $dbLinkFunc =Open($dbtype,$connecttype,$dbhost,$dbuser,$dbpass,$dbname);
 dbConnect();
-
 $checktaxfeeother = @mysql_query("select * from ebpls_buss_taxfeeother");
 $checktaxfeeother1 = @mysql_num_rows($checktaxfeeother);
 if ($checktaxfeeother1 == 0 || $checktaxfeeother == "") {
@@ -42,9 +41,9 @@ if (!isset($part) or $part=='') {	// 2008.04.25 add isset check
 		if ($GLOBALS['watbrowser']=='msie') {
 			
 			$strQuery =mysql_query("UPDATE ebpls_user SET login = NOW(), logout = NOW() WHERE id = '$ThUserData[id]'");
-		setUserLogout();
-			} else {
-		setUserLogout();
+			setUserLogout();
+		} else {
+			setUserLogout();
 		}
 
 		$ThUserData['id']='';	//2008.04.25 add quotes
