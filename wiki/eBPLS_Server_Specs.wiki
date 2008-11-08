@@ -23,7 +23,7 @@ Note:
  # I had to use all-generic-ide at the boot prompt to make it work.
 
 == MSI P31 ==
-from "Frederick" <jrkrugger@...>
+from "Frederick" <jrkrugger@...> (Nov 3, 2008)
 
  * Motherboard: MSI P31 Neo
  * Processor: Intel Dual Core
@@ -34,4 +34,3 @@ from "Frederick" <jrkrugger@...>
 
 Notes: 
  # Disable the on-board LAN in setup and install a PCI Ethernet Card (Realtek Model RTL8139).  Due to unsupported chipset of built-in LAN (Model 8168/8111).
-
