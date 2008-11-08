@@ -2,7 +2,7 @@
 
 = Native eBPLS Hardware Specifications =
 
-The User Guide outlines configurations for the minimum and recommended hardware for the eBPLS server.  
+The [http://ebpls.googlecode.com/files/eBPLS%20User%20Guide.pdf User Guide] outlines configurations for the minimum and recommended hardware for the eBPLS server.  
 
 Recent hardware changes particularly SATA disk drives are not supported by the original Fedora Core 4 operating system.
 
