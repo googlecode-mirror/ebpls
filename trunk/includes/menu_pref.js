@@ -1,1 +1,0 @@
-function menuScheme(x) { var scheme = new Array("blue",12,"plain","arial","green","green","black",1,1,"red","#C0C0FF"); return scheme[x]; }
