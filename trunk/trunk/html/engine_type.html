@@ -1,0 +1,91 @@
+
+<body onLoad="javascript: _FRM.nCode.focus();">
+<script language="Javascript">
+function VerifyCiti()
+{
+	var a = document._FRM;
+                                                                                                                             
+                if (isBlank(a.nCode.value)) {
+                                                                                                                             
+                        alert (<?php echo $invalid_input_error; ?> + " Engine Type");
+                        a.nCode.focus();
+						a.nCode.select();
+						return false;
+                }
+                
+                if (a.nCode.value.length>15) {
+                                                                                                                             
+                        alert ("Engine Type " + <?php echo $max_len_error; ?>);
+                        a.nCode.focus();
+                        a.nCode.select();
+                        return false;
+                }
+                
+
+		a.sb.value='Submit';
+                a.submit();
+                return true;
+}
+function ClearCiti()
+{
+	var _FRM = document._FRM;
+	_FRM.nCode.value = "";
+	_FRM.sb.value = "";
+	_FRM.bbo.value = "";
+	alert("Transaction Cancelled!");
+	_FRM.submit()
+	return true;
+}
+</script>
+	<form action="index.php?part=4&class_type=Preference&selMode=ebpls_ncitizenship&action_=8&itemEvent=1&data_item=0&orderbyasde=1" ENCTYPE="multipart/form-data" method="post" name='_FRM'>
+	<script language='Javascript' src='javascripts/default.js'></script>
+                                                                                                 
+	<input type=hidden name=bbo value="<?php echo $bbo;?>">
+	<input type=hidden name=confx value="<?php echo $confx;?>">
+	<input type=hidden name=part value="<?php echo $part;?>">
+	<input type=hidden name=class_type value="<?php echo $class_type;?>">
+	<input type=hidden name=pref_type value="<?php echo $pref_type;?>">
+	<input type=hidden name=selMode value="<?php echo $selMode;?>">
+                                                                                                 
+	<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+	<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>                                                                                             
+                                                                                                 
+	<tr><td colspan=2 class=header2 align=center width=100%>Engine Type</td></tr>
+	<tr><td colspan=2 ><br></td></tr>
+                                                                                                 
+        <tr width=90%>
+        	<td> &nbsp </td>
+        </tr>
+        <tr width=90%>
+        	<td> &nbsp </td>
+        </tr>
+        <tr width=90%>
+        	<td align=right valign=top> Engine Type : </td>
+        	<td align=left valign=top> &nbsp <input type=text maxlength=30 name=nCode class=text180 value='<?php echo $nCode; ?>'> <font class="def_label"> (Max 30 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+        </table>
+        <table align=center border=0 cellspacing=0 cellpadding=0 width=90%>
+        <tr width=90%>
+        	<td align=center valign=top>
+                	&nbsp
+		</td>
+        </tr>
+        <tr width=90%>
+        	<td align=center valign=top>
+			<input type=hidden name=sb>
+                        <input type=button value=Save name=sib onclick='VerifyCiti();'>
+                        <input type=Button value=Cancel onClick="javascript: ClearCiti();">
+                        <input type=Reset value=Reset onClick="javascript: _FRM.nCode.focus();">
+                        &nbsp<br><br>
+		</td>
+        </tr>
+        </table>
+</form>
+
+
+

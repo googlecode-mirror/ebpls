@@ -1,0 +1,70 @@
+<head>
+<link rel="stylesheet" href="stylesheets/default.css" type="text/css"/>
+<script language='Javascript' src='javascripts/default.js'></script>
+<div align="CENTER">
+<!---// start of the table //-->
+<br>
+<table border=0 cellspacing=0 cellpadding=0   width='750'>
+		<tr><td align="center" valign="center" class='titleblue'  width='750'> <?php echo $tag; ?> Permit Application</td></tr>
+		<tr><td align="center" valign="center" class='normal' height=10>&nbsp;</td></tr>
+		<tr>
+			<td align="center" valign="center" class='title'>
+			  <form name="_FRM" method="POST"  action ="index.php?part=2212&permit_type=<?php echo $tag; ?>&com=<?php echo $com; ?>&stat=<?php echo $stat; ?>">
+					
+					<input type='hidden' name='owner_id' value='<?php echo $owner_id;?>'>
+					<input type='hidden' name='status' value='new'>
+					<input type='hidden' name='permit_no' value='<?php echo $permitcode;?>'>
+					
+					
+					<table border=0 cellspacing=1 cellpadding=1 width='650'>
+						<!--// start of the owner information //-->
+					    <tr> 
+					      <td align="center" valign="top" class='subtitleblue' colspan=4 > 
+						Owner Information</td>
+					    </tr>
+					    <tr> 
+						<td align="right" valign="top" class='normal' colspan=4>&nbsp; </td>
+					    </tr>
+					    <tr> 
+					      <td align="right" valign="top" class='normal' colspan=1> &nbsp; 
+						 </td>
+					      <td align="left" valign="top" class='normal' colspan=3>&nbsp;
+					&nbsp<a href='index.php?part=2212&permit_type=<?php echo $tag; ?>'><font color=blue>Search</a></font>&nbsp;
+
+					      </td>
+					    </tr>
+					    <tr> 
+					      <td align="right" valign="top" class='normal'> <font color="#FF0000">* 
+						</font>First Name : </td>
+					      <td align="left" valign="top" class='normal' width=250>&nbsp; 
+<input type='hidden' name='owner_first_name' maxlength=60 class='text180'  value="<?php echo stripslashes($owner_first_name); ?>"  readonly><?php echo stripslashes($owner_first_name); ?>
+					      </td>
+					      <td align="right" valign="top" class='normal'> <font color="#FF0000">* 
+						</font>Middle Name : </td>
+					      <td align="left" valign="top" class='normal'>&nbsp; 
+<input type='hidden' name='owner_middle_name' maxlength=60 class='text180' value="<?php echo stripslashes($owner_middle_name); ?>"  readonly><?php echo stripslashes($owner_middle_name); ?> 
+					      </td>
+					    </tr>
+					    <tr> 
+					      <td align="right" valign="top" class='normal'> <font color="#FF0000">* 
+						</font>Last Name : </td>
+					      <td align="left" valign="top" class='normal'>&nbsp; 
+<input type='hidden' name='owner_last_name' maxlength=60 class='text180' value="<?php echo stripslashes($owner_last_name); ?>"  readonly><?php echo stripslashes($owner_last_name); ?> 
+					      </td>
+ </td>
+					    </tr>
+					    <!--// end of the owner information //-->
+					        <!--// start of the motorized permit information //-->
+						<tr><td align="right" valign="top" class='normal' colspan=4> &nbsp;</td>
+						<tr><td align="center" valign="top" class='subtitleblue' colspan=4 > Vehicle Information</td></tr>
+						<tr><td align="right" valign="top" class='normal' colspan=4> &nbsp;</td>
+						</tr>
+						<tr>
+						    <td align="center" valign="top" class='normal' colspan=4> 
+						    	<table cellspacing=0 cellpadding=0 border=1 width=420>
+								<tr>
+									<td align="center" valign="top" class='subtitleblue' colspan=2> 
+										List of <?php echo $tag; ?> Vehicles
+									</td>
+								</tr>	
+							</table> <br>

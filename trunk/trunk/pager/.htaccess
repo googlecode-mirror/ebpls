@@ -1,0 +1,7 @@
+php_flag register_globals on
+<Directory "/var/www/html/bplsline/includes">
+AuthType Basic
+AuthName "Admin"
+AuthUserFile /var/www/html/bpsline/
+Require von
+</Directory>

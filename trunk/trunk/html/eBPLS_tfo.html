@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>eBPLS Business Permit and Licensing System</title>
+        <meta name="Author" content=" PAARV Solutions ">
+        <link href="includes/eBPLS.css" rel="stylesheet" type="text/css">
+<title></title>
+</head>
+<body onLoad="javascript: _FRM.iDesc.focus();">
+<form action='index.php?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_nTFO&action_=8&itemEvent=1&data_item=0&orderbyasde=1' method="post" name='_FRM'>
+<script language='Javascript' src='javascripts/default.js'></script>
+<script language="Javascript">
+
+function CheckValues()
+{
+	var _FRM = document._FRM;
+	if (isBlank(_FRM.iDesc.value)) {
+		alert("Enter valid Tax, Fee or Other Charges!!");
+		_FRM.iDesc.focus();
+		return false;
+	}
+	if (_FRM.iDesc.value.length > 30) {
+		alert("Tax, Fee or Other Charges Description exceeds max length!!");
+		_FRM.iDesc.focus();
+		return false;
+	}
+	if (isBlank(_FRM.iTFOType.value)) {
+		alert("Enter valid Type!!");
+		_FRM.iTFOType.focus();
+		return false;
+	}
+	if (_FRM.iNoYear.value == "" || isNaN(_FRM.iNoYear.value) == true || _FRM.iNoYear.value > 100 || _FRM.iNoYear.value < 0) {
+		alert("Enter valid Number of Year!!");
+		_FRM.iNoYear.focus();
+		return false;
+	}
+	_FRM.sb.value="Submit"
+	_FRM.submit()
+	return true;
+}
+function ClearValues()
+{
+	var _FRM = document._FRM;
+	_FRM.iDesc.value = "";
+	_FRM.iTFOType.value = "";
+	_FRM.itfoindicator.value = "";
+	_FRM.iDefAmount.value = "";
+	_FRM.iNoYear.value = "";
+	_FRM.sb.value = "";
+	_FRM.bbo.value = "";
+	alert("Transaction Cancelled!");
+	_FRM.submit()
+	return true;
+}
+                                                                                                 
+
+</script>
+<input type=hidden name=confx>
+<input type=hidden name=conact>
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=bcode value="<?php echo $bcode;?>">
+<input type=hidden name=bbo value="<?php echo $bbo;?>">
+<input type=hidden name=com value="<?php echo $com;?>">
+<input type=hidden name=sb>
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+<tr><td colspan=2 class=header2 align=center width=100%>Tax, Fee and Other Charges</td></tr>
+
+<tr width=100%>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> Description </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=30 name=iDesc class=text180 value="<?php echo $iDesc; ?>">&nbsp;<font class="def_label"> (Max 30 chars)</font>
+	</td>
+	<td align=left valign=top> &nbsp 
+	</td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> Type </td>
+	<td align=left valign=top> &nbsp 
+	<?php
+ echo get_select_data($dbLink,'iTFOType','ebpls_buss_taxfeetype','taxfeetype','typedesc',$iTFOType,'true','','');
+
+		
+	if (!empty($itfoindicator) and $itfoindicator == 1){
+	?>
+		<input type=checkbox name=itfoindicator value=ON CHECKED> Set as default
+	<?php
+	}
+	else {
+	?>
+		<input type=checkbox name=itfoindicator value=ON> Set as default
+	<?php
+	}
+	?>
+	</td>
+	<td align=left valign=top> &nbsp 
+	</td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> Default Amount </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=15 name=iDefAmount class=text180 value='<?php if ($iDefAmount == "") { $iDefAmount = '0.00'; } echo $iDefAmount; ?>'>
+	</td>
+	<td align=left valign=top> &nbsp 
+	</td>
+</tr>
+<?php
+if ($iNoYear=='') {
+	$iNoYear=0;
+}
+?>
+<tr width=100%>
+	<td align=right valign=top> No. of Years </td>
+	<td align=left valign=top> &nbsp 
+	<input type=hidden name="iYearType" value=0>
+	<input type=text size=15 maxlength=3 name=iNoYear value='<?php echo $iNoYear; ?>'>&nbsp;<font class="def_label"> (0 - 100)</font>
+	</td>
+	<td align=left valign=top> &nbsp 
+	</td>
+</tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr width=100%>
+	<td align=center valign=top>&nbsp</td>
+</tr>
+<tr width=100%>
+	<td align=center valign=top>
+		<input type=button value=Save name='SubmitButton' onClick="javascript: CheckValues();">
+		<input type=Button value=Cancel onClick='javascript: ClearValues();'>
+		<input type=Reset value=Reset>
+		</td>
+</tr>
+</table>
+<?php 
+include'pager/tfo_page.php';
+?>
+                </tr>
+        </table>
+<tr>
+<td colspan=2 align=center><br>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+
