@@ -1,0 +1,62 @@
+<form action='' method=post name="_FRM">
+<body onload="javascript: frm.<?php echo $field1; ?>.focus();"></body>
+<script language='Javascript' src='javascripts/javafunc.js'></script>
+<script language='Javascript' src='javascripts/default.js'></script>
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+	<tr><td colspan=2 class=header2 align=center>AF Issuance</td></tr>
+</table>
+<table border="0" width="100%" cellspacing="0" id="table1">
+<br><br>
+	<tr>
+		<input type=hidden name=main_id value="<?php echo $main_id; ?>">
+		<td width=40%>Payment Officer:</td>
+		<td>
+		<?php
+	    echo get_select_user($dbLink,'$field1','ebpls_user','id','username',$$field1,'true','','');
+	    
+?>
+		</td>
+	</tr>
+	<tr>
+		<input type=hidden name=main_id value="<?php echo $main_id; ?>">
+		<td width=40%>AF Start Series:</td>
+		<td><input type="text" name="<?php echo $field2; ?>" size="20" value='<?php echo $$field2; ?>' onkeyup='ComputeBALA();'></td>
+	</tr>
+	<tr>
+		
+		<td >AF End Series:</td>
+		<td><input type="text" name="<?php echo $field3; ?>" size="20" value='<?php echo $$field3; ?>' onkeyup='ComputeBALA();'></td>
+	</tr>
+	<tr>
+		
+		<td >AF Balance:</td>
+		<td><input type="text" name="bala" size="20" value='<?php echo $bala; ?>' readonly></td>
+	</tr>
+	<tr>
+		
+		<td >Minimum Level:</td>
+		<td><input type="text" name="<?php echo $field4; ?>" size="20" value='<?php echo $$field4; ?>'></td>
+	</tr>
+	<tr>
+		<td >&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+	<input type=hidden name="saveme">
+	<input type=hidden name="com" value="<? echo $com;?>">
+	<input type=hidden name="bbo" value="<? echo $bbo;?>">
+	<input type=hidden name="page">
+	<input type=hidden name="order" value="<? echo $order;?>">
+	<input type=hidden name="isdesc" value="<? echo $isdesc;?>">
+		<td >&nbsp;</td>
+		<td><input type="button" value="Save" name="B3" onclick='CheckAF();'  >
+		<input type="button" value="Cancel" name="B1"  onclick='CancelCat()' >
+		<input type="reset" value="Reset" name="B2"  ></td>
+	</tr>
+</table>
+</form>

@@ -1,0 +1,105 @@
+<!-- start of CTC formating //-->
+<table border=0 cellspacing=0 cellpadding=0 width='100%'>
+<tr>
+	<td align="center" valign="top">
+		<table border=0 cellspacing=1 cellpadding=0  width="100%" bgcolor='#202366'>
+			<tr>
+				<td align="center" valign="center"  bgcolor='#ffffff' width=240 class='normaltax' colspan=2>COMMUNITY TAX CERTIFICATE</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' width=100 class='normalgray'>BUSINESS</td>
+				<td align="center" valign="center" width=180 height=20  bgcolor='#ffffff' class='normaltax'>[ctc_code]</td>
+			</tr>
+			<tr>
+				<td align="center" valign="top"  bgcolor='#ffffff' width=10% align=center><pre><sup class='suptitle'>YEAR</sup><BR><font class=ctc_year>[FOR_YEAR]</font></pre></td>
+				<td align="center" valign="top"  bgcolor='#ffffff' width=35% ><sup class='suptitle'>PLACE OF ISSUE ( City / Mun / Prov )<BR><font class=ctc_place_issued>[PLACE_ISSUED]</font></td>
+				<td align="center" valign="top"  bgcolor='#ffffff' width=35% ><pre><sup class='suptitle'>DATE ISSUED</sup><BR><font class=ctc_item>[DATE]</font></pre></td>
+				<td align="center" valign="top" width=20% height=20  bgcolor='#ffffff' class='normaltax'>TAX PAYER'S COPY</td>
+			</tr>
+			<tr>
+
+
+
+
+				<td align="center" valign="top"  bgcolor='#ffffff' width="85%" align=center colspan=3>
+					<table width="100%" border=0 cellpadding=2 >
+					<tr>
+						<td>COMPANY'S FULLNAME</td>
+					<tr>
+						<td><input name="ctc_company" value="[ctc_company]" size=60 maxlength=128></td>
+					</tr>
+					</table>
+				</td>
+
+
+				<td align="" valign="top"  bgcolor='#ffffff' width=190 ><sup class='suptitle'>&nbsp;TIN IF ANY<BR>&nbsp;&nbsp;<input name="ctc_tin_no" value="[ctc_tin_no]" size=15 maxlength=32></td>
+			</tr>
+			<tr>
+				<td align="" valign="top"  bgcolor='#ffffff' width="70%" align=center colspan=3>
+				&nbsp;ADDRESS OF PRINCIPAL PLACE OF BUSINESS
+				<BR>
+				&nbsp;<input name="ctc_company_address" value="[ctc_company_address]" size=60 maxlength=128>
+				</td>
+				<td align="" valign="top"  bgcolor='#ffffff' width=190 ><sup class='suptitle'>&nbsp;DATE OF REG./INCORPORATION<BR>
+				&nbsp;&nbsp;[CTC_INCORPORATION_DATE]
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td align="center" valign="top">
+		<table border=0 cellspacing=1 cellpadding=5  width="100%" bgcolor='#202366'>
+			<tr>
+				<td align="" valign="middle" bgcolor='#ffffff' class='normaltax'>KIND OF ORGANIZATION<BR>[CTC_ORGANIZATION_TYPE]
+				</td>
+			        <td align="" colspan=3 valign="center" bgcolor='#ffffff' class='normaltax'>PLACE OF INCORPORATION<BR> <input name="ctc_place_of_incorporation" value="[ctc_place_of_incorporation]" size=32 maxlength=128></td>
+			</tr>
+			<tr>
+				<td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>KIND /  NATURE OF BUSINESS
+				<BR>
+				<input name="ctc_business_nature" value="[ctc_business_nature]" size=60 maxlength=128>
+				</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'>TAXABLE AMOUNT</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'>COMMUNITY TAX DUE</td>
+			</tr>
+			<tr>
+				<td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>A. BASIC COMMUNITY TAX (Php500.00)  </td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'></td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_amounttext"  name="ctc_basic_tax" readonly size=10 maxlength=30></td>
+			</tr>
+			<tr>
+				<td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>B. ADDITIONAL COMMUNITY TAX ( tax not to exceed Php10,000.00) </td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'></td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'></td>
+			</tr>
+			<tr>
+				<td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>1  ASSESSED VALUE OF REAL PROPERTY OWNED IN THE PHILIPPINES (Php2.00 for every Php5,000.00)</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_amounttext"  name="ctc_additional_tax1"  value="[ctc_additional_tax1]" size=10 maxlength=30></td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_amounttext" name="ctc_additional_tax1_due" value="[ctc_additional_tax1_due]" readonly size=10 maxlength=30></td>
+			</tr>
+			<tr>
+				<td align="" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2>2  GROSS RECEIPTS INCLUDING DIVIDENDS/EARNINGS DERIVED FROM BUSINESS IN THE PHIL DURING THE PRECEDING YEAR (Php2.00 for every Php5,000.00)</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_amounttext" name="ctc_additional_tax2"  value="[ctc_additional_tax2]" size=10 maxlength=30></td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_amounttext" name="ctc_additional_tax2_due"  value="[ctc_additional_tax2_due]" readonly size=10 maxlength=30></td>
+			</tr>
+			<tr>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2 rowspan=2><!--<BR>------------------------------------------<BR>Tax Payer's Signature<BR><BR>--></td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'>TOTAL(Php)</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_total_amounttext" name="ctc_total_amount_due" readonly size=10 maxlength=30></td>
+			</tr>
+			<tr>
+
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'>Interest(Php)</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_amounttext" name="ctc_total_interest_due" readonly size=10 maxlength=30></td>
+			</tr>
+			<tr>
+
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax' colspan=2><!--<BR>------------------------------------------<BR>Municipal / City Treasurer<BR><BR>--></td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'>Total Amount Paid(Php)</td>
+			        <td align="center" valign="center"  bgcolor='#ffffff' class='normaltax'><input type="text" class="ctc_total_amounttext" name="ctc_total_paid" readonly size=10 maxlength=30></td>
+			</tr>
+
+		</table>
+	</td>
+</tr>
+</table>
+<!--// end of the formating CTC //-->

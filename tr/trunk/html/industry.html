@@ -1,0 +1,100 @@
+<body onLoad="javascript: _FRM.nCode.focus();">
+<?php
+$nCode = isset($nCode) ? $nCode : '';
+$nType = isset($nType) ? $nType : '';
+?>
+<form action="index.php?part=4&class_type=Preference&selMode=<?php echo $selMode;?>&action_=8&itemEvent=1&data_item=0&orderbyasde=1" ENCTYPE="multipart/form-data" method="post" name="_FRM">
+                                                                                                 
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=bbo value="<?php echo $bbo;?>">
+<input type=hidden name=confx value="<?php echo $confx;?>">
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+	<tr><td colspan=2 class=header2 align=center>Industry Sector</td></tr>
+	<tr width=100%>
+                <td> &nbsp </td>
+        </tr>
+        <tr width=100%>
+                <td align=right valign=top> Industry Sector Code : </td>
+                <td align=left valign=top> &nbsp <input type=text maxlength=30 name=nCode class=text180 value='<?php echo $nCode; ?>'> <font class="def_label"> (Max 15 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+        <tr width=100%>
+                <td align=right valign=top> Industry Sector Type : </td>
+                <td align=left valign=top> &nbsp <input type=text maxlength=30 name=nType class=text180 value='<?php echo $nType; ?>'> <font class="def_label"> (Max 30 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=90%>
+        <tr width=100%>
+                <td align=center valign=top>&nbsp</td>
+        </tr>
+        <tr width=100%>
+                <td align=center valign=top>
+			 <input type=hidden name=sb>
+                        <input type=button value=Save name=sib onclick='VerifyIndustry();'>
+                        <input type=Button value=Cancel onClick='CancelCat();'>
+                        <input type=Reset value=Reset onClick="javascript: _FRM.nCode.focus();">
+                </td>
+        </tr>
+</table>
+</form>
+<tr>
+<td colspan=2 align=center><br>
+</td>
+</tr>
+</table>
+<script language='javascript'>
+function VerifyIndustry()
+{
+                                                                                                                                                                                                         
+                var a = document._FRM;
+                                                                                                                                                                                                         
+                 if (isBlank(a.nCode.value)) {
+                                                                                                                                                                                                         
+                        alert (<?php echo $invalid_input_error; ?> + " Industry Sector Code");
+                        a.nCode.focus();
+                        return false;
+                }
+                                                                                                                                                                                                         
+                 if (isBlank(a.nType.value)) {
+                                                                                                                                                                                                         
+                        alert (<?php echo $invalid_input_error; ?> + " Industry Sector Description");
+                        a.nType.focus();
+                        return false;
+                }
+                                                                                                                                                                                                         
+                                                                                                                                                                                                         
+                if (a.nCode.value.length>10) {
+                                                                                                                                                                                                         
+                        alert ("Economic Industry Sector Code " + <?php echo $max_len_error; ?>);
+                        a.nCode.focus();
+                        a.nCode.select();
+                        return false;
+                }
+                                                                                                                                                                                                         
+                if (a.nType.value.length>25) {
+                                                                                                                                                                                                         
+                        alert ("Economic Industry Sector Description " + <?php echo $max_len_error; ?>);
+                        a.nType.focus();
+                        a.nType.select();
+                        return false;
+                }
+                                                                                                                                                                                                         
+                                                                                                                                                                                                         
+                                                                                                                                                                                                         
+                a.sb.value='Submit';
+                a.submit();
+                return true;
+}
+</script>                                                                                               
+                                                                                                 
+</form>
+
+</html>
