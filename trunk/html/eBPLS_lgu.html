@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>eBPLS Business Permit and Licensing System</title>
+        <meta name="Author" content=" PAARV Solutions ">
+</head>
+<body onLoad="javascript: _FRM.iProvince.focus();">
+<form action='index.php?part=4&class_type=Preference&selMode=ebpls_nLGU&is_desc=ASC&page=1' method="post" name='_FRM'>
+<script language='Javascript' src='javascripts/default.js'></script>
+<script language="Javascript">
+
+function CheckValues()
+{
+	var _FRM = document._FRM;
+	if (_FRM.iProvince.value == "") {
+                alert("Province Cannot be Empty!!");
+		_FRM.iProvince.focus();
+		_FRM.iProvince.select();
+                return false;
+        }
+	if (_FRM.iLGUCode.value == "" || _FRM.iLGUCode.value == 0) {
+		alert("Enter valid LGU Code!!");
+		_FRM.iLGUCode.focus();
+		_FRM.iLGUCode.select();
+		return false;
+	}
+	if (_FRM.iLGUCode.value.length > 15) {
+                alert("LGU Code Exceeds Maximum Length!!");
+                _FRM.iLGUCode.focus();
+				_FRM.iLGUCode.select();
+                return false;
+        }
+	if (_FRM.iLGUDescription.value == "" || _FRM.iLGUDescription.value == 0) {
+		alert("Enter valid LGU Name!!");
+		_FRM.iLGUDescription.focus();
+		_FRM.iLGUDescription.select();
+		return false;
+	}
+	if (_FRM.iLGUDescription.value.length > 30) {
+                alert("LGU Name Exceeds Maximum Length!!");
+                _FRM.iLGUDescription.focus();
+                _FRM.iLGUDescription.select();
+				return false;
+        }
+	_FRM.sb.value="Submit"
+	_FRM.submit()
+	return true;
+}
+function ClearValues()
+{
+	var _FRM = document._FRM;
+	_FRM.iProvince.value = "";
+	_FRM.iLGUCode.value = "";
+	_FRM.iLGUDescription.value = "";
+	_FRM.iBLGFCode.value = "";
+	_FRM.sb.value = "";
+	_FRM.bbo.value = "";
+	alert("Transaction Cancelled!");
+	_FRM.submit()
+	return true;
+}
+                                                                                                 
+function confdel(cc)
+{
+         var _FRM = document._FRM;
+        doyou = confirm("Record Will Be Deleted, Continue?");
+                                                                                                 
+                                                                                                 
+        if (doyou==true) {
+                _FRM.bbo.value = cc;
+               _FRM.confx.value = 1;
+        } else {
+                _FRM.confx.value=0;
+                alert("Transaction Cancelled");
+		_FRM.iProvince.focus();
+                return false;
+        }
+        		
+                _FRM.submit();
+               return true;
+}
+</script>
+<input type=hidden name=confx value='<?php echo $confx; ?>'>
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=bbo value="<?php echo $bbo;?>">
+<input type=hidden name=com>
+<input type=hidden name=sb>
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+<tr><td colspan=2 class=header2 align=center width=100%>LGU</td></tr>
+<tr width=100%>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> Province </td>
+	<td align=left valign=top> &nbsp 
+	<?php echo get_select_province($dblink,'iProvince','ebpls_province','province_code','province_desc',$iProvince,'');?>
+	</td>
+	<td> &nbsp </td>
+</tr>
+<?php
+$iLGUCode = isset($iLGUCode) ? $iLGUCode : '';  //2008.05.12 define undefined variables
+$iLGUDescription = isset($iLGUDescription) ? $iLGUDescription : '';
+$iBLGFCode = isset($iBLGFCode) ? $iBLGFCode : '';
+?>
+<tr width=100%>
+	<td align=right valign=top> LGU Code </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=15 name=iLGUCode class=text180 value='<?php echo $iLGUCode; ?>'>&nbsp;<font class="def_label"> (Max 15 chars)</font></td>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> LGU Name </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=30 name=iLGUDescription class=text180 value='<?php echo $iLGUDescription; ?>'>&nbsp;<font class="def_label"> (Max 30 chars)</font></td>
+	<td> &nbsp </td>
+</tr>
+<tr width=100%>
+	<td align=right valign=top> BLGF Code </td>
+	<td align=left valign=top> &nbsp <input type=text maxlength=255 name=iBLGFCode class=text180 value='<?php echo $iBLGFCode; ?>'></td>
+	<td> &nbsp </td>
+</tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr width=100%>
+	<td align=center valign=top>
+		<input type=button value=Save name='SubmitButton' onClick="javascript: CheckValues();">
+		<input type=Button value=Cancel onClick='javascript: ClearValues();'>
+		<input type=Reset value=Reset onClick="javascript: _FRM.iProvince.focus();">
+	</td>
+</tr>
+</table>
+<?php 
+include'pager/lgu_page.php';
+?>
+                </tr>
+        </table>
+<tr>
+<td colspan=2 align=center><br>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+

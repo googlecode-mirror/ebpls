@@ -1,0 +1,138 @@
+<?php 
+require_once("lib/ebpls.lib.php");
+require_once("lib/ebpls.utils.php");                                                                                                                        
+require_once("ebpls-php-lib/utils/ebpls.search.funcs.php");
+//require_once("includes/eBPLS_header.php");
+                                                                                                                                                                                                                                     
+//--- get connection from DB
+$dbLink = get_db_connection();
+?>
+
+<?php
+echo date("F dS Y h:i:s A");
+?>
+
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <title>CERTIFICATION</title>
+  <meta name="Author" content=" Pagoda, Ltd. ">
+  <link href="includes/eBPLS.css" rel="stylesheet" type="text/css">
+  <script language="JavaScript" src="includes/eBPLS.js"></script>
+</head>
+<body>
+<br>
+
+<?php
+
+					$result=mysql_query("select lgumunicipality, lguprovince, lguoffice from ebpls_buss_preference") or die(mysql_error());
+          $resulta=mysql_fetch_row($result);
+
+?>
+
+<h4 align="center"> Republic of the Philippines </h4>
+<h4 align="center"> <?php echo $resulta[1]; ?> </h4>
+<h4 align="center"> <?php echo $resulta[0]; ?> </h4>
+<h4 align="center"> <?php echo $resulta[2]; ?> </h4>
+<h4> X------------------------X </h4>
+<h4 align="center"><u> CERTIFICATION </u></h4>
+<br>
+<br>
+
+<?php
+		
+					$result=mysql_query("select a.business_permit_code, a.application_date, b.business_name, b.business_street, a.transaction,
+					concat(c.owner_first_name, ' ', c.owner_middle_name, ' ', c.owner_last_name), c.owner_gender,
+					concat(c.owner_street, ' ', c.owner_city_code, ' ', owner_province_code), a.business_permit_id
+					from ebpls_business_enterprise_permit a, ebpls_business_enterprise b, ebpls_owner c
+					where a.business_permit_code = '$permit_number' and a.owner_id = b.owner_id and a.owner_id = c.owner_id") or die(mysql_error());
+          $resulta=mysql_fetch_row($result);
+	          
+?>
+
+<b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I HEREBY CERTIFY </b> that my business establishment is not located in a government lot, 
+      road right-of-way, sidewalk or any other public place. 
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In the event that my business is located in any of the foregoing places, I hereby manifest that I have 
+secured the necessary written approval of the government agency concerned, as shown by the herein attached permit acquired therefrom. 
+<br>
+<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I FURTHER CERTIFY</b> that my business establishment is not squatting in any private land.
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I am issuing this certification under penalties of perjury.
+<br>
+<br>
+<table align="left" border="0" cellpadding="1" cellspacing="1" width="1000">
+  <tbody>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+    <tr>
+    	<td align="center" width="500"> <b><?php echo $resulta[5]; ?> </b></td>
+      <td align="center" width="500"> <b><?php echo $resulta[2]; ?> </b></td>
+    </tr>
+    <tr>
+      <td align="center" width="500"> Name of Applicant/Signature </td>
+      <td align="center" width="500"> Trade Name of Business </td>
+    </tr>
+   </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+
+<table align="left" border="0" cellpadding="1" cellspacing="1" width="1000">
+	<tbody>
+    <tr>
+      <td> <br>
+      <br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SUBSCRIBED AND SWORN to before me this ___ day of __________ 20__ at the City of ____________, Philippines.
+Affiant exhibited to me his/her Community Tax Cert. No._____________________ issued on ______________ at____________________________. </td>
+    </tr>
+    <tr>
+      <td> <br>
+      <br>
+      <br>
+Doc. No.: ___________ <br>
+Page No.: ___________ <br>
+Book No.: ___________ <br>
+Series of _______ <br>
+      <br>
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"> NOTARY PUBLIC
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+Until December 31, 20__ <br>
+PTR &amp;&nbsp; No.: ___________ <br>
+Issued on __________ &nbsp;&nbsp;<br>
+      <br>
+      <br>
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+
+<?php
+
+require_once("includes/eBPLS_footer.php");
+
+?>
+
+</body>
+</html>

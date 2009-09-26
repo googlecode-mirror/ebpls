@@ -1,0 +1,102 @@
+
+<?php
+$nCode = isset($nCode) ? $nCode : '';
+$nType = isset($nType) ? $nType : '';
+?>
+
+<form method="post" name='_FRM'>
+<input type=hidden name=part value="<?php echo $part;?>">
+<input type=hidden name=class_type value="<?php echo $class_type;?>">
+<input type=hidden name=selMode value="<?php echo $selMode;?>">
+<input type=hidden name=bbo value="<?php echo $bbo;?>">
+<input type=hidden name=confx value="<?php echo $confx;?>">
+<table border=0 width=100% align=center cellspacing=0 cellpadding=0>
+<tr><td colspan=2 class=header align=center width=100%>REFERENCES</td></tr>
+<tr>
+        <td colspan=2 align=center>
+</td>
+</tr>
+	<tr><td colspan=2 class=header2 align=center>Occupancy</td></tr>
+        <tr width=100%>
+                <td> &nbsp </td>
+        </tr>
+	<tr width=100%>
+                <td> &nbsp </td>
+        </tr>
+        <tr width=100%>
+                <td align=right valign=top> Occupancy Code : </td>
+                <td align=left valign=top> &nbsp <input type=text maxlength=15 name=nCode class=text180 value='<?php echo $nCode; ?>'> <font class="def_label"> (Max 15 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+        <tr width=100%>
+                <td align=right valign=top> Occupancy Type : </td>
+                <td align=left valign=top> &nbsp <input type=text maxlength=30 name=nType class=text180 value='<?php echo $nType; ?>'> <font class="def_label"> (Max 30 chars)</font></td>
+                <td> &nbsp </td>
+        </tr>
+</table>
+<table align=center border=0 cellspacing=0 cellpadding=0 width=90%>
+        <tr width=100%>
+                <td align=center valign=top>&nbsp</td>
+        </tr>
+        <tr width=100%>
+                <td align=center valign=top>
+			<input type=hidden name=sb>
+			<input type=button value=Save name=sib onclick='VerifyOccu();'>
+                        <input type=Button value=Cancel onClick='CancelCat();'>
+                        <input type=Reset value=Reset>
+                        &nbsp<br><br>
+                </td>
+        </tr>
+</table>
+</form>
+<tr>
+<td colspan=2 align=center><br>
+</td>
+</tr>
+</table>
+<body onLoad="javascript: _FRM.nCode.focus();">
+    <script language='javascript'>
+    function VerifyOccu()
+{
+
+		var a = document._FRM;
+
+		 if (isBlank(a.nCode.value)) {
+
+			alert (<?php echo $invalid_input_error; ?> + " Occupancy Code");
+			a.nCode.focus();
+			return false;
+		}
+
+		 if (isBlank(a.nType.value)) {
+                                                                                                                             
+                        alert (<?php echo $invalid_input_error; ?> + " Occupancy Type");
+                        a.nType.focus();
+                        return false;
+                }
+
+		if (a.nCode.value.length>10) {
+                                                                                                                             
+                        alert ("Occupancy Code " + <?php echo $max_len_error; ?> );
+                        a.nCode.focus();
+                        a.nCode.select();
+                        return false;
+                }
+
+		if (a.nType.value.length>15) {
+                                                                                                                             
+                        alert ("Occupancy Type " + <?php echo $max_len_error; ?> );
+                        a.nType.focus();
+                        a.nType.select();
+                        return false;
+                }
+
+
+
+		a.sb.value='Submit';
+		a.submit();
+		return true;
+}                                                                                             
+ </script>                                                                                                
+</form>
+
