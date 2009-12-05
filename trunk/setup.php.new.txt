@@ -1,0 +1,1 @@
+For those who will use the system-only installation, please download the new setup.php and replace the old one in the main web directory (/home/site/ebpls/setup.php). After replacing the old file, run the new setup on the web browser.

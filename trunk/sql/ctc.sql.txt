@@ -1,0 +1,1 @@
+Please download the update for CTC Settings table. Download the file and upload it to the server using the MySQL myadmin (Import) or the "Admin" link in the system (Restore)
