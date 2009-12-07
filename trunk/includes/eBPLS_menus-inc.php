@@ -1,6 +1,7 @@
 <?php
 /*
 Modification History:
+2009.12.05: Enable Menu Entries - TomR
 2008.04.25: Change invalid constants to strings to reduce PHP errors in log
 2008.05.11: Changed BusItem to busItem in 'busItem=ebpls_ninterestsur' strings after line 968
 */
@@ -139,9 +140,10 @@ if ($chkpenalty==0) {
 <?php
         $tdate=date('D, M d, Y');
 ?>
-<td width="30%" class="color3">Today is <?php echo $tdate;?></td>
-<td width="30%" align="center">Welcome, <b> <?php echo(strtoupper($ThUserData['firstname'])); ?> <?php echo(strtoupper($ThUserData['lastname'])); ?></b></td>
-<td width="40%" height=25 align=right > [ <a href=?part=4>HOME</a>
+<td width="40%" > Today is <?php echo $tdate;?>
+<?php echo("  ***  " . eBPLS_APP_NAME . " version " . eBPLS_APP_VERSION . "  ***"); ?></td>
+<td width="25%" align="center">Welcome, <b> <?php echo(strtoupper($ThUserData['firstname'])); ?> <?php echo(strtoupper($ThUserData['lastname'])); ?></b></td>
+<td width="35%" height=25 align=right > [ <a href=?part=4>HOME</a>
 <?php
         if ($ulev>5) {
 ?>
@@ -182,7 +184,7 @@ if ($chkpenalty==0) {
 	<option value='Business'>Business</option>
 	<?php
 	}
-        /*if ($mp==1 || $ulev==6 || $ulev==7) { ?>
+        if ($mp==1 || $ulev==6 || $ulev==7) { ?>
 	<option value='Motorized'>Motorized</option>
 	<?php
         }
@@ -198,13 +200,14 @@ if ($chkpenalty==0) {
         }
         if ($fp==1 || $ulev==6 || $ulev==7) { ?>
 
-	<!--<option value='Franchise'>Franchise</option>-->
+	<!-- enable Franchise  -->
+	<option value='Franchise'>Franchise</option>
 	<?php
         }
         if ($ip==1 || $ulev==6 || $ulev==7) { ?>
 
 	<option value='Fishery'>Fishery</option>
-	<?php } */ ?>
+	<?php }  ?>
 	</select>
 	</td>
 </tr>
@@ -259,11 +262,11 @@ if ($chkpenalty==0) {
 	<td><input type=submit name=Search value="SEARCH" style="font-size:10" height="19"></td>
 </tr>
 </form>
-<!--
+<!-- enable HOME -->
 <tr bgcolor="#EEEEEE">
 <td><a href=?part=4>HOME</a></td>
 </tr>
--->
+
 </table>
 <table border=0 width=100% cellspacing=0 cellpadding=0 class="mnu">
 <tr>
@@ -340,7 +343,8 @@ if ($bpar==1 ||  $ulev==6 || $ulev==7) {
 ?>
 
 <?php 
-/*if ($fp==1 ||  $ulev==6 || $ulev==7) { ?>
+// Main Menu - Permits - Franchaise
+if ($fp==1 ||  $ulev==6 || $ulev==7) { ?>
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp - 
 <a href=?part=4&class_type=Permits&itemID_=1221&permit_type=Franchise&busItem=Franchise&mtopsearch=SEARCH> Franchise</a></td>
@@ -378,10 +382,11 @@ if ($fpar==1 ||  $ulev==6 || $ulev==7) {
 
 <?php
 }
-}*/
+}  
+// Main Menu - Permits - Fishery
 ?>
 
-<?php /*if ($ip==1 ||  $ulev==6 || $ulev==7) { ?>
+<?php if ($ip==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
@@ -391,8 +396,8 @@ if ($fpar==1 ||  $ulev==6 || $ulev==7) {
 <?php
 }
 
-
-/*if ($busItem==Fishery){
+// Main Menu - Permits - Fishery
+if ($busItem==Fishery){
 ?>
 <?php
                                                                                 
@@ -426,8 +431,9 @@ if ($ipar==1 ||  $ulev==6 || $ulev==7) {
 <?php
 }
 }
-
-/*if ($mp==1 ||  $ulev==6 || $ulev==7) { ?>
+ 
+// Main Menu - Permits - Motorized, Occupational, Peddlars entries
+if ($mp==1 ||  $ulev==6 || $ulev==7) { ?>
 <tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
 <a href=?part=4&class_type=Permits&itemID_=1221&permit_type=Motorized&busItem=Motorized&mtopsearch=SEARCH> Motorized</a></td>
@@ -552,7 +558,7 @@ if ($ppar==1 ||  $ulev==6 || $ulev==7) {
 <?php
 }
 }
-}*/
+} // 
 }
 
 ?>
@@ -607,10 +613,9 @@ if ($busItem=='Reports') {
 </tr>
                                                                                                  
 <?php
-        }
- 
-                                                                                                
-        /*if ($mpl1==1 ||  $ulev==6 || $ulev==7) { ?>
+        }  
+// Reports - Motorized, Occupational, Fishery, Peddlars
+        if ($mpl1==1 ||  $ulev==6 || $ulev==7) { ?>
                                                                                                  
 <tr>
 <td class='bold'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <a href=?part=4&class_type=Reports&itemID_=921&busItem=Reports&permit_type=Reports&rpt=Motorized>Motorized</a></td>
@@ -631,9 +636,10 @@ if ($busItem=='Reports') {
                                                                                                 
         if ($fpl==1 ||  $ulev==6 || $ulev==7) { ?>
                                                                                                  
-<!--<tr>
+<!-- enable Franchise -->
+<tr>
 <td class='bold'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <a href=?part=4&class_type=Reports&itemID_=921&busItem=Reports&permit_type=Reports&rpt=Franchise>Franchise</a></td>
-</tr>-->
+</tr>
                                                                                                  
 <?php
         }
@@ -656,8 +662,8 @@ if ($busItem=='Reports') {
 </tr>
                                                                                                  
 <?php
-        }*/
-                                                                                                
+        } 
+// Reports - CTC, ...
         if ($ctl1==1 ||  $ulev==6 || $ulev==7) { ?>
                                                                                                  
 <tr>
@@ -785,10 +791,11 @@ if ($bnl==1 ||  $ulev==6 || $ulev==7) { ?>
 <a href=index.php?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_nbusiness&action_=0&orderbyasdes=1&reftype=bus&permit_type=Business>Business Nature</a></td>
 </tr>
 
-<!--<tr>
+<!-- enable PSIC menu -->
+<tr>
 <td> &nbsp &nbsp &nbsp &nbsp &nbsp -
 <a href=index.php?part=4&class_type=Preference&pref_type=Business&selMode=ebpls_npsic&action_=9&itemEvent=1&data_item=0>PSIC </a></td>
-</tr>-->
+</tr>
 
 <?php
 			}
@@ -805,13 +812,15 @@ if ($opfl==1 ||  $ulev==6 || $ulev==7) {
 
 ?>
 	
-<!--<tr>
+<!-- enable other permits -->
+<tr>
 <td class='bold'> &nbsp &nbsp &nbsp -
-<a href=index.php?part=4&class_type=Preference&permit=others&selMode=<?php echo $idd; ?>&action_=8&itemEvent=1&data_item=0>Other Permit </a></td>
-</tr>-->
+<a href=index.php?part=4&class_type=Preference&permit=others&selMode=<?php echo $idd; ?>&action_=8&itemEvent=1&data_item=0>Other Permits </a></td>
+</tr>
 <?php
 }
-/*if ($class_type==Preference and $permit==others) {
+// Main Menu - Permits - Fishery
+if ($class_type==Preference and $permit==others) {
 
 if ($fpfl==1 ||  $ulev==6 || $ulev==7) {
 	if ($eng==1 ||  $ulev==6 || $ulev==7) { ?>
@@ -850,7 +859,7 @@ if ($fishde==1 ||  $ulev==6 || $ulev==7) { ?>
 <?php
 	}
 }
-}*/
+}
 
 if ($coal==1 ||  $ulev==6 || $ulev==7) { ?>
                                                                                                  
@@ -976,7 +985,8 @@ if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 <?php
 }
 }
-/*if ($busItem == 'ebpls_ninterestsur') {
+// 
+if ($busItem == 'ebpls_ninterestsur') {
 if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
@@ -1005,7 +1015,8 @@ if ($psl==1 ||  $ulev==6 || $ulev==7) { ?>
 </tr>
 <?php
 }
-}*/
+}
+// 
 if ($rsl==1 ||  $ulev==6 || $ulev==7) { ?>
 
 <tr>
@@ -1018,10 +1029,11 @@ if ($rsl==1 ||  $ulev==6 || $ulev==7) { ?>
 <a href=index.php?part=4&class_type=Preference&selMode=ebpls_nreportsign&is_desc=ASC>Signatory Templates </a></td>
 </tr>
 
-<!--<tr>
+<!-- enable Templates -->
+<!-- <tr>
 <td> &nbsp &nbsp &nbsp -
 <a href=index.php?part=4&class_type=Preference&selMode=ebpls_ntemplate&action_=8&itemEvent=1&data_item=0>Templates </a></td>
-</tr>-->
+</tr> -->
 <?php
 }
 
@@ -1053,11 +1065,7 @@ if ($gsl==1 ||  $ulev==6 || $ulev==7) { ?>
 }
 }
 ?>
-<!--
-<tr>
-<td><a href=?part=2>Logout</a></td>
-</tr>
--->
+
 <?php
 }
 ?>
@@ -1096,22 +1104,33 @@ if ($acl==1 ||  $ulev==6 || $ulev==7) { ?>
 	
 <?php 
 }
-//if ($cspl==1 ||  $ulev==6 || $ulev==7) { ?>
-	<!--<tr>
+//
+if ($cspl==1 ||  $ulev==6 || $ulev==7) { ?>
+	<tr>
 		<td class='bold'> &nbsp &nbsp &nbsp - 
 		<a href='?part=4&itemID_=23&busItem=Settings&permit_type=Settings&settings_type=ColorScheme&item_id=Settings'><font size=1>Color Scheme Preference</font></a></td>
-	</tr>-->
+	</tr>
 	
-	<!--<tr>
+	<tr>
 		<td> &nbsp &nbsp &nbsp -
 		<a href='?part=4&itemID_=&busItem=Settings&permit_type=Settings&settings_type=SysReference&item_id=Settings'><font size=1>System Reference</font></a></td>
-	</tr>-->
+	</tr>
 
 <?php 
-//}
+//
+}
 }
 
 ?>
+
+<!-- enable Logout -->
+<tr>
+<td><a href=?part=4>Home</a></td>
+</tr>
+
+<tr>
+<td><a href=?part=2>Logout</a></td>
+</tr>
 
 <tr>
 <td align=left><hr></td>
@@ -1202,21 +1221,21 @@ while($get_infoan = FetchRow($dbtype,$resultan))
 if ($permit_type=='Business') {
 	include "includes/resetvars.php";
 	include"includes/bizlevel.php";
-//} elseif ($permit_type=='Motorized') {
-//	include "includes/resetvars.php";
-//	include"includes/motorlevel.php";
-//} elseif ($permit_type=='Franchise') {
-//	include "includes/resetvars.php";
-//	include"includes/franlevel.php";
-//} elseif ($permit_type=='Occupational') {
-//	include "includes/resetvars.php";
-//	include"includes/occulevel.php";
-//} elseif ($permit_type=='Peddler') {
-//	include "includes/resetvars.php";
-//	include"includes/pedlevel.php";
-//} elseif ($permit_type=='Fishery') {
-//	include "includes/resetvars.php";
-//	include"includes/fishlevel.php";
+} elseif ($permit_type=='Motorized') {
+	include "includes/resetvars.php";
+	include"includes/motorlevel.php";
+} elseif ($permit_type=='Franchise') {
+	include "includes/resetvars.php";
+	include"includes/franlevel.php";
+} elseif ($permit_type=='Occupational') {
+	include "includes/resetvars.php";
+	include"includes/occulevel.php";
+} elseif ($permit_type=='Peddler') {
+	include "includes/resetvars.php";
+	include"includes/pedlevel.php";
+} elseif ($permit_type=='Fishery') {
+	include "includes/resetvars.php";
+	include"includes/fishlevel.php";
 } elseif ($permit_type=='CTC') {
 	include "includes/resetvars.php";
 	include"includes/ctclevel.php";
