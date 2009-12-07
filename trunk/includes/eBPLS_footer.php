@@ -15,7 +15,7 @@
 <center>
 <br>
 <span class="thCopyright"><font color="black">
-<?php echo(eBPLS_APP_NAME . " version " . eBPLS_APP_VERSION); ?> Copyright &copy; 2004 National Computer Center 
+<?php echo("***  " . eBPLS_APP_NAME . " version " . eBPLS_APP_VERSION . "  ***"); ?> Copyright &copy; 2004 National Computer Center 
 For website comments and suggestions, please email the </font><a href="mailto:<?php echo(eBPLS_MAIL_WEBMASTER); ?>?subject=eBPLS%20Comments"><font color="blue">webmasters</font></a>.<br>
 </span>
 <br>&nbsp;
