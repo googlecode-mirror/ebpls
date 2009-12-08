@@ -57,9 +57,15 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
-	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+/* =====================================================================
+frederick >>> change this.  SEE correction made on line# 116 & 118
+also added the words "Province of & MUNICIPALITY OF"
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+=========================================================================*/
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF  '.strtoupper($this->lgu),0,2,'C');
 	$this->SetFont('Arial','B',14);
 	$this->Cell(340,5,$this->office,0,2,'C');
 	$this->Cell(340,5,'',0,2,'C');	
@@ -68,7 +74,7 @@ function AcceptPageBreak()
 	$this->SetFont('Arial','B',14);
 	$this->Cell(340,5,'REGISTERED AND RENEWED',0,1,'C');
 	$this->SetFont('Arial','B',14);
-	$this->Cell(340,5,'FOR THE YEARS '.$this->yearnow.', '.$this->yearnext.'& '.$this->yearnextnext,0,1,'C');
+	$this->Cell(340,5,'FOR THE YEARS '.$this->yearnow.', '.$this->yearnext.' & '.$this->yearnextnext,0,1,'C');
 	$this->SetFont('Arial','BU',12);
 	$this->Ln(22);
 	
@@ -105,7 +111,12 @@ $getlgu = @mysql_query("select city_municipality_desc from ebpls_city_municipali
 $getlgu = @mysql_fetch_row($getlgu);
 $getprov = @mysql_query("select province_desc from ebpls_province where province_code = '$resulta[1]'");
 $getprov = @mysql_fetch_row($getprov);
+/*=======================================================
+frederick >>> change this; incorrect arrangement of variable
+>> SEE: function setLGUinfo (line # 22)
 $pdf->setLGUinfo($getlgu[0],$getprov[0],$resulta[2]);
+===========================================================*/
+$pdf->setLGUinfo($getprov[0],$getlgu[0],$resulta[2]);
 $pdf->setYears($dateprev,$datenext,$datenextnext);
 $pdf->AddPage();
 $pdf->AliasNbPages();
@@ -200,10 +211,6 @@ while ($getnats = @mysql_fetch_assoc($getnat))
 	$pdf->Cell(30,5,$get3new,1,0,'R');
 	$pdf->Cell(30,5,$get3renew,1,0,'R');
 	$yloop = $yloop + 5;
-	if ($yloop > 120) {
-		$yloop = 0;
-		$pdf->AddPage();
-	}
 }
 $pdf->Cell(270,5,'',0,1,'C');
 $pdf->Cell(270,5,'',0,1,'C');

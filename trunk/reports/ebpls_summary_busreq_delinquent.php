@@ -54,11 +54,28 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
+/* -----------------------------------------------------------------
+frederick >>> change these:
+
 	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+
+to these:             */
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//SEE: change made on lines 116 & 118
+
+//added blank space
+	$this->Cell(340,5,'',0,1,'C');
+
 	$this->SetFont('Arial','B',14);
-	$this->Cell(340,5,$this->office,0,2,'C');
+
+//changed to ALL CAPS
+//	$this->Cell(340,5,$this->office,0,2,'C');
+	$this->Cell(340,5,strtoupper($this->office),0,2,'C');
+//-------------------------------------------------
 	$this->Cell(340,5,'',0,2,'C');	
 	$this->SetFont('Arial','BU',16);
 	$this->Cell(340,5,'LIST OF BUSINESS REQUIREMENT DELINQUENT',0,1,'C');
@@ -94,7 +111,13 @@ if ($cap_inv2 == "" || $cap_inv2 == 0) {
 }
 //$pdf=new FPDF('L','mm','Legal');
 $pdf=new PDF('L','mm','Legal');
-$pdf->setLGUinfo($getlgu[0],$getprov[0],'Office of the Treasurer');
+/*--------------------------------------------------------------------------
+frederick >>> changed this:
+	$pdf->setLGUinfo($getlgu[0],$getprov[0],'Office of the Treasurer');
+to this:     */
+	$pdf->setLGUinfo($getprov[0],$getlgu[0],'Office of the Treasurer');
+//SEE: function setLGUinfo on line 20
+//-----------------------------------------------------------------------
 $pdf->setYear($date_from,$date_to);
 $pdf->AddPage();
 $pdf->AliasNbPages();
@@ -121,10 +144,15 @@ $pdf->Cell(340,5,$dateprinted,0,1,'R');
 $pdf->SetX(5);
 $pdf->Cell(30,5,'APPLICATION DATE',1,0,'C');
 $pdf->Cell(50,5,'BUSINESS NAME',1,0,'C');
-$pdf->Cell(100,5,'BUSINESS ADDRESS',1,0,'C');
+/*===========================================================
+FREDERICK -> change cell width FROM 100 to 85:
+$pdf->Cell(100,5,'BUSINESS ADDRESS',1,0,'C'); */
+$pdf->Cell(85,5,'BUSINESS ADDRESS',1,0,'C');
 $pdf->Cell(60,5,'OWNER NAME',1,0,'C');
-$pdf->Cell(100,5,'REQUIREMENT DELINQUENT',1,1,'C');
-
+/* and FROM 100 to 115
+$pdf->Cell(100,5,'REQUIREMENT DELINQUENT',1,1,'C'); */
+$pdf->Cell(115,5,'REQUIREMENT DELINQUENT',1,1,'C');
+//===========================================================
 /*
 	$result = mysql_query("select distinct (c.business_permit_id), a.business_name, 
 	concat(a.business_lot_no, ' ', a.business_street, ' ',
@@ -169,7 +197,11 @@ $date_to = date('Y-m-d', $xdate);
 		$pdf->SetX(5);
     	$pdf->Cell(30,5,$resulta[application_date],1,0,'C');
 		$pdf->Cell(50,5,$resulta[business_name],1,0,'C');
-		$pdf->Cell(100,5,$resulta[bus_add],1,0,'C');
+/*==========================================================================
+		FREDERICK -> change cell width from 100 to 85:
+		$pdf->Cell(100,5,$resulta[bus_add],1,0,'C'); */
+		$pdf->Cell(85,5,$resulta[bus_add],1,0,'C');
+//========================================================================== 
 		$pdf->Cell(60,5,$resulta[fulln],1,0,'C');
 		$getdelreq = @mysql_query("select * from havereq where  business_id = '$resulta[business_id]' and owner_id = '$resulta[owner_id]' and active = '0'");
 		$getdelreq11 = "";
@@ -185,11 +217,13 @@ $date_to = date('Y-m-d', $xdate);
 			$getdelreq11 .= $xvvar1.$getreqs['reqdesc'];
 			$xvvar++;
 		}
-		$pdf->Cell(100,5,$getdelreq11,1,1,'L');
-
+/*==========================================================================
+ and FROM 100 to 115
+		$pdf->Cell(100,5,$getdelreq11,1,1,'L'); */
+		$pdf->Cell(115,5,$getdelreq11,1,0,'L');
 		$pdf->SetY($pdf->GetY()+5);
 	} 
-
+//==========================================================================
 $pdf->Cell(270,5,'',0,1,'C');
 $pdf->Cell(270,5,'',0,1,'C');
 

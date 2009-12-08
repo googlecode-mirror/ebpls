@@ -48,6 +48,8 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
+/*--------------------------------------------------------------
+FREDERICK -> changed the cell width of the ff: from 340 to 195:
 	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
 	$this->Cell(340,5,$this->prov,0,1,'C');
 	$this->Cell(340,5,$this->lgu,0,2,'C');
@@ -56,10 +58,29 @@ function AcceptPageBreak()
 	$this->Cell(340,5,'',0,2,'C');	
 	$this->SetFont('Arial','BU',16);
 	$this->Cell(340,5,'COLLECTIONS SUMMARY',0,1,'C');
+
+Additionally:               */
+//changed letter case
+	$this->Cell(195,5,'Republic of the Philippines',0,1,'C');
+
+//change $this->prov and $this->lgu    SEE: change made on lines 121 & 122
+//added the words "Province of & MUNICIPALITY OF"
+	$this->Cell(195,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(195,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//added blank space
+	$this->Cell(195,5,'',0,1,'C');
+
+	$this->SetFont('Arial','B',14);
+//changed to ALL CAPS
+	$this->Cell(195,5,strtoupper($this->office),0,2,'C');
+	$this->Cell(195,5,'',0,2,'C');	
+	$this->SetFont('Arial','BU',16);
+	$this->Cell(195,5,'COLLECTIONS SUMMARY',0,1,'C');
 	$this->SetFont('Arial','BU',12);
 	$this->Ln(22);
 	
-} 	
+}
+//-------------------------------------------------------------------------
 //Page footer
 	function Footer()
 	{
@@ -92,8 +113,14 @@ $getprov = @mysql_query("select province_desc from ebpls_province where province
 $getprov = @mysql_fetch_row($getprov);
 	
 //$pdf=new FPDF('L','mm','Legal');
-$pdf=new PDF('L','mm','Legal');
-$pdf->setLGUinfo($getlgu[0],$getprov[0],$resulat[2]);
+/*-------------------------------------------------------------------
+FREDERICK -> change Paper Orientation from Landscape to Portrait
+$pdf=new PDF('L','mm','Legal'); */
+$pdf=new PDF('P','mm','Legal');
+//change arrangement of $getlgu & $getprov   SEE: function setLGUinfo on line 19
+//$pdf->setLGUinfo($getlgu[0],$getprov[0],$resulat[2]);
+$pdf->setLGUinfo($getprov[0],$getlgu[0],'Office of the Treasurer');
+//---------------------------------------------------------------------
 $pdf->AddPage();
 $pdf->AliasNbPages();
 
@@ -105,9 +132,16 @@ $gettype = @mysql_fetch_array($resultpp);
 //header
 $pdf->SetFont('Arial','B',6);
 $pdf->SetY($Y_Label_position);
-$pdf->SetX(5);
-$pdf->Cell(50,5,$gettype[typedesc],1,0,'C');
+/*====================================================
+FREDERICK -> change X Coordinate from 5 to 55:
+/$pdf->SetX(5); */
 $pdf->SetX(55);
+//====================================================
+$pdf->Cell(50,5,$gettype[typedesc],1,0,'C');
+/*====================================================
+FREDERICK -> removed this X Coordinate
+/$pdf->SetX(55);
+=====================================================*/
 $pdf->Cell(55,5,'COLLECTION',1,1,'C');
 
 //second line
@@ -116,48 +150,80 @@ while ($getfees=mysql_fetch_array($result)) {
 $Yx++;
 $Yxx=$Yx*5;
 $pdf->SetY($Y_Label_position+$Yxx);
-$pdf->SetX(5);
+/*=========================================
+FREDERICK -> change X coordinate
+/$pdf->SetX(5); */
+$pdf->SetX(55);
+//=========================================
 $pdf->Cell(50,5,$getfees[tfodesc],1,0,'L');
 $getamount = mysql_query("select sum(compval) from tempassess where tfoid='$getfees[tfoid]' and date_create between '$date_from' and '$date_to' and active='1'");
 $getamount = mysql_fetch_row($getamount);
-$pdf->SetX(55);
+/*=========================================
+FREDERICK -> removed this X Coordinate
+$pdf->SetX(55); */
+//=========================================
 $pdf->Cell(55,5,number_format($getamount[0],2),1,0,'R');
 $totalamount = $totalamount + $getamount[0];
 }
 $totalamount = number_format($totalamount,2);
-$pdf->SetY($Y_Label_position+$Yxx+10);
-$pdf->SetX(5);
-$pdf->Cell(50,5,'Total',1,0,'L');
+/*=========================================
+FREDERICK -> change addtl Y coordinate from 10 to 6
+$pdf->SetY($Y_Label_position+$Yxx+10); */
+$pdf->SetY($Y_Label_position+$Yxx+6);
+/* changed this X Coordinate from 5 to 55
+$pdf->SetX(5); */
 $pdf->SetX(55);
+//=========================================
+$pdf->Cell(50,5,'Total',1,0,'L');
+/*=========================================
+FREDERICK -> removed this X coordinate
+$pdf->SetX(55);
+===========================================*/
 $pdf->Cell(55,5,$totalamount,1,0,'R');
-          
+/*=========================================
+FREDERICK -> change cell width of the ff: from 270 to 195          
 $pdf->Cell(270,5,'',0,1,'C');
-$pdf->Cell(270,5,'',0,1,'C');
-
+$pdf->Cell(270,5,'',0,1,'C'); */
+$pdf->Cell(195,5,'',0,1,'C');
+$pdf->Cell(195,5,'',0,1,'C');
 //$pdf->SetY(-18);
-$pdf->SetX(5);
-
+/* change X coordinate from 5to 25
+$pdf->SetX(5); */
+$pdf->SetX(25);
+//===========================================
 $pdf->SetFont('Arial','B',10);
-$pdf->Cell(172,5,'Prepared By :',0,0,'L');
-$pdf->Cell(172,5,'Noted By :',0,1,'L');
+$pdf->Cell(50,5,'Prepared By :',0,0,'L');
 
+$pdf->SetX(125);
+$pdf->Cell(50,5,'Noted By :',0,1,'L');
+/*==========================================
+FREDERICK -> change cell width of the ff: from 270 to 195    
 $pdf->Cell(270,5,'',0,1,'C');
-$pdf->Cell(270,5,'',0,1,'C');
-
+$pdf->Cell(270,5,'',0,1,'C'); */
+$pdf->Cell(195,5,'',0,1,'C');
+$pdf->Cell(195,5,'',0,1,'C');
+//===========================================
 $getuser = @mysql_query("select * from ebpls_user where username = '$usernm'") or die(mysql_error());
 $getuser = @mysql_fetch_array($getuser);
 $getsignatories = @mysql_query("select * from report_signatories where report_file='Comparative Annual Report' and sign_type='3'");
 $getsignatories1 = @mysql_fetch_array($getsignatories);
 $getsignatories = @mysql_query("select * from global_sign where sign_id='$getsignatories1[sign_id]'");
 $getsignatories1 = @mysql_fetch_array($getsignatories);
-$pdf->SetX(5);
+/*====================================================
+FREDERICK -> change X coordinate from 5 to 25
+$pdf->SetX(5); */
+$pdf->SetX(25);
 $pdf->SetFont('Arial','B',10);
-$pdf->Cell(172,5,$getuser[firstname].' '.$getuser[lastname],0,0,'L');
-$pdf->Cell(172,5,$getsignatories1[gs_name],0,1,'L');
+$pdf->Cell(75,5,$getuser[firstname].' '.$getuser[lastname],0,0,'L');
+//add this X coordinate:
+$pdf->SetX(125);
+$pdf->Cell(75,5,$getsignatories1[gs_name],0,1,'L');
 $pdf->SetFont('Arial','B',10);
-$pdf->SetX(5);
-$pdf->Cell(172,5,'',0,0,'C');
-$pdf->Cell(172,5,$getsignatories1[gs_pos],0,1,'L');
+//$pdf->SetX(5);
+$pdf->SetX(125);
+//$pdf->Cell(75,5,'',0,0,'C');
+$pdf->Cell(75,5,$getsignatories1[gs_pos],0,1,'L');
+//=====================================================
 //$pdf->SetFont('Arial','B',10);
 //$pdf->Cell(172,5,'Recommend Approval:',1,0,'L');
 //$pdf->Cell(172,5,'Approved:',1,1,'L');
