@@ -10,7 +10,7 @@
 
 //	Application Name and Version
 define("eBPLS_APP_NAME", "eBPLS");
-define("eBPLS_APP_VERSION", "eGov4MD/CESO r55");
+define("eBPLS_APP_VERSION", "eGov4MD/CESO r58 BETA");
 include "varsite.php";
 //define("eBPLS_APP_URL", "http://localhost/ebpls/");	// do not include filenames
 
