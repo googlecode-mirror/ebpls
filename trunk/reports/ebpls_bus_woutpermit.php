@@ -47,11 +47,27 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
+/* ---------------------------------------------------------------
+frederick >>> change these:
+
 	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+
+to this:      */
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//SEE: change made to lines 102 & 104
+
+//add blank space
+	$this->Cell(340,5,'',0,1,'C');
+
 	$this->SetFont('Arial','B',14);
-	$this->Cell(340,5,$this->office,0,2,'C');
+//change this to uppercase
+//	$this->Cell(340,5,$this->office,0,2,'C');
+	$this->Cell(340,5,strtoupper($this->office),0,2,'C');
+//---------------------------------------------------------------------------
 	$this->Cell(340,5,'',0,2,'C');	
 	$this->SetFont('Arial','BU',16);
 	$this->Cell(340,5,'BUSINESS ESTABLISHMENTS WITHOUT PERMIT',0,1,'C');
@@ -81,7 +97,12 @@ $getprov = @mysql_query("select province_desc from ebpls_province where province
 $getprov = @mysql_fetch_row($getprov);    
 //$pdf=new FPDF('L','mm','Legal');
 $pdf=new PDF('L','mm','Legal');
+/*------------------------------------------------------------------------
+frederick >>> change this:
 $pdf->setLGUinfo($getlgu[0],$getprov[0],'Office of the Treasurer');
+to this:              */
+$pdf->setLGUinfo($getprov[0],$getlgu[0],'Office of the Treasurer');
+//--------------------------------------------------------------------------
 $pdf->AddPage();
 $pdf->AliasNbPages();
 
@@ -158,7 +179,14 @@ if ($paid == '0' || $paid =='1') {
 								 where a.owner_id='$resulta[owner_id]' and
 								 a.business_id='$resulta[business_id]' and a.active=1
 								 ");
-		
+
+/*--------------------------------------------------------------------------------
+frederick >>> found out that this script is located below/after the $getcap query
+This is the reason why the array $getl[bus_code] resulted empty and
+the capital investment did not appear in the report,
+therefore, this has been moved here:             */
+			$getl = mysql_fetch_assoc($getline);
+//----------------------------------------------------------------------------------
 				$getcap = mysql_query ("select * from tempbusnature a
 								 where a.owner_id='$resulta[owner_id]' and
 								 a.business_id='$resulta[business_id]' and a.bus_code='$getl[bus_code]'
@@ -167,7 +195,6 @@ if ($paid == '0' || $paid =='1') {
 				$getcap = mysql_fetch_assoc($getcap);
 				
 				$totcap = $totcap + $getcap[cap_inv];
-			$getl = mysql_fetch_assoc($getline);
 				$totgross = $totgross + $getl[last_yr];
 			
 		$pdf->Cell(30,5,number_format($getcap[cap_inv],2),1,0,'R');

@@ -64,11 +64,25 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
+/* ----------------------------------------------------------------------
+frederick >>> changed these:
 	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+to these:               */
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//SEE: change made on lines 118 to 120
+
+//added blank space
+	$this->Cell(340,5,'',0,1,'C');
+
 	$this->SetFont('Arial','B',14);
-	$this->Cell(340,5,$this->office,0,2,'C');
+//change this to ALL CAPS
+//	$this->Cell(340,5,$this->office,0,2,'C');
+		$this->Cell(340,5,strtoupper($this->office),0,2,'C');
+//-----------------------------------------------------------------------
 	$this->Cell(340,5,'',0,2,'C');	
 	$this->SetFont('Arial','BU',16);
 	$this->Cell(340,5,'LIST OF EXEMPTED BUSINESS ESTABLISHMENTS',0,1,'C');
@@ -105,7 +119,12 @@ $getprov = @mysql_fetch_row($getprov);
 
 //$pdf=new FPDF('L','mm','Legal');
 $pdf=new PDF('L','mm','Legal');
+/* --------------------------------------------------------------------
+frederick >>> changed this:
 $pdf->setLGUinfo($getlgu[0],$getprov[0],'Office of the Treasurer');
+to this                                                            */
+$pdf->setLGUinfo($getprov[0],$getlgu[0],'Office of the Treasurer');
+//----------------------------------------------------------------------
 $pdf->setDateRange($date_from,$date_to);
 $pdf->AddPage();
 $pdf->AliasNbPages();
@@ -138,10 +157,18 @@ $pdf->Cell(60,5,'BUSINESS NAME',1,0,'C');
 $pdf->SetX(155);
 $pdf->Cell(90,5,'BUSINESS ADDRESS',1,0,'C');
 //$pdf->SetX(220);
-$pdf->Cell(30,5,'LINE OF BUSINESS',1,0,'C');
+/*===========================================================
+FREDERICK -> change cell width FROM 30 TO 43:
+$pdf->Cell(30,5,'LINE OF BUSINESS',1,0,'C'); */
+$pdf->Cell(43,5,'LINE OF BUSINESS',1,0,'C');
+/* FROM 30 TO 22:
 //$pdf->SetX(270);
-$pdf->Cell(30,5,'OWNERSHIP TYPE',1,0,'C');
-$pdf->Cell(20,5,'EXEMPTION',1,0,'C');
+$pdf->Cell(30,5,'OWNERSHIP TYPE',1,0,'C'); */
+$pdf->Cell(22,5,'OWNERSHIP TYPE',1,0,'C');
+/* and FROM 20 TO 15:
+$pdf->Cell(20,5,'EXEMPTION',1,0,'C'); */
+$pdf->Cell(15,5,'EXEMPTION',1,0,'C');
+//============================================================
 
 //$pdf->SetX(305);
 
@@ -160,6 +187,9 @@ $pdf->Cell(20,5,'EXEMPTION',1,0,'C');
 */
 $date_from = str_replace("/", "-", $date_from);
 $date_to = str_replace("/", "-", $date_to);
+/*-----------------------------------------------------------------------------------------
+frederick >>> change this:
+
 	$result = mysql_query ("select distinct (c.business_permit_code) as pid, a.business_name,
         concat(a.business_lot_no, ' ', a.business_street, ' ',
         a.business_city_code, ' ', a.business_province_code, ' ', a.business_zip_code) 
@@ -177,6 +207,24 @@ $date_to = str_replace("/", "-", $date_to);
 	and c.application_date between '$date_from 00:00:00' and '$date_to 23:59:59'
         ");
 
+to this:                 */
+	$result = mysql_query ("select distinct (c.business_permit_code) as pid, a.business_name,
+        concat(a.business_lot_no, ' ', a.business_street, ',', ' ', g.barangay_desc, ',', ' ',
+        h.city_municipality_desc, ',', ' ', i.province_desc, ' ', a.business_zip_code) 
+	as bus_add,
+        concat(b.owner_first_name, ' ', b.owner_middle_name, ' ', b.owner_last_name) as fulln,
+	b.owner_id, a.business_id, f.business_category_desc, f.tax_exemption 
+        from ebpls_business_enterprise a, ebpls_owner b, ebpls_business_enterprise_permit c,
+	tempbusnature d, ebpls_buss_nature e, ebpls_business_category f, ebpls_barangay g, ebpls_city_municipality h, ebpls_province i where
+        d.active=1 
+        and d.bus_code = e.natureid and d.bus_code like '$business_nature_code%' 
+        and b.owner_id = a.owner_id and a.business_id = c.business_id and a.business_barangay_code = g.barangay_code and a.business_city_code = h.city_municipality_code and a.business_province_code = i.province_code and
+        c.active=1 and b.owner_last_name like '$owner_last%' 
+        and b.owner_id = d.owner_id and $parti and 
+	a.business_id=d.business_id and f.business_category_code=a.business_category_code
+	and c.application_date between '$date_from 00:00:00' and '$date_to 23:59:59'
+        ");
+//--------------------------------------------------------------------------------------------
 	$i = 1;
 	$pdf->SetFont('Arial','B',4);
 	$pdf->SetY($Y_Table_Position);
@@ -213,7 +261,11 @@ $date_to = str_replace("/", "-", $date_to);
 		if ($qute==1) {
 		$pdf->SetX(245);
 		$pdf->SetFont('Arial','B',4);
-		$pdf->Cell(30,5,$getlyn[naturedesc],1,0,'L');
+/*============================================================
+		FREDERICK -> change cell width from 30 to 43:
+		$pdf->Cell(30,5,$getlyn[naturedesc],1,0,'L');*/
+		$pdf->Cell(43,5,$getlyn[naturedesc],1,0,'L');
+//============================================================
 	//	$pdf->SetX(270);
 //		$pdf->SetFont('Arial','B',6);
 //		$pdf->Cell(30,5,number_format($getlyn[cap_inv],2),1,1,'R');
@@ -223,7 +275,11 @@ $date_to = str_replace("/", "-", $date_to);
 		$qute=1;
 	//	$pdf->SetX(245);
                 $pdf->SetFont('Arial','B',4);
-                $pdf->Cell(30,5,$getlyn[bus_nature],1,0,'L');
+/*============================================================
+		FREDERICK -> change cell width from 30 to 43:
+		$pdf->Cell(30,5,$getlyn[bus_nature],1,0,'L');*/
+                $pdf->Cell(43,5,$getlyn[bus_nature],1,0,'L');
+//=============================================================
         //      $pdf->SetX(270);
   //              $pdf->SetFont('Arial','B',6);
     //            $pdf->Cell(30,5,$getlyn[cap_inv],1,1,'R');
@@ -231,8 +287,14 @@ $date_to = str_replace("/", "-", $date_to);
       //          $totcal = $totcal + $getlyn[cap_inv];
 		}
 		}
-		$pdf->Cell(30,5,ucfirst($resulta[business_category_desc]),1,0,'R');
-		$pdf->Cell(20,5,$resulta[tax_exemption ],1,0,'L');
+/*=============================================================
+		frederick -> change cell width from 30 to 22 and position from Right(R) to Center(C):
+		$pdf->Cell(30,5,ucfirst($resulta business_category_desc]),1,0,'R'); */
+		$pdf->Cell(22,5,ucfirst($resulta[business_category_desc]),1,0,'C');
+		/*and from 20 to 15 and position from Left(L) to Center (C):
+		$pdf->Cell(20,5,$resulta[tax_exemption ],1,0,'L');*/
+		$pdf->Cell(15,5,$resulta[tax_exemption ],1,0,'C');
+//=============================================================
 		$qute=0;
 		$i++;
 		$pdf->SetY($pdf->GetY()+5);

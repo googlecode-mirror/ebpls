@@ -59,9 +59,16 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
-	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+/*------------------------------------------------------------
+frederick >>> changed these:
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+to these: 																						*/
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//SEE change made on lines 111 & 113
+//-------------------------------------------------------------
 	$this->SetFont('Arial','B',14);
 	$this->Cell(340,5,$this->office,0,2,'C');
 	$this->Cell(340,5,'',0,2,'C');	
@@ -98,7 +105,13 @@ if ($cap_inv2 == "" || $cap_inv2 == 0) {
 }
 //$pdf=new FPDF('L','mm','Legal');
 $pdf=new PDF('L','mm','Legal');
+/*-----------------------------------------------
+frederick >> incorrect arrangement, SEE function setLGUinfo on line 30
+changed this:
 $pdf->setLGUinfo($getlgu[0],$getprov[0],'');
+to this:                                  */
+$pdf->setLGUinfo($getprov[0],$getlgu[0],'');
+//-----------------------------------------------
 $pdf->setDateRange($date_from,$date_to);
 $pdf->AddPage();
 $pdf->AliasNbPages();
@@ -185,8 +198,12 @@ $pdf->Cell(35,5,'ANNUAL GROSS SALES',1,1,'C');
 	$pdf->SetX(5);
 		$pdf->Cell(10,5,$i,1,0,'L');
 		
-		$pdf->Cell(25,5,$re[business_permit_code],1,0,'L');
-		
+/*======================================================
+frederick >> to view permit number, changed this
+	$pdf->Cell(25,5,$re[business_permit_code],1,0,'L');
+to this:                                              */
+		$pdf->Cell(25,5,$re[pid],1,0,'L');
+//=======================================================
 		$pdf->Cell(150,5,$re[business_name]."/".$re[bus_add]."/".$re[fulln],1,0,'L');
 		
 		if ($trans == 'Retire') {

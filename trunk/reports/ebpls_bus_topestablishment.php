@@ -47,14 +47,30 @@ function AcceptPageBreak()
 	    //Logo
 	    //$this->Image('logo_pb.png',10,8,33);
 	    //Arial bold 15
-	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
+/*------------------------------------------------------------------
+frederick >>> changed these:
+
 	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+
+to these:   */
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//SEE: change made on lines 112 & 114
+
+//added blank space
+	$this->Cell(340,5,'',0,1,'C');
+
 	$this->SetFont('Arial','B',14);
-	$this->Cell(340,5,$this->office,0,2,'C');
+
+// changed to ALL CAPS
+//	$this->Cell(340,5,$this->office,0,2,'C');
+	$this->Cell(340,5,strtoupper($this->office),0,2,'C');
+//------------------------------------------------------------------
 	$this->Cell(340,5,'',0,2,'C');	
 	$this->SetFont('Arial','BU',14);
 	$this->Cell(340,5,$this->list_op,0,1,'C');
@@ -92,7 +108,13 @@ $getprov = @mysql_fetch_row($getprov);
 
 //$pdf=new FPDF('L','mm','Legal');
 $pdf=new PDF('L','mm','Legal');
+/*-------------------------------------------------------------------------------------------
+frederick >>> changed this:
 $pdf->setLGUinfo($getlgu[0],$getprov[0],'Office of the Treasurer',strtoupper($list_option));
+to this:       */
+$pdf->setLGUinfo($getprov[0],$getlgu[0],'Office of the Treasurer',strtoupper($list_option));
+//SEE: function setLGUinfo on line 20
+//--------------------------------------------------------------------------------------------
 $pdf->AddPage();
 $pdf->AliasNbPages();
 
@@ -111,6 +133,11 @@ $pdf->SetY($Y_Label_position-10);
 $dateprinted = date('Y-m-d');
 $pdf->SetX(5);
 $pdf->Cell(340,5,$dateprinted,0,1,'R');
+/*==========================================
+FREDERICK -> add Y coordinate to adjust 
+		position from top */
+$pdf->SetY(50);
+//==========================================
 $pdf->SetX(5);
 $pdf->Cell(10,5,'SEQ. NO.',1,0,'C');
 $pdf->SetX(15);
@@ -300,6 +327,9 @@ $resultf = SelectMultiTable($dbtype,$dbLink,"ebpls_buss_tfo a, ebpls_business_en
 		$i++;
 		$pdf->SetY($pdf->GetY()+5);
 	} 
+/*===============================================
+FREDERICK -> removed the following:
+these are just empty cells!!
 $pdf->SetX(5);
 $pdf->Cell(10,5,'',1,0,'L');
 $pdf->SetX(15);
@@ -312,9 +342,12 @@ $pdf->SetX(155);
 $pdf->Cell(90,5,'' ,1,0,'L');
 $pdf->Cell(30,5,'',1,0,'R');
 $pdf->Cell(30,5,'',1,0,'R');
-$pdf->Cell(30,5,'',1,0,'R');
-
+$pdf->Cell(30,5,'',1,0,'R'); */
+//=======================================
 $pdf->SetX(5);
+/*=======================================
+ FREDERICK -> removed the following:
+these are just empty cells!!
 $pdf->Cell(10,5,'',1,0,'L');
 $pdf->SetX(15);
 $pdf->Cell(25,5,'',1,0,'L');
@@ -323,7 +356,10 @@ $pdf->Cell(55,5,'',1,0,'L');
 $pdf->SetX(95);
 $pdf->Cell(60,5,'',1,0,'L');
 $pdf->SetX(155);
-$pdf->Cell(90,5,'Total ' ,1,0,'R');
+  and CHANGE CELL WIDTH from 90 to 240: 
+$pdf->Cell(90,5,'Total ' ,1,0,'R'); */
+$pdf->Cell(240,5,'T O T A L    ' ,1,0,'R');
+//==========================================
 $pdf->Cell(30,5,number_format($totinv1,2),1,0,'R');
 $pdf->Cell(30,5,number_format($gtotdue,2),1,0,'R');
 $pdf->Cell(30,5,number_format($gtotpay,2),1,0,'R');

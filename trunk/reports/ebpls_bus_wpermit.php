@@ -56,9 +56,17 @@ function AcceptPageBreak()
 	
 	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 	$this->SetFont('Arial','B',12);
+/*----------------------------------------------------------------
+frederick: change these:
 	$this->Cell(340,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');
 	$this->Cell(340,5,$this->lgu,0,1,'C');
 	$this->Cell(340,5,$this->prov,0,2,'C');
+to these:                        */
+	$this->Cell(340,5,'Republic of the Philippines',0,1,'C');
+	$this->Cell(340,5,'Province of '.$this->prov,0,1,'C');
+	$this->Cell(340,5,'MUNICIPALITY OF '.strtoupper($this->lgu),0,2,'C');
+//SEE: change made on lines 103 & 105
+//-----------------------------------------------------------------
 	$this->SetFont('Arial','B',14);
 	$this->Cell(340,5,$this->office,0,2,'C');
 	$this->Cell(340,5,'',0,2,'C');	
@@ -90,7 +98,12 @@ $getprov = @mysql_fetch_row($getprov);
 
 //$pdf=new FPDF('L','mm','Legal');
 $pdf=new PDF('L','mm','Legal');
+/*------------------------------------------------------------
+frederick >>> change this:
 $pdf->setLGUinfo($getlgu[0],$getprov[0],$resulta[2],"$paid");
+to this:         */
+$pdf->setLGUinfo($getprov[0],$getlgu[0],$resulta[2],"$paid");
+//-------------------------------------------------------------
 $pdf->AddPage();
 $pdf->AliasNbPages();
 
@@ -122,6 +135,9 @@ $date_to = str_replace("/", "", $date_to);
 $xdate = strtotime($date_to);
 $xdate = $xdate + (60*60*24);
 $date_to = date('Y-m-d', $xdate);
+/*--------------------------------------------------------------------------------------------
+frederick >>> this query only shows only the municipality & province code and not the description, therefore, changed this:
+
 	$result = mysql_query ("select distinct(a.business_name), 
 	concat(a.business_lot_no, ' ', a.business_street, ' ',
         a.business_city_code, ' ', a.business_province_code, ' ',
@@ -140,6 +156,26 @@ $date_to = date('Y-m-d', $xdate);
         and a.business_barangay_code  like '$brgy_name%' and paid='$paid' 
         "); 
 
+to this:                                    */
+	$result = mysql_query ("select distinct(a.business_name), 
+	concat(a.business_lot_no, ' ', a.business_street, ' ',
+        f.barangay_desc, ',', ' ', g.city_municipality_desc, ',', ' ', h.province_desc, ' ',
+        a.business_zip_code) as bus_add,
+        concat(b.owner_first_name, ' ', b.owner_middle_name, ' ', b.owner_last_name) as fulln,
+        b.owner_id, a.business_id,
+	c.transaction 
+        from ebpls_business_enterprise a, ebpls_owner b, ebpls_business_enterprise_permit c,
+        tempbusnature d, ebpls_buss_nature e, ebpls_barangay f, ebpls_city_municipality g, ebpls_province h 
+	where
+        d.active=1 and d.bus_code = e.natureid
+        and b.owner_id = a.owner_id and a.business_id = c.business_id and
+        c.active=1 and b.owner_id = d.owner_id and
+        a.business_id=d.business_id and b.owner_last_name like '$owner_last%'
+				and a.business_barangay_code = f.barangay_code and a.business_city_code = g.city_municipality_code and a.business_province_code = h.province_code
+        and c.application_date between '$date_from' and '$date_to'
+        and a.business_barangay_code  like '$brgy_name%' and paid='$paid' 
+        "); 
+//----------------------------------------------------------------------------------------------
 
 
 
