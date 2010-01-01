@@ -449,7 +449,9 @@ function createZone()
 			}
 			?>
 	  <tr> 
-	    <td align="right" valign="top" class='normal'> <font color="#FF0000"> *</font>Birth Date (yyyy-mm-dd): 
+	    <td align="right" valign="top" class='normal'> 
+<!--  this has removed the red asterisk (req'd. field)  <font color="#FF0000"> *</font>  -->
+            Birth Date (yyyy-mm-dd): 
 	    </td>
 	    <td align="left" valign="top" class='normal'>&nbsp; 
 		 <input id="cid" name="owner_birth_date" value="<?php echo $owner_birth_date; ?>" type="text" size="10">

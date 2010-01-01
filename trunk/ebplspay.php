@@ -85,15 +85,17 @@ function checkValidPay(cmd)
                 
                 if (cmd=='CASH') {
                 
-                
-	                
-	                if(isNaN(_FRM.amtpaid.value) || _FRM.amtpaid.value<0 || _FRM.amtpaid.value<_FRM.amtpay.value)
-	                {
-	                        alert( msgTitle + "Please input a valid amount!");
-	                        _FRM.amtpaid.focus();
-	                        _FRM.amtpaid.select();
-	                        return false;
-	                } 
+                	// LEO RENTON - in this mod, I added parseFloat function to convert inputted value to floating
+	                //if(parseFloat(_FRM.amtpaid.value) != 'NaN')
+                        
+	                	if(isNaN(_FRM.amtpaid.value) || parseFloat(_FRM.amtpaid.value)<0.0 || parseFloat(_FRM.amtpaid.value)<parseFloat(_FRM.amtpay.value))
+	                	{
+	                        	alert( msgTitle + "Please input a valid amount! ");
+	                        	_FRM.amtpaid.focus();
+	                        	_FRM.amtpaid.select();
+	                        	return false;
+	              	 	} 
+				
 	                
 	                
 	                if(_FRM.amtpaid.value.length>15)

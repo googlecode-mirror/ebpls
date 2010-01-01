@@ -6,8 +6,12 @@ $file_dir=eBPLS_APP_URL;
 $iAdminPassword = md5($iAdminPassword);
 if ($scmd==1) {
 //$backup1 = passthru("mysqldump -cf --add-drop-table -h$dbhost -u$dbuser -p$dbpass $dbname > backup/$backup");
+
+//leo renton
+$backup = $backup . ".sql";
 system("mysqldump -cf --add-drop-table -h$dbhost -u$dbuser -p$dbpass $dbname > backup/$backup");
-system("gzip -9 backup/$backup &2<1");
+// added --force option to force overwrite of existing backup
+system("gzip -9 --force backup/$backup &2<1");
 $backupfile = $backup.".gz";
 $query = mysql_query("insert into backups (backuptime, data) values (now(),'$backup')");
 ?>
@@ -131,7 +135,7 @@ function ConfDown(dme)
 	 window.open('backup/' + dme,'viewpay',
 				'left=20,top=20,width=450,height=450,toolbar=0,resizable=1');     
 	} else {
-		alert ("File is saved at the backup folder.");
+		alert ("File is saved at the /home/site/ebpls/backup folder.");
 	return false;
 	}
 }
@@ -185,7 +189,7 @@ function purgerecord()
 		<tr width=90%>
 		<input type=hidden name=scmd>
 		<input type=hidden name=prec>
-			<td align=right valign=top> Backup Database : </td>
+			<td align=right valign=top> Backup Database (w/o .sql): </td>
 			<td align=left valign=top> &nbsp;
 			<input type=text name=backup>&nbsp; 
 			<input type=button value='Go' onclick='BackUp(backup);'></td>
@@ -203,6 +207,14 @@ function purgerecord()
 		<tr><td><br></td></tr>
 		<tr width=90%>
 			<td align=center valign=top colspan='3'> <input   type=button  name=purge   value="Delete Dormant Records" onclick="purgerecord();"> </td>
+		</tr>
+		<!--LEO RENTON-->
+		<tr width=90%>
+			<td align=center valign=top colspan='3'> <a href = "duplicate_owners.php" target = "_blank"> View Duplicate Owners </a> </td>
+		</tr>
+		<!--LEO RENTON-->
+		<tr width=90%>
+			<td align=center valign=top colspan='3'> <a href = "duplicate_business.php" target = "_blank"> View Duplicate Business Establishments </a> </td>
 		</tr>
 	</table>
 </body>

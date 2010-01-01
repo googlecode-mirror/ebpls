@@ -1166,20 +1166,20 @@ function checkValidOwner()
                 //      _FRM.owner_house_no.focus();
                 //      return false;
                 //}
-				if(isValid == false)
+			/*	if(isValid == true)
                         {
-                        alert("Invalid Date!\nFormat : yyyy-mm-dd!");
+                        alert("xxInvalid Date!\nFormat : yyyy-mm-dd!");
                         _FRM.owner_birth_date.focus();
                         _FRM.owner_birth_date.select();
                         return false;
                         }
-						if(isValidBDay == false)
+						if(isValidBDay == true)
                         {
-                        alert("Invalid Birth Date!\nFormat : yyyy-mm-dd!");
+                        alert("xInvalid Birth Date!\nFormat : yyyy-mm-dd!");
                         _FRM.owner_birth_date.focus();
                         _FRM.owner_birth_date.select();
                         return false;
-                        }
+                        } */
                  if( isBlank(_FRM.owner_street.value) == true)
                 {
                         alert("Please enter Address!");
