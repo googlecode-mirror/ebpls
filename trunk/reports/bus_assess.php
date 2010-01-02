@@ -59,7 +59,7 @@ function AcceptPageBreak()
 	function Header()
 	{
 	    //Logo
-	$this->Image('../images/ebpls_logo.jpg',10,8,33);
+   //	$this->Image('../images/ebpls_logo.jpg',10,8,33);
 
 	$this->SetFont('Arial','B',12);
 	$this->Cell(190,5,'REPUBLIC OF THE PHILIPPINES',0,1,'C');   

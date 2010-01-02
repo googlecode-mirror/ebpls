@@ -10,7 +10,7 @@
 
 //	Application Name and Version
 define("eBPLS_APP_NAME", "eBPLS");
-define("eBPLS_APP_VERSION", "eGov4MD/CESO r58 BETA");
+define("eBPLS_APP_VERSION", "eGov4MD/CESO r61 BETA");
 include "varsite.php";
 //define("eBPLS_APP_URL", "http://localhost/ebpls/");	// do not include filenames
 
@@ -18,7 +18,7 @@ include "varsite.php";
 define("eBPLS_GSMNUM_LEN", 12);
 
 //	Alert Strings: System developers' contact variables
-define("eBPLS_MAIL_WEBMASTER", "vdsa_15@yahoo.com,asuquev@dap.edu.ph,radomingo@dap.edu.ph,bobbet_a_domingo@yahoo.com");	// does not support multiple email addresses
+define("eBPLS_MAIL_WEBMASTER", "eGov4MD@yahoogroups.com, eGov4MD2@yahoo.com");	// does not support multiple email addresses
 define("eBPLS_GSM_WEBMASTER", "+639193354369");	// no spaces (" ") please!!!
 
 //	Module Index Handler
